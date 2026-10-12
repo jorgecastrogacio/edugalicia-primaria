@@ -1,0 +1,246 @@
+/* ============================================================
+   EduGalicia - Estilos de Maquetación de Pantalla e Impresión A4
+   Calibración Estricta con Smart CSS Break y Flip Cards
+   ============================================================ */
+
+@page {
+  size: A4 portrait;
+  margin: 8mm;
+}
+
+@media print {
+  /* 1. Ocultar todos los elementos de control y UI en papel */
+  .no-print,
+  header.no-print,
+  aside.no-print,
+  .export-toolbar,
+  .settings-modal,
+  .no-print-card,
+  button {
+    display: none !important;
+  }
+
+  /* 2. Mostrar la versión imprimible fija del Trivial (pregunta + casillas + solución) */
+  .quiz-card-screen {
+    display: none !important;
+  }
+  .quiz-card-print {
+    display: block !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* 3. Ajuste universal de página y colores exactos para PDF */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body, html {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    width: 210mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #root {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+  }
+
+  /* 4. Smart Multi-Page A4: Permite flujo de 1 o 2 páginas sin cortar elementos */
+  .a4-sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 8mm !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    max-height: none !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    border: none !important;
+    overflow: visible !important;
+  }
+
+  /* 5. Reglas estrictas Anti-Corte: Trasladado a filas para evitar Pagination Deadlock */
+  table {
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  thead {
+    display: table-header-group !important; /* Repite cabecera si pasa a página 2 */
+  }
+
+  tr, tbody tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .avoid-break,
+  section,
+  blockquote,
+  .mermaid-wrapper,
+  .quiz-card-container,
+  .printable-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    -webkit-column-break-inside: avoid !important;
+  }
+
+  /* 6. Si un elemento fuerza nueva página o cuaderno completo de 3 láminas */
+  .force-new-page,
+  .sheet-page {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+  .sheet-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+}
+
+/* ============================================================
+   Clase de Forzado para Exportación a Imagen PNG (html-to-image)
+   ============================================================ */
+.force-print-layout .quiz-card-screen {
+  display: none !important;
+}
+.force-print-layout .quiz-card-print {
+  display: block !important;
+}
+.force-print-layout .no-print {
+  display: none !important;
+}
+
+/* ============================================================
+   Visualización en Pantalla (Preview WYSIWYG de Alta Fidelidad)
+   ============================================================ */
+
+.a4-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 10mm;
+  margin: 0 auto;
+  background-color: #ffffff;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.a4-canvas {
+  height: 297mm;
+  max-height: 297mm;
+  overflow: hidden;
+}
+
+.sticky-note {
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s ease;
+}
+
+.cloud-badge {
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.2);
+}
+
+/* Neo-Brutalismo Infantil: Sombras sólidas duras */
+.brutal-card {
+  border: 3.5px solid #000000;
+  box-shadow: 5px 5px 0px #000000;
+  border-radius: 1.25rem;
+  background-color: #ffffff;
+}
+
+.brutal-card-sm {
+  border: 2.5px solid #000000;
+  box-shadow: 3.5px 3.5px 0px #000000;
+  border-radius: 1rem;
+}
+
+.brutal-card-lg {
+  border: 4px solid #000000;
+  box-shadow: 6px 6px 0px #000000;
+  border-radius: 1.5rem;
+}
+
+.brutal-badge {
+  border: 2px solid #000000;
+  box-shadow: 2px 2px 0px #000000;
+}
+
+@media print {
+  .brutal-card,
+  .brutal-card-sm,
+  .brutal-card-lg,
+  .brutal-badge {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    border-color: #000000 !important;
+  }
+}
+
+/* Patrón Libreta Escolar y Text Shadow de Cómic */
+.bg-notebook {
+  background-image: linear-gradient(transparent 95%, #e5e7eb 95%);
+  background-size: 100% 30px;
+}
+
+.comic-title {
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.comic-shadow-sm {
+  text-shadow: 1.5px 1.5px 0 #000, -0.75px -0.75px 0 #000, 0.75px -0.75px 0 #000, -0.75px 0.75px 0 #000;
+}
+
+/* Cinta adhesiva / Washi tape decorativo */
+.washi-tape {
+  background-color: rgba(255, 255, 255, 0.65);
+  border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Contenedor y perspectiva para las Flip Cards */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.quiz-card-screen {
+  min-height: 155px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quiz-card-front,
+.quiz-card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Reglas de Diagrama Mermaid dentro de A4 */
+.mermaid-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  max-height: 105mm;
+}
+
+.mermaid-wrapper svg {
+  max-width: 100% !important;
+  max-height: 100mm !important;
+  height: auto !important;
+}
