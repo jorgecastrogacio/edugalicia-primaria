@@ -256,11 +256,11 @@ export default function SheetPreview({
         })()}
       </div>
 
-      {/* 3. CONTENEDOR OFF-SCREEN RÍGIDO A4 (VECTOR 4: EXPORTACIÓN MATEMÁTICAMENTE EXACTA) */}
+      {/* 3. CONTENEDOR OFF-SCREEN RÍGIDO A4 (VECTOR 4: EXPORTACIÓN MATEMÁTICAMENTE EXACTA - TOTALMENTE NO-PRINT) */}
       <div 
         id="edugalicia-a4-offscreen"
         aria-hidden="true"
-        className="a4-export-mode fixed -left-[9999px] top-0 pointer-events-none select-none z-[-100]"
+        className="no-print a4-export-mode fixed -left-[9999px] top-0 pointer-events-none select-none z-[-100]"
         style={{ width: '794px', minHeight: '1123px' }}
       >
         {activeTab === 'dashboard' && (

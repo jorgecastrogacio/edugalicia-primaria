@@ -5,22 +5,45 @@
 
 @page {
   size: A4 portrait;
-  margin: 8mm;
+  margin: 0; /* Erradica cabeceras y pies de página automáticos del navegador */
 }
 
 @media print {
   /* 1. Ocultar todos los elementos de control y UI en papel */
   .no-print,
+  [data-no-print],
+  header,
   header.no-print,
+  aside,
   aside.no-print,
   .export-toolbar,
   .settings-modal,
   .no-print-card,
+  nav,
   button {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  /* 2. Mostrar la versión imprimible fija del Trivial (pregunta + casillas + solución) */
+  main {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  section.lg\:col-span-7 {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 2. Mostrar la versión imprimible fija del Trivial */
   .quiz-card-screen {
     display: none !important;
   }
@@ -52,38 +75,61 @@
     background: #ffffff !important;
   }
 
-  /* 4. Neutralización Estricta de Escala de Pantalla para Impresión */
+  /* 4. Neutralización Estricta de Escala y Aislamiento de Hoja A4 */
   #edugalicia-a4-sheet,
   .a4-sheet,
-  .sheet-page,
   div[style*="scale"] {
     transform: none !important;
     margin: 0 auto !important;
-    margin-bottom: 0 !important;
+    width: 210mm !important;
+    max-width: 210mm !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 10mm !important; /* Padding seguro interior para no pegarse al borde */
+    overflow: hidden !important; /* Clipping estricto contra desbordes de rotación */
+    position: relative !important;
+  }
+
+  /* 5. Clases de Hoja y Paginación Matemática para Modo Cuaderno */
+  .sheet-page {
     width: 210mm !important;
     max-width: 210mm !important;
     min-height: 297mm !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    overflow: visible !important;
+    max-height: 297mm !important;
+    height: 297mm !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    position: relative !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    clear: both !important;
   }
 
-  /* 5. Smart Multi-Page A4: Permite flujo de páginas sin cortar elementos */
-  .a4-sheet {
-    box-shadow: none !important;
-    margin: 0 !important;
-    margin-bottom: 0 !important;
-    padding: 8mm !important;
-    width: 210mm !important;
-    min-height: 297mm !important;
-    max-height: none !important;
-    height: auto !important;
-    border-radius: 0 !important;
-    border: none !important;
-    overflow: visible !important;
+  .sheet-page:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
   }
 
-  /* 5. Reglas estrictas Anti-Corte: Trasladado a filas para evitar Pagination Deadlock */
+  /* 6. Conservación Íntegra de Grids y Flexbox (Desmantelado el hack destructor) */
+  /* Los layouts de columnas ahora respiran y se respetan en impresión */
+
+  /* 7. Reglas de No-Corte Quirúrgicas por Componente Semántico */
+  .cromo-card,
+  .satelite-card,
+  .quiz-card,
+  .creative-box,
+  .postit-note,
+  .avoid-break,
+  .break-inside-avoid,
+  .info-banner {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    -webkit-column-break-inside: avoid !important;
+  }
+
   table {
     page-break-inside: auto !important;
     break-inside: auto !important;
@@ -92,62 +138,12 @@
   }
 
   thead {
-    display: table-header-group !important; /* Repite cabecera si pasa a página 2 */
+    display: table-header-group !important;
   }
 
   tr, tbody tr {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
-  }
-
-  /* REQUISITO CRÍTICO CTO: Solución al bug de WebKit donde break-inside: avoid se ignora en Grid y Flex */
-  .grid,
-  .flex,
-  .sm\:grid,
-  .md\:grid,
-  .sm\:flex,
-  .md\:flex,
-  [class*="grid-cols-"] {
-    display: block !important;
-  }
-
-  .grid > *,
-  .flex > *,
-  [class*="grid-cols-"] > * {
-    margin-bottom: 12mm !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    -webkit-column-break-inside: avoid !important;
-  }
-
-  .avoid-break,
-  .cromo-card,
-  .satelite-card,
-  .quiz-card,
-  .creative-box,
-  .postit-note,
-  .break-inside-avoid,
-  section,
-  blockquote,
-  .mermaid-wrapper,
-  .quiz-card-container,
-  .printable-card {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-    -webkit-column-break-inside: avoid !important;
-  }
-
-  /* 6. Si un elemento fuerza nueva página o cuaderno completo de 3 láminas */
-  .force-new-page,
-  .sheet-page {
-    page-break-after: always !important;
-    break-after: page !important;
-  }
-  .sheet-page:last-child {
-    page-break-after: auto !important;
-    break-after: auto !important;
   }
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ILLUSTRATIONS, getSubjectIllustration, getUniversalMascot } from '../data/illustrationMap.jsx';
 import DynamicArtEngine from './DynamicArtEngine.jsx';
+import HighlightedText from './HighlightedText.jsx';
 import { MapPin, Sparkles, Lightbulb, Star, Calendar, Compass, Layers, Shield, Zap } from 'lucide-react';
 
 export default function SheetDashboardVisual({
@@ -205,8 +206,18 @@ export default function SheetDashboardVisual({
                     return (
                       <div
                         key={idx}
-                        className={`cromo-card relative border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl ${bgClass} p-3.5 pt-6 ${rotClass} transition hover:scale-[1.01] h-fit break-words flex flex-col justify-between`}
+                        className={`cromo-card relative border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl ${bgClass} p-3.5 pt-6 ${rotClass} transition hover:scale-[1.01] h-fit break-words flex flex-col justify-between overflow-hidden`}
                       >
+                        {/* Marca de Agua Gigante Translúcida de Fondo */}
+                        <div className="absolute inset-0 m-auto flex items-center justify-center text-8xl opacity-[0.08] pointer-events-none select-none z-0">
+                          {item.pegatina || item.emoji || "⭐"}
+                        </div>
+
+                        {/* Pegatina Flotante en Esquina Inferior Derecha */}
+                        <div className="absolute bottom-1 right-2 text-3xl opacity-85 rotate-12 select-none pointer-events-none z-20 filter drop-shadow-[1px_2px_0px_rgba(0,0,0,0.3)]">
+                          {item.pegatina || item.emoji || "⭐"}
+                        </div>
+
                         {/* Washi Tape Superior */}
                         <div className="w-14 h-4 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-2 z-20 shadow-xs" />
 
@@ -221,7 +232,7 @@ export default function SheetDashboardVisual({
                           <span className="leading-none text-xs">{idx + 1}</span>
                         </div>
 
-                        <div>
+                        <div className="relative z-10">
                           {/* Franja de Rareza y Elemento */}
                           <div className="flex items-center justify-between pl-8 mb-1.5">
                             <span className="text-[8.5px] font-black uppercase bg-black text-amber-300 px-2 py-0.5 rounded border border-black shadow-[1px_1px_0px_#000]">
@@ -232,9 +243,10 @@ export default function SheetDashboardVisual({
                             </span>
                           </div>
 
-                          {/* Encabezado del Cromo */}
+                          {/* Encabezado del Cromo con garabato flecha */}
                           <div className="flex items-center justify-between border-b-2 border-black/30 pb-1 mb-2 pl-8">
-                            <h3 className="font-black text-xs md:text-sm uppercase tracking-tight text-black leading-tight break-words">
+                            <h3 className="font-black text-xs md:text-sm uppercase tracking-tight text-black leading-tight break-words flex items-center gap-1">
+                              <span className="text-amber-600 select-none pointer-events-none text-xs">🏷️</span>
                               {item.concepto}
                             </h3>
                             <span className="text-[9px] font-black uppercase bg-purple-600 text-white px-1.5 py-0.5 rounded shadow-[1px_1px_0px_#000]">
@@ -242,14 +254,14 @@ export default function SheetDashboardVisual({
                             </span>
                           </div>
 
-                          {/* Explicación Didáctica (SIN TRUNCAMIENTOS, SOPORTE LISTAS Y SALTOS DE LÍNEA) */}
-                          <p className="text-[10.5px] sm:text-xs text-slate-900 font-bold leading-relaxed bg-white/80 border border-black/20 rounded-xl p-2.5 shadow-xs break-words whitespace-pre-line">
-                            {item.descripcion}
+                          {/* Explicación Didáctica con ROTULADOR FLUORESCENTE */}
+                          <p className="text-[10.5px] sm:text-xs text-slate-900 font-bold leading-relaxed bg-white/85 border border-black/20 rounded-xl p-2.5 shadow-xs break-words whitespace-pre-line relative z-10">
+                            <HighlightedText text={item.descripcion} />
                           </p>
                         </div>
 
                         {/* Barra de Atributo de Juego RPG */}
-                        <div className="mt-3 pt-2 border-t-2 border-dashed border-black/30 flex items-center justify-between text-[9.5px] font-black text-black">
+                        <div className="mt-3 pt-2 border-t-2 border-dashed border-black/30 flex items-center justify-between text-[9.5px] font-black text-black relative z-10">
                           <span className="flex items-center gap-1.5">
                             <span className="bg-emerald-300 border border-black px-1.5 py-0.2 rounded text-[8px]">
                               DEF: 95
@@ -310,8 +322,8 @@ export default function SheetDashboardVisual({
                 <div className="font-black text-black uppercase tracking-tight text-xs flex items-center gap-1.5 mb-1 pl-4">
                   <span>🧐</span> Sabías que...?
                 </div>
-                <p className="text-[10px] text-slate-900 font-bold leading-tight break-words whitespace-pre-line">
-                  {data?.curiosidad || "Na natureza galega, todos os seres vivos colaboran nun equilibrio marabilloso que debemos coidar!"}
+                <p className="text-[10px] text-slate-900 font-bold leading-tight break-words whitespace-pre-line relative z-10">
+                  <HighlightedText text={data?.curiosidad || "Na natureza galega, todos os seres vivos colaboran nun equilibrio marabilloso que debemos coidar!"} />
                 </p>
               </div>
 
@@ -322,8 +334,8 @@ export default function SheetDashboardVisual({
                 <div className="font-black text-black uppercase tracking-tight text-xs flex items-center gap-1.5 mb-1 pr-4">
                   <span>💡</span> ¡O Truco Secreto!
                 </div>
-                <p className="text-[10px] text-slate-900 font-bold leading-tight italic break-words whitespace-pre-line">
-                  "{data?.trucoExamen || "Relaciona sempre os conceptos con elementos que poidas ver na túa propia rúa ou colexio!"}"
+                <p className="text-[10px] text-slate-900 font-bold leading-tight italic break-words whitespace-pre-line relative z-10">
+                  "<HighlightedText text={data?.trucoExamen || "Relaciona sempre os conceptos con elementos que poidas ver na túa propia rúa ou colexio!"} />"
                 </p>
               </div>
             </div>

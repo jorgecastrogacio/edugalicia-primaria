@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, Trophy, Sparkles, Check, RotateCw, Target, Star, Award, Zap, Gamepad2 } from 'lucide-react';
 import { getUniversalMascot, ILLUSTRATIONS } from '../data/illustrationMap.jsx';
 import DynamicArtEngine from './DynamicArtEngine.jsx';
+import HighlightedText from './HighlightedText.jsx';
 
 export default function SheetChallenges({
   id = "edugalicia-sheet-retos",
@@ -131,12 +132,13 @@ export default function SheetChallenges({
                   className={`quiz-card relative p-3.5 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_#000] bg-white ${idx === 0 ? '-rotate-1' : 'rotate-1'} avoid-break`}
                 >
                   <div className="w-12 h-3 bg-white/60 border border-gray-400 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 z-20" />
-                  <div className="flex items-start gap-2.5 mb-2">
+                  <div className="flex items-start gap-2.5 mb-2 relative z-10">
                     <span className="w-6 h-6 rounded-lg bg-purple-600 border-2 border-black text-white font-black text-xs flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#000]">
                       #{idx + 1}
                     </span>
-                    <p className="text-xs md:text-sm font-black text-black leading-snug break-words">
-                      {q.pregunta}
+                    <p className="text-xs md:text-sm font-black text-black leading-snug break-words flex items-center gap-1.5 flex-wrap">
+                      <span className="text-amber-500 select-none pointer-events-none text-xs">⚡</span>
+                      <HighlightedText text={q.pregunta} />
                     </p>
                   </div>
 
@@ -190,7 +192,8 @@ export default function SheetChallenges({
             ).map((vf, vIdx) => (
               <div key={vf.id || vIdx} className="bg-white border-3 border-black rounded-xl p-2.5 flex items-center justify-between shadow-[3px_3px_0px_#000]">
                 <span className="font-black text-slate-900 text-[11px] leading-snug break-words pr-2">
-                  {vIdx + 1}. {vf.texto}
+                  <span className="mr-1 select-none">{vIdx + 1}.</span>
+                  <HighlightedText text={vf.texto} />
                 </span>
                 <div className="flex items-center gap-2 shrink-0 ml-3">
                   <button
@@ -242,7 +245,7 @@ export default function SheetChallenges({
           </div>
 
           <p className="text-[10.5px] text-slate-900 font-bold mb-2 pl-4 leading-snug">
-            {data?.retoCreativo || "Debuxa aquí o concepto máis importante deste tema: ponlle unha carita kawaii feliz, o seu nome en letras de cómic xigantes e cores vivas!"}
+            <HighlightedText text={data?.retoCreativo || "Debuxa aquí o **concepto máis importante** deste tema: ponlle unha carita kawaii feliz, o seu nome en letras de cómic xigantes e cores vivas!"} />
           </p>
 
           {/* Lienzo estilo Marco de Museo / Regla milimetrada con fondo de cuadrícula */}

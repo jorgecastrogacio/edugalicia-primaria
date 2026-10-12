@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Sparkles, Compass, Lightbulb, Star, Zap } from 'lucide-react';
 import { getUniversalMascot } from '../data/illustrationMap.jsx';
+import HighlightedText from './HighlightedText.jsx';
 
 export default function SheetConceptMap({
   id = "edugalicia-sheet-mapa",
@@ -29,7 +30,7 @@ export default function SheetConceptMap({
   ];
 
   return (
-    <div id={id} className="a4-sheet bg-notebook text-slate-900 flex flex-col justify-between p-6">
+    <div id={id} className="a4-sheet min-h-[1123px] h-fit bg-notebook text-slate-900 flex flex-col justify-between p-6 relative">
       {/* 1. CABECERA NEO-BRUTALISTA v2.0 CON MASCOTA */}
       <header className="pb-3 border-b-4 border-black avoid-break relative">
         <div className="absolute -top-3 -right-2 text-3xl z-20 select-none drop-shadow-sm">📍</div>
@@ -94,8 +95,18 @@ export default function SheetConceptMap({
               return (
                 <div
                   key={idx}
-                  className={`relative ${config.rot} z-10 border-4 border-black shadow-[4px_4px_0px_#000] rounded-2xl ${config.bg} p-3.5 pt-4.5 h-fit break-words transition hover:scale-[1.02]`}
+                  className={`satelite-card relative ${config.rot} z-10 border-4 border-black shadow-[4px_4px_0px_#000] rounded-2xl ${config.bg} p-3.5 pt-4.5 h-fit break-words transition hover:scale-[1.02] overflow-hidden`}
                 >
+                  {/* Marca de Agua Translúcida de Fondo */}
+                  <div className="absolute inset-0 m-auto flex items-center justify-center text-7xl opacity-[0.07] pointer-events-none select-none z-0">
+                    {item.pegatina || item.icono || item.emoji || "✨"}
+                  </div>
+
+                  {/* Pegatina Flotante Esquina */}
+                  <div className="absolute bottom-1 right-2 text-2xl opacity-80 rotate-12 select-none pointer-events-none z-20 filter drop-shadow-xs">
+                    {item.pegatina || item.icono || item.emoji || "✨"}
+                  </div>
+
                   <div className="w-12 h-3.5 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-30 shadow-xs" />
                   
                   {/* Comic sound badge */}
@@ -108,17 +119,18 @@ export default function SheetConceptMap({
                     {item.icono || item.emoji || "✨"}
                   </div>
 
-                  <div className="pl-6 pt-0.5">
+                  <div className="pl-6 pt-0.5 relative z-10">
                     <div className="flex items-center justify-between border-b-2 border-black/30 pb-1 mb-1">
-                      <h3 className="font-black text-xs sm:text-sm uppercase tracking-tight text-black leading-tight">
+                      <h3 className="font-black text-xs sm:text-sm uppercase tracking-tight text-black leading-tight flex items-center gap-1">
+                        <span className="text-sm select-none pointer-events-none">⤴️</span>
                         {item.titulo || item.concepto}
                       </h3>
                       <span className="text-[8px] font-black uppercase bg-black text-white px-1.5 py-0.2 rounded">
                         Órbita #{idx + 1}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/80 rounded-xl p-2 border border-black/20">
-                      {item.descripcion}
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/85 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line relative z-10">
+                      <HighlightedText text={item.descripcion} />
                     </p>
                   </div>
                 </div>
@@ -170,8 +182,18 @@ export default function SheetConceptMap({
               return (
                 <div
                   key={realIdx}
-                  className={`relative ${config.rot} z-10 border-4 border-black shadow-[4px_4px_0px_#000] rounded-2xl ${config.bg} p-3.5 pt-4.5 h-fit break-words transition hover:scale-[1.02]`}
+                  className={`satelite-card relative ${config.rot} z-10 border-4 border-black shadow-[4px_4px_0px_#000] rounded-2xl ${config.bg} p-3.5 pt-4.5 h-fit break-words transition hover:scale-[1.02] overflow-hidden`}
                 >
+                  {/* Marca de Agua Translúcida de Fondo */}
+                  <div className="absolute inset-0 m-auto flex items-center justify-center text-7xl opacity-[0.07] pointer-events-none select-none z-0">
+                    {item.pegatina || item.icono || item.emoji || "✨"}
+                  </div>
+
+                  {/* Pegatina Flotante Esquina */}
+                  <div className="absolute bottom-1 right-2 text-2xl opacity-80 rotate-12 select-none pointer-events-none z-20 filter drop-shadow-xs">
+                    {item.pegatina || item.icono || item.emoji || "✨"}
+                  </div>
+
                   <div className="w-12 h-3.5 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-30 shadow-xs" />
                   
                   {/* Comic sound badge */}
@@ -184,17 +206,18 @@ export default function SheetConceptMap({
                     {item.icono || item.emoji || "✨"}
                   </div>
 
-                  <div className="pl-6 pt-0.5">
+                  <div className="pl-6 pt-0.5 relative z-10">
                     <div className="flex items-center justify-between border-b-2 border-black/30 pb-1 mb-1">
-                      <h3 className="font-black text-xs sm:text-sm uppercase tracking-tight text-black leading-tight">
+                      <h3 className="font-black text-xs sm:text-sm uppercase tracking-tight text-black leading-tight flex items-center gap-1">
+                        <span className="text-sm select-none pointer-events-none">⤵️</span>
                         {item.titulo || item.concepto}
                       </h3>
                       <span className="text-[8px] font-black uppercase bg-black text-white px-1.5 py-0.2 rounded">
                         Órbita #{realIdx + 1}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/80 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line">
-                      {item.descripcion}
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/85 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line relative z-10">
+                      <HighlightedText text={item.descripcion} />
                     </p>
                   </div>
                 </div>

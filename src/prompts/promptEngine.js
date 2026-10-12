@@ -58,33 +58,38 @@ Paso 1: Suma unidades: 7 + 5 = 12 (escribe 2 e leva 1).
 Paso 2: Suma decenas: 4 + 2 + 1 = 7. Resultado: 72.</descripcion>
 
 ================================================================================
-🎨 DIRECTIVA DE ARTE E FORMATO TÉCNICO:
+🎨 DIRECTIVA ZETA: MICRO-ARTE OBRIGATORIO E ROTULADOR FLUORESCENTE
 ================================================================================
-1. TI NON XERAS HTML NIN TAILWIND. Saída EXCLUSIVA en XML puro (<edugalicia_lamina>...</edugalicia_lamina>).
-2. O arte e emojis deben respirar a materia (silbatos e zapatillas para deporte 🏃‍♂️⚽⏱️, planetas e foguetes para o universo 🌍🚀✨, regras e compás para matemáticas 📐🔢⚡, libros e plumas para linguas 📚✍️🎭).
-3. Podes usar saltos de liña (\n) dentro de <descripcion> para listas e pasos ordenados.
+1. CADA <cromo> E CADA <satelite> DEBE INCLUÍR OBRIGATORIAMENTE unha etiqueta <pegatina>[Emoji de apoio visual]</pegatina> (ex: ⚡, 🦴, 🧪, 🌿, 🔢, 🎯, 🚀, 💡).
+2. ROTULADOR FLUORESCENTE: Dentro das <descripcion>, <resumen>, <curiosidad> e <truco_examen>, DEBES envolver os 1-3 conceptos ou datos máis cruciais con dobres asteriscos **palabra clave** (ex: "**One (1)**", "**Os osos longos**", "**Fotosíntese**"). Isto activarase como un rotulador amarelo fluorescente no caderno do alumno!
+3. TI NON XERAS HTML NIN TAILWIND. Saída EXCLUSIVA en XML puro (<edugalicia_lamina>...</edugalicia_lamina>).
+4. Podes usar saltos de liña (\n) dentro de <descripcion> para listas e pasos ordenados.
 
 ESTRUTURA XML OBRIGATORIA:
 <edugalicia_lamina>
   <tema_global nombre="[Título didáctico directo]" color_paleta="[azul_espacial|verde_natureza|amarelo_enerxia|morado_maxia|laranxa_arcade]" materia="[Materia]" curso="[Curso]" />
   <arte_principal tipo="emoji_art">[Combinación de 3-4 emojis representativos do tema, ex: 🌍🚀✨ ou ⚽🏃‍♂️💪 ou 📐🔢⚡]</arte_principal>
   <lema_mascota>[Frase curta e motivadora de choque para o caderno escolar, máx 10 palabras]</lema_mascota>
-  <resumen>[Definición directa ou regra esencial en 1-2 frases directas, sen rodeos]</resumen>
-  <curiosidad>[Dato fascinante, récord ou feito histórico/científico real]</curiosidad>
-  <truco_examen>[Fórmula mnemotécnica ou regra directa de cálculo/memoria]</truco_examen>
+  <resumen>[Definición directa con **palabra clave** destacada en asteriscos]</resumen>
+  <curiosidad>[Dato fascinante con **palabra clave** destacada en asteriscos]</curiosidad>
+  <truco_examen>[Regra mnemotécnica con **clave de exame** en asteriscos]</truco_examen>
   <cromos>
-    <!-- 4 cromos coleccionables con DATOS CRUDOS E DIRECTOS -->
+    <!-- 4 cromos coleccionables con PEGATINA E PALABRAS CLAVE CON ASTERISCOS -->
     <cromo titulo="[Elemento ou Grupo 1]" icono="[Emoji temático]" rareza="[lendaria|epica|especial|dominada]" elemento="[Categoría]" poder="[80-100]" defensa="[80-100]" xp="[25-35]">
-      <descripcion>[Datos crudos, lista exacta, operacións con números reais ou definición concisa]</descripcion>
+      <pegatina>[Emoji visual de apoio]</pegatina>
+      <descripcion>[Datos crudos con **palabras clave** en asteriscos, ex: 1: **One**. 2: **Two**]</descripcion>
     </cromo>
     <cromo titulo="[Elemento ou Grupo 2]" icono="[Emoji temático]" rareza="[lendaria|epica|especial|dominada]" elemento="[Categoría]" poder="[80-100]" defensa="[80-100]" xp="[25-35]">
-      <descripcion>[Datos crudos, lista exacta, operacións con números reais ou definición concisa]</descripcion>
+      <pegatina>[Emoji visual de apoio]</pegatina>
+      <descripcion>[Datos crudos con **palabras clave** en asteriscos]</descripcion>
     </cromo>
     <cromo titulo="[Elemento ou Grupo 3]" icono="[Emoji temático]" rareza="[lendaria|epica|especial|dominada]" elemento="[Categoría]" poder="[80-100]" defensa="[80-100]" xp="[25-35]">
-      <descripcion>[Datos crudos, lista exacta, operacións con números reais ou definición concisa]</descripcion>
+      <pegatina>[Emoji visual de apoio]</pegatina>
+      <descripcion>[Datos crudos con **palabras clave** en asteriscos]</descripcion>
     </cromo>
     <cromo titulo="[Elemento ou Grupo 4]" icono="[Emoji temático]" rareza="[lendaria|epica|especial|dominada]" elemento="[Categoría]" poder="[80-100]" defensa="[80-100]" xp="[25-35]">
-      <descripcion>[Datos crudos, lista exacta, operacións con números reais ou definición concisa]</descripcion>
+      <pegatina>[Emoji visual de apoio]</pegatina>
+      <descripcion>[Datos crudos con **palabras clave** en asteriscos]</descripcion>
     </cromo>
   </cromos>
   <cuadro_clasificacion>
@@ -117,18 +122,22 @@ ESTRUTURA XML OBRIGATORIA:
     </filas>
   </cuadro_clasificacion>
   <mapa_central titulo="[Concepto Central]" subtitulo="[Subtítulo directo]" icono="[Emoji central]">
-    <!-- 4 satélites con DATOS CRUDOS complementarios -->
+    <!-- 4 satélites con PEGATINAS e DATOS CRUDOS -->
     <satelite titulo="[Subtema / Grupo 1]" icono="[Emoji 1]" sound="¡POW!">
-      <descripcion>[Información cruda, lista ou regra directa]</descripcion>
+      <pegatina>[Emoji de apoio]</pegatina>
+      <descripcion>[Información con **palabras destacadas**]</descripcion>
     </satelite>
     <satelite titulo="[Subtema / Grupo 2]" icono="[Emoji 2]" sound="¡BOOM!">
-      <descripcion>[Información cruda, lista ou regra directa]</descripcion>
+      <pegatina>[Emoji de apoio]</pegatina>
+      <descripcion>[Información con **palabras destacadas**]</descripcion>
     </satelite>
     <satelite titulo="[Subtema / Grupo 3]" icono="[Emoji 3]" sound="¡ZAP!">
-      <descripcion>[Información cruda, lista ou regra directa]</descripcion>
+      <pegatina>[Emoji de apoio]</pegatina>
+      <descripcion>[Información con **palabras destacadas**]</descripcion>
     </satelite>
     <satelite titulo="[Subtema / Grupo 4]" icono="[Emoji 4]" sound="¡TOP!">
-      <descripcion>[Información cruda, lista ou regra directa]</descripcion>
+      <pegatina>[Emoji de apoio]</pegatina>
+      <descripcion>[Información con **palabras destacadas**]</descripcion>
     </satelite>
   </mapa_central>
   <retos>

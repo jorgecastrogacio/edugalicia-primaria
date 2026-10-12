@@ -487,7 +487,7 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
     const cElemento = getAttr('elemento') || "Saber Básico";
     const cPoder = parseInt(getAttr('poder'), 10) || 95;
     const cDefensa = parseInt(getAttr('defensa'), 10) || 90;
-    const cXp = parseInt(getAttr('xp'), 10) || 30;
+    const cPegatina = getTagContent('pegatina', innerContent) || getAttr('pegatina') || cIcono;
     const cDesc = getTagContent('descripcion', innerContent) || innerContent.replace(/<[^>]+>/g, '').trim();
 
     conceptosClave.push({
@@ -495,6 +495,7 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
       titulo: cTitulo,
       emoji: cIcono,
       icono: cIcono,
+      pegatina: cPegatina,
       rareza: cRareza,
       elemento: cElemento,
       poder: cPoder,
@@ -619,6 +620,7 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
       const sTitulo = getSatAttr('titulo') || getTagContent('titulo', satInner) || "Subtema";
       const sIcono = getSatAttr('icono') || getTagContent('icono', satInner) || "✨";
       const sSound = getSatAttr('sound') || "¡POW!";
+      const sPegatina = getTagContent('pegatina', satInner) || getSatAttr('pegatina') || sIcono;
       const sDesc = getTagContent('descripcion', satInner) || satInner.replace(/<[^>]+>/g, '').trim();
 
       satelites.push({
@@ -626,6 +628,7 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
         concepto: sTitulo,
         icono: sIcono,
         emoji: sIcono,
+        pegatina: sPegatina,
         sound: sSound,
         descripcion: sDesc
       });
