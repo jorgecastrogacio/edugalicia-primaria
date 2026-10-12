@@ -242,8 +242,8 @@ export default function SheetDashboardVisual({
                             </span>
                           </div>
 
-                          {/* Explicación Didáctica (SIN TRUNCAMIENTOS) */}
-                          <p className="text-[10.5px] sm:text-xs text-slate-900 font-bold leading-relaxed bg-white/80 border border-black/20 rounded-xl p-2.5 shadow-xs break-words">
+                          {/* Explicación Didáctica (SIN TRUNCAMIENTOS, SOPORTE LISTAS Y SALTOS DE LÍNEA) */}
+                          <p className="text-[10.5px] sm:text-xs text-slate-900 font-bold leading-relaxed bg-white/80 border border-black/20 rounded-xl p-2.5 shadow-xs break-words whitespace-pre-line">
                             {item.descripcion}
                           </p>
                         </div>
@@ -310,7 +310,7 @@ export default function SheetDashboardVisual({
                 <div className="font-black text-black uppercase tracking-tight text-xs flex items-center gap-1.5 mb-1 pl-4">
                   <span>🧐</span> Sabías que...?
                 </div>
-                <p className="text-[10px] text-slate-900 font-bold leading-tight">
+                <p className="text-[10px] text-slate-900 font-bold leading-tight break-words whitespace-pre-line">
                   {data?.curiosidad || "Na natureza galega, todos os seres vivos colaboran nun equilibrio marabilloso que debemos coidar!"}
                 </p>
               </div>
@@ -322,7 +322,7 @@ export default function SheetDashboardVisual({
                 <div className="font-black text-black uppercase tracking-tight text-xs flex items-center gap-1.5 mb-1 pr-4">
                   <span>💡</span> ¡O Truco Secreto!
                 </div>
-                <p className="text-[10px] text-slate-900 font-bold leading-tight italic">
+                <p className="text-[10px] text-slate-900 font-bold leading-tight italic break-words whitespace-pre-line">
                   "{data?.trucoExamen || "Relaciona sempre os conceptos con elementos que poidas ver na túa propia rúa ou colexio!"}"
                 </p>
               </div>

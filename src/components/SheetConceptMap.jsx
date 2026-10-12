@@ -193,7 +193,7 @@ export default function SheetConceptMap({
                         Órbita #{realIdx + 1}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/80 rounded-xl p-2 border border-black/20">
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/80 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line">
                       {item.descripcion}
                     </p>
                   </div>
