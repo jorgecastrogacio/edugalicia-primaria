@@ -91,7 +91,26 @@ export default function App() {
     };
   }, [isLoading]);
 
-  // Disparo directo a Gemini con cero fricción
+  const handleSelectTemplate = (templateKey) => {
+    const tpl = DEFAULT_TEMPLATES[templateKey];
+    if (!tpl) return;
+    if (tpl.curso) {
+      const matchCurso = CURRICULO_GALICIA.cursos.find(c => tpl.curso.includes(c.id));
+      if (matchCurso) setCursoId(matchCurso.id);
+    }
+    if (tpl.materia) {
+      const matchMateria = CURRICULO_GALICIA.materias.find(m => 
+        tpl.materia.toLowerCase().includes(m.nombre.toLowerCase()) || 
+        m.nombre.toLowerCase().includes(tpl.materia.toLowerCase())
+      );
+      if (matchMateria) setMateriaId(matchMateria.id);
+    }
+    if (tpl.tema) setTema(tpl.tema);
+    setSheetData(tpl.data);
+    setErrorMessage('');
+  };
+
+  // Disparo directo a Gemini con recuperación automática y cero bloqueos
   const handleGenerar = async () => {
     setIsLoading(true);
     setErrorMessage('');
@@ -108,8 +127,13 @@ export default function App() {
       const parsed = parseAiOutputToSheet(resultText, tema, cursoObj?.label, materiaObj?.nombre);
       setSheetData(parsed);
     } catch (err) {
-      console.error("Error al generar:", err);
-      setErrorMessage(err.message || "Error al procesar la solicitud con la IA.");
+      console.warn("EduGalicia: Activando adaptación pedagógica inmediata tras aviso de IA:", err);
+      // Generar plantilla pedagógica adaptada inmediatamente para que la lámina nunca se quede colgada
+      const offlineFallback = parseAiOutputToSheet("", tema, cursoObj?.label, materiaObj?.nombre);
+      if (offlineFallback) {
+        setSheetData(offlineFallback);
+      }
+      setErrorMessage(`Aviso: ${err.message || "Error al conectar con Gemini."} Hemos adaptado la lámina a "${tema}". (Para IA en tiempo real en la web, verifica que VITE_GEMINI_API_KEY esté añadida en Vercel > Settings > Environment Variables).`);
     } finally {
       setIsLoading(false);
     }
@@ -167,6 +191,7 @@ export default function App() {
               onGenerar={handleGenerar}
               isLoading={isLoading}
               temasSugeridos={temasSugeridos}
+              onSelectTemplate={handleSelectTemplate}
             />
 
             {/* Barra de progreso / Mensaje de Estado Secuencial */}

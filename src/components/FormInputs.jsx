@@ -15,7 +15,8 @@ export default function FormInputs({
   setFormato,
   onGenerar,
   isLoading,
-  temasSugeridos = []
+  temasSugeridos = [],
+  onSelectTemplate
 }) {
   const materiaSeleccionada = CURRICULO_GALICIA.materias.find(m => m.id === materiaId);
 
@@ -110,6 +111,47 @@ export default function FormInputs({
                 {t}
               </button>
             ))}
+          </div>
+        )}
+
+        {/* Plantillas Didácticas Rápidas 1-Clic */}
+        {onSelectTemplate && (
+          <div className="mt-3 pt-2.5 border-t border-slate-100">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1">
+                <span>📚</span> Plantillas Modelo (Carga Inmediata):
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              <button
+                type="button"
+                onClick={() => onSelectTemplate('ecosistemas')}
+                className="text-[11px] font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg border border-emerald-200 transition"
+              >
+                🌳 Ecosistemas
+              </button>
+              <button
+                type="button"
+                onClick={() => onSelectTemplate('fracciones')}
+                className="text-[11px] font-semibold bg-blue-50 hover:bg-blue-100 text-blue-800 px-2.5 py-1 rounded-lg border border-blue-200 transition"
+              >
+                🍕 Fracciones
+              </button>
+              <button
+                type="button"
+                onClick={() => onSelectTemplate('englishAdventure')}
+                className="text-[11px] font-semibold bg-amber-50 hover:bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg border border-amber-200 transition"
+              >
+                🇬🇧 English Adventure
+              </button>
+              <button
+                type="button"
+                onClick={() => onSelectTemplate('universo')}
+                className="text-[11px] font-semibold bg-purple-50 hover:bg-purple-100 text-purple-800 px-2.5 py-1 rounded-lg border border-purple-200 transition"
+              >
+                🚀 Sistema Solar
+              </button>
+            </div>
           </div>
         )}
       </div>
