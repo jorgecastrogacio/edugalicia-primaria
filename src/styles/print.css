@@ -52,10 +52,27 @@
     background: #ffffff !important;
   }
 
-  /* 4. Smart Multi-Page A4: Permite flujo de 1 o 2 páginas sin cortar elementos */
+  /* 4. Neutralización Estricta de Escala de Pantalla para Impresión */
+  #edugalicia-a4-sheet,
+  .a4-sheet,
+  .sheet-page,
+  div[style*="scale"] {
+    transform: none !important;
+    margin: 0 auto !important;
+    margin-bottom: 0 !important;
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* 5. Smart Multi-Page A4: Permite flujo de páginas sin cortar elementos */
   .a4-sheet {
     box-shadow: none !important;
     margin: 0 !important;
+    margin-bottom: 0 !important;
     padding: 8mm !important;
     width: 210mm !important;
     min-height: 297mm !important;
