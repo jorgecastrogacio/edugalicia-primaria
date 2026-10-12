@@ -44,10 +44,13 @@ export default function HtmlCanvasRenderer({
   }
 
   return (
-    <div
-      id={id}
-      className="a4-sheet a4-canvas text-slate-800 flex flex-col justify-between overflow-hidden"
-      dangerouslySetInnerHTML={{ __html: cleanHtml }}
-    />
+    <div className="w-full flex justify-center overflow-x-hidden">
+      <div
+        id={id}
+        className="a4-sheet a4-canvas text-slate-800 flex flex-col justify-between overflow-hidden"
+        style={{ width: '210mm', minHeight: '297mm' }}
+        dangerouslySetInnerHTML={{ __html: cleanHtml }}
+      />
+    </div>
   );
 }

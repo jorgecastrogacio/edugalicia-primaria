@@ -19,24 +19,38 @@ export default function ExportToolbar({
 
   // Exportación a imagen PNG de alta definición (pixelRatio 2) con soporte para Guardar en Fotos móvil
   const handleDownloadImage = async () => {
-    const node = document.getElementById(sheetElementId);
-    if (!node) {
+    const parentContainer = document.getElementById(sheetElementId);
+    if (!parentContainer) {
       alert("No se encontró el lienzo para exportar.");
       return;
     }
 
+    // Buscar el nodo real .a4-sheet activo (evita capturar wrappers vacíos o escalados)
+    const targetSheet = parentContainer.querySelector('.a4-sheet') || parentContainer;
+
     try {
       setIsExportingImage(true);
-      node.classList.add('force-print-layout');
+      targetSheet.classList.add('force-print-layout');
 
-      const dataUrl = await toPng(node, {
+      // Guardar estilos temporales para captura limpia a escala 1:1 pura (794x1123 px = A4 a 96 DPI)
+      const originalTransform = parentContainer.style.transform;
+      parentContainer.style.transform = 'none';
+
+      const dataUrl = await toPng(targetSheet, {
         pixelRatio: 2,
         backgroundColor: '#ffffff',
+        width: 794,
         style: {
           margin: '0',
-          boxShadow: 'none'
+          boxShadow: 'none',
+          transform: 'none',
+          width: '794px',
+          minWidth: '794px'
         }
       });
+
+      // Restaurar el transform responsivo de pantalla
+      parentContainer.style.transform = originalTransform;
 
       const sanitizedTitle = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const tabSuffix = activeTab ? `-${activeTab}` : '';
@@ -73,7 +87,7 @@ export default function ExportToolbar({
       console.error("Error al exportar a imagen:", err);
       alert("Hubo un detalle al exportar la imagen. Puedes usar 'Imprimir a PDF'.");
     } finally {
-      node.classList.remove('force-print-layout');
+      targetSheet.classList.remove('force-print-layout');
       setIsExportingImage(false);
     }
   };

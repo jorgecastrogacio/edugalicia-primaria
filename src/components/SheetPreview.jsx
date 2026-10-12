@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import SheetDashboardVisual from './SheetDashboardVisual';
 import SheetConceptMap from './SheetConceptMap';
 import SheetChallenges from './SheetChallenges';
@@ -18,6 +18,31 @@ export default function SheetPreview({
 }) {
   const [internalTab, setInternalTab] = useState('dashboard');
   const activeTab = controlledActiveTab !== undefined ? controlledActiveTab : internalTab;
+
+  const containerRef = useRef(null);
+  const [scale, setScale] = useState(1);
+
+  // Calibración matemática exacta de escala A4 (210mm = 794px a 96DPI)
+  useEffect(() => {
+    const handleResize = () => {
+      if (!containerRef.current) return;
+      const containerWidth = containerRef.current.clientWidth;
+      const a4WidthPx = 794; // Ancho A4 exacto a 96 DPI
+
+      if (containerWidth < a4WidthPx && containerWidth > 0) {
+        // Añadir margen de respiración en móvil (restar 16px para padding)
+        const availableWidth = containerWidth - 16;
+        const newScale = Math.min(1, Math.max(0.35, availableWidth / a4WidthPx));
+        setScale(newScale);
+      } else {
+        setScale(1);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleTabClick = (tabKey) => {
     if (onTabChange) {
@@ -58,8 +83,12 @@ export default function SheetPreview({
     }
   ];
 
+  // Altura proporcional calculada para que el contenedor padre no colapse cuando scale < 1
+  const a4HeightPx = 1123;
+  const scaledHeight = scale < 1 ? `${Math.round(a4HeightPx * scale)}px` : 'auto';
+
   return (
-    <div className="w-full flex flex-col items-center">
+    <div ref={containerRef} className="w-full flex flex-col items-center overflow-x-hidden">
       {/* 1. SELECTOR SUPERIOR DE PESTAÑAS (NO SE IMPRIME) */}
       <nav aria-label="Selección de Lámina" className="no-print mb-4 w-full max-w-[210mm] bg-white/95 backdrop-blur-xs p-2 rounded-2xl border border-slate-200/90 shadow-xs">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -91,8 +120,17 @@ export default function SheetPreview({
         </div>
       </nav>
 
-      {/* 2. CONTENEDOR DEL LIENZO A4 (CAPTURABLE POR HTML-TO-IMAGE Y PRINT) */}
-      <div id={id} className="w-full flex flex-col items-center space-y-6">
+      {/* 2. CONTENEDOR DEL LIENZO A4 CON ESCALADO PROPORCIONAL ANTI-CORTE */}
+      <div 
+        id={id} 
+        className="w-full flex flex-col items-center transition-transform origin-top"
+        style={{
+          width: scale < 1 ? '794px' : '100%',
+          transform: scale < 1 ? `scale(${scale})` : 'none',
+          transformOrigin: 'top center',
+          marginBottom: scale < 1 ? `-${Math.round(a4HeightPx * (1 - scale))}px` : '0px'
+        }}
+      >
         {/* VISTA 1: DASHBOARD VISUAL (SÓLO LÁMINA 1) */}
         {activeTab === 'dashboard' && (
           <div className="sheet-page w-full flex justify-center">
