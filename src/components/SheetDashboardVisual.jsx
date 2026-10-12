@@ -1,5 +1,6 @@
 import React from 'react';
 import { ILLUSTRATIONS, getSubjectIllustration, getUniversalMascot } from '../data/illustrationMap.jsx';
+import VisualEngine from './VisualEngine.jsx';
 import { MapPin, Sparkles, Lightbulb, Star, Calendar, Compass, Layers, Shield, Zap } from 'lucide-react';
 
 export default function SheetDashboardVisual({
@@ -85,40 +86,14 @@ export default function SheetDashboardVisual({
 
       {/* 2. CUERPO DE CROMOS COLECCIONABLES CAÓTICOS */}
       <main className="flex-1 space-y-3.5 my-2.5">
-        {/* ESCAPARATE DE ARTE TEMÁTICO GIGANTE (FASE 2: EMOJI-ART SUPERPUESTO GIGANTE) */}
-        <section className="avoid-break relative overflow-visible">
-          <div className={`relative ${activeMascot.color} border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3 sm:p-4 flex items-center justify-between gap-3 -rotate-1`}>
-            {/* Washi Tape */}
-            <div className="w-16 h-4 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-20 shadow-xs" />
-
-            {/* Columna Izquierda: Información y Lema Didáctico */}
-            <div className="min-w-0 flex-1 z-10">
-              <div className="flex items-center gap-1.5 mb-1.5">
-                <span className="text-[9px] font-black uppercase bg-black text-white px-2 py-0.5 rounded shadow-[1px_1px_0px_#000]">
-                  ⚡ {activeMascot.badge}
-                </span>
-                <span className="text-[10px] font-black text-indigo-950 uppercase tracking-tight truncate">
-                  {data?.temaGlobal?.nombre || data?.titulo || tema}
-                </span>
-              </div>
-              <p className="text-xs sm:text-sm font-black text-black leading-snug">
-                "{data?.lemaMascota || activeMascot.quote}"
-              </p>
-              <p className="text-[10px] sm:text-[10.5px] font-bold text-slate-800 mt-1 line-clamp-2">
-                {data?.resumen || "Descobre e domina todos os conceptos esenciais desta misión oficial de Primaria!"}
-              </p>
-            </div>
-
-            {/* Columna Derecha: ARTE TEMÁTICO GIGANTE SUPERPUESTO (z-20, drop-shadow, rotate) */}
-            <div className="relative shrink-0 pr-1 sm:pr-3">
-              <div className="text-5xl sm:text-7xl md:text-8xl select-none filter drop-shadow-[6px_6px_0px_#000] rotate-6 transform hover:scale-110 transition duration-200">
-                {data?.artePrincipal || "🌍🚀✨"}
-              </div>
-              <span className="absolute -bottom-2 -right-1 bg-rose-500 text-white font-black text-[8px] uppercase px-1.5 py-0.5 rounded border border-black shadow-[2px_2px_0px_#000] rotate-12">
-                ARTE LOMLOE
-              </span>
-            </div>
-          </div>
+        {/* ESCAPARATE DE ARTE MONUMENTAL VISUAL ENGINE (VECTOR 2) */}
+        <section className="avoid-break relative overflow-visible my-1">
+          <VisualEngine
+            artePrincipal={data?.artePrincipal || "🌍🚀✨"}
+            tema={data?.titulo || tema}
+            materia={materia}
+            lema={data?.lemaMascota || activeMascot.quote}
+          />
         </section>
         {/* HERO VISUAL DE DUELO CELULAR (Si es célula) */}
         {isCellTopic && (

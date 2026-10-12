@@ -20,31 +20,6 @@ export default function SheetPreview({
   const [internalTab, setInternalTab] = useState('dashboard');
   const activeTab = controlledActiveTab !== undefined ? controlledActiveTab : internalTab;
 
-  const containerRef = useRef(null);
-  const [scale, setScale] = useState(1);
-
-  // Calibración matemática exacta de escala A4 (210mm = 794px a 96DPI)
-  useEffect(() => {
-    const handleResize = () => {
-      if (!containerRef.current) return;
-      const containerWidth = containerRef.current.clientWidth;
-      const a4WidthPx = 794; // Ancho A4 exacto a 96 DPI
-
-      if (containerWidth < a4WidthPx && containerWidth > 0) {
-        // Añadir margen de respiración en móvil (restar 16px para padding)
-        const availableWidth = containerWidth - 16;
-        const newScale = Math.min(1, Math.max(0.35, availableWidth / a4WidthPx));
-        setScale(newScale);
-      } else {
-        setScale(1);
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   const handleTabClick = (tabKey) => {
     if (onTabChange) {
       onTabChange(tabKey);
@@ -84,14 +59,10 @@ export default function SheetPreview({
     }
   ];
 
-  // Altura proporcional calculada para que el contenedor padre no colapse cuando scale < 1
-  const a4HeightPx = 1123;
-  const scaledHeight = scale < 1 ? `${Math.round(a4HeightPx * scale)}px` : 'auto';
-
   return (
-    <div ref={containerRef} className="w-full flex flex-col items-center overflow-x-hidden">
+    <div className="w-full flex flex-col items-center px-1 sm:px-4">
       {/* 1. SELECTOR SUPERIOR DE PESTAÑAS (NO SE IMPRIME) */}
-      <nav aria-label="Selección de Lámina" className="no-print mb-4 w-full max-w-[210mm] bg-white/95 backdrop-blur-xs p-2 rounded-2xl border border-slate-200/90 shadow-xs">
+      <nav aria-label="Selección de Lámina" className="no-print mb-4 w-full max-w-4xl bg-white/95 backdrop-blur-xs p-2 rounded-2xl border border-slate-200/90 shadow-xs">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
@@ -121,16 +92,10 @@ export default function SheetPreview({
         </div>
       </nav>
 
-      {/* 2. CONTENEDOR DEL LIENZO A4 CON ESCALADO PROPORCIONAL ANTI-CORTE */}
+      {/* 2. CONTENEDOR VISIBLE RESPONSIVE EN PANTALLA (VECTOR 3: CERO HACKS DE SCALE) */}
       <div 
         id={id} 
-        className="w-full flex flex-col items-center transition-transform origin-top"
-        style={{
-          width: scale < 1 ? '794px' : '100%',
-          transform: scale < 1 ? `scale(${scale})` : 'none',
-          transformOrigin: 'top center',
-          marginBottom: scale < 1 ? `-${Math.round(a4HeightPx * (1 - scale))}px` : '0px'
-        }}
+        className="w-full max-w-4xl flex flex-col items-center"
       >
         {/* VISTA 1: DASHBOARD VISUAL (SÓLO LÁMINA 1) */}
         {activeTab === 'dashboard' && (
@@ -289,6 +254,43 @@ export default function SheetPreview({
             </div>
           );
         })()}
+      </div>
+
+      {/* 3. CONTENEDOR OFF-SCREEN RÍGIDO A4 (VECTOR 4: EXPORTACIÓN MATEMÁTICAMENTE EXACTA) */}
+      <div 
+        id="edugalicia-a4-offscreen"
+        aria-hidden="true"
+        className="a4-export-mode fixed -left-[9999px] top-0 pointer-events-none select-none z-[-100]"
+        style={{ width: '794px', minHeight: '1123px' }}
+      >
+        {activeTab === 'dashboard' && (
+          <div className="w-[794px] flex justify-center">
+            <SheetDashboardVisual curso={curso} materia={materia} tema={tema} data={data} />
+          </div>
+        )}
+        {activeTab === 'mapa' && (
+          <div className="w-[794px] flex justify-center">
+            <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} />
+          </div>
+        )}
+        {activeTab === 'retos' && (
+          <div className="w-[794px] flex justify-center">
+            <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} />
+          </div>
+        )}
+        {activeTab === 'todo' && (
+          <div className="w-[794px] space-y-6 flex flex-col items-center">
+            <div className="w-[794px] flex justify-center">
+              <SheetDashboardVisual curso={curso} materia={materia} tema={tema} data={data} />
+            </div>
+            <div className="w-[794px] flex justify-center">
+              <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} />
+            </div>
+            <div className="w-[794px] flex justify-center">
+              <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

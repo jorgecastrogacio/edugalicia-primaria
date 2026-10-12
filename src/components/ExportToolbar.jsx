@@ -20,27 +20,28 @@ export default function ExportToolbar({
     window.print();
   };
 
-  // 2. Exportación a Imagen con Flujo Dual: Blob URL + Modal de Retención iOS
+  // 2. Exportación a Imagen Nativa de Alta Fidelidad a partir del contenedor Off-Screen
   const handleDownloadImage = async () => {
-    const parentContainer = document.getElementById(sheetElementId);
-    if (!parentContainer) {
+    // Prioridad 1: Contenedor Off-Screen matemático A4 exacto (794px, sin distorsión de scroll móvil)
+    const offscreenContainer = document.getElementById('edugalicia-a4-offscreen');
+    const onScreenContainer = document.getElementById(sheetElementId);
+    
+    // Nodo a fotografiar
+    const targetNode = offscreenContainer?.querySelector('.a4-sheet') || 
+                       offscreenContainer || 
+                       onScreenContainer?.querySelector('.a4-sheet') || 
+                       onScreenContainer;
+
+    if (!targetNode) {
       alert("No se encontró el lienzo para exportar.");
       return;
     }
 
-    // Localizar el nodo .a4-sheet activo
-    const targetSheet = parentContainer.querySelector('.a4-sheet') || parentContainer;
-
     try {
       setIsExportingImage(true);
-      targetSheet.classList.add('force-print-layout');
 
-      // Desactivar temporalmente cualquier transformación CSS de pantalla para render 1:1 puro
-      const originalTransform = parentContainer.style.transform;
-      parentContainer.style.transform = 'none';
-
-      // Generar Blob nativo en alta resolución (794x1123 a pixelRatio: 2)
-      const blob = await toBlob(targetSheet, {
+      // Generar Blob nativo en 2x (1588x2246 @ pixelRatio: 2) ultra nítido
+      const blob = await toBlob(targetNode, {
         pixelRatio: 2,
         backgroundColor: '#ffffff',
         width: 794,
@@ -53,9 +54,6 @@ export default function ExportToolbar({
         }
       });
 
-      // Restaurar el transform visual del teléfono inmediatamente
-      parentContainer.style.transform = originalTransform;
-
       if (!blob) {
         throw new Error("No se pudo generar el archivo de imagen.");
       }
@@ -66,7 +64,11 @@ export default function ExportToolbar({
 
       const objectUrl = URL.createObjectURL(blob);
 
-      // 1-CLIC DESCARGA DIRECTA: Inyectar dinámicamente <a download>
+      // Detección de dispositivos táctiles / iOS (iPhone/iPad/iPod o Safari táctil)
+      const isTouchOrIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                           (navigator.maxTouchPoints && navigator.maxTouchPoints > 1 && window.innerWidth < 800);
+
+      // Disparar siempre intento de descarga directa por enlace dinámico
       const link = document.createElement('a');
       link.download = fileName;
       link.href = objectUrl;
@@ -75,26 +77,21 @@ export default function ExportToolbar({
       link.click();
       document.body.removeChild(link);
 
-      // Detección de iOS (iPhone/iPad/iPod) donde Safari puede bloquear el atributo download automático
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-      if (isIOS) {
-        // En iOS Safari: mostrar instantáneamente el Modal superpuesto para Guardar en Fotos
+      // Si es móvil / iOS, abrir SIEMPRE el Modal para Guardar en Fotos con pulsación larga
+      if (isTouchOrIOS) {
         setModalImageUrl(objectUrl);
       } else {
         setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
       }
     } catch (err) {
       console.error("Error al exportar a imagen:", err);
-      // Fallback de emergencia a toPng directo y mostrar modal
       try {
-        const fallbackDataUrl = await toPng(targetSheet, { pixelRatio: 2, backgroundColor: '#ffffff', width: 794 });
+        const fallbackDataUrl = await toPng(targetNode, { pixelRatio: 2, backgroundColor: '#ffffff', width: 794 });
         setModalImageUrl(fallbackDataUrl);
       } catch (fallbackErr) {
         alert("No se pudo exportar la imagen automáticamente. Usa la opción 'Imprimir / Guardar PDF'.");
       }
     } finally {
-      targetSheet.classList.remove('force-print-layout');
       setIsExportingImage(false);
     }
   };
@@ -159,13 +156,13 @@ export default function ExportToolbar({
         </div>
       </div>
 
-      {/* 3. MODAL DE RETENCIÓN ANTI-IOS: GUARDA DIRECTO EN FOTOS */}
+      {/* 3. MODAL DE RETENCIÓN ANTI-IOS: GUARDA DIRECTO EN FOTOS (VECTOR 4) */}
       {modalImageUrl && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex flex-col items-center justify-center p-4 overflow-y-auto no-print animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_#000] max-w-lg w-full p-5 flex flex-col items-center text-center relative my-auto">
+        <div className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-4 overflow-y-auto no-print animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_#000] max-w-lg w-full p-4 sm:p-6 flex flex-col items-center text-center relative my-auto">
             <button
               onClick={() => setModalImageUrl(null)}
-              className="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-100 border-2 border-black flex items-center justify-center font-black hover:bg-rose-100 transition cursor-pointer"
+              className="absolute top-3 right-3 w-9 h-9 rounded-full bg-slate-100 border-2 border-black flex items-center justify-center font-black hover:bg-rose-100 transition cursor-pointer"
               aria-label="Cerrar ventana"
             >
               <X className="w-5 h-5 text-black" />
@@ -175,20 +172,20 @@ export default function ExportToolbar({
               📸
             </div>
 
-            <h3 className="text-xl font-black uppercase tracking-tight text-black mb-1">
-              ¡Misión Completada!
+            <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black mb-2 leading-tight">
+              ¡MISIÓN CUMPLIDA! 📸
             </h3>
             
-            <p className="text-xs sm:text-sm font-black text-slate-900 bg-amber-100 border-3 border-black shadow-[3px_3px_0px_#000] rounded-xl p-3 mb-4 max-w-sm leading-snug">
-              👉 <strong>Mantén pulsado el dedo sobre la imagen</strong> para <strong>"Guardar en Fotos"</strong> o <strong>"Compartir"</strong>.
+            <p className="text-xs sm:text-sm font-black text-slate-900 bg-amber-100 border-3 border-black shadow-[3px_3px_0px_#000] rounded-2xl p-3.5 mb-4 max-w-sm leading-snug">
+              👉 <strong>Mantén pulsado el dedo sobre esta imagen para Guardarla en Fotos</strong> o compartirla con tu clase.
             </p>
 
             {/* Vista previa de la imagen exportada */}
-            <div className="w-full max-h-[50vh] overflow-y-auto rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] bg-slate-50 p-2 mb-4">
+            <div className="w-full max-h-[50vh] overflow-y-auto rounded-2xl border-3 border-black shadow-[4px_4px_0px_#000] bg-slate-50 p-2 mb-4">
               <img
                 src={modalImageUrl}
                 alt="Lámina Generada EduGalicia"
-                className="w-full h-auto object-contain rounded-lg"
+                className="w-full h-auto object-contain rounded-xl select-all"
               />
             </div>
 
