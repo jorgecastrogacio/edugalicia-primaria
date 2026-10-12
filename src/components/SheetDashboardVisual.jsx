@@ -1,6 +1,6 @@
 import React from 'react';
-import { ILLUSTRATIONS, getSubjectIllustration } from '../data/illustrationMap.jsx';
-import { MapPin, Sparkles, Lightbulb, Star, Calendar, Compass, Layers } from 'lucide-react';
+import { ILLUSTRATIONS, getSubjectIllustration, getUniversalMascot } from '../data/illustrationMap.jsx';
+import { MapPin, Sparkles, Lightbulb, Star, Calendar, Compass, Layers, Shield, Zap } from 'lucide-react';
 
 // Datos enriquecidos 1 a 1 para temas curriculares comunes de Primaria
 const NUMBERS_1_20 = [
@@ -63,10 +63,13 @@ export default function SheetDashboardVisual({
   const isCellTopic = normTema.includes("célula") || normTema.includes("celula") || normTema.includes("citoplasma") || normTema.includes("orgánulo") || normTema.includes("organulo");
   const isSpaceTopic = normTema.includes("universo") || normTema.includes("sistema solar") || normTema.includes("planeta") || normTema.includes("terra") || normTema.includes("astro");
 
-  const SubjectIcon = getSubjectIllustration(materia, tema);
+  const activeMascot = getUniversalMascot(materia, tema);
+  const SubjectIcon = activeMascot.component;
 
   const rotations = ["-rotate-2", "rotate-3", "-rotate-1", "rotate-2", "-rotate-3", "rotate-1"];
   const pastelBgs = ["bg-yellow-100", "bg-cyan-100", "bg-pink-100", "bg-emerald-100", "bg-purple-100", "bg-orange-100"];
+  const cardRarities = ["LENDARIA ★★★", "ÉPICA ★★", "ESPECIAL ★", "DOMINADA ★★★", "RARA ★★", "MÁXIMA ★★★"];
+  const cardElements = ["⚡ PODER CLAVE", "🛡️ SABER CENTRAL", "🔥 EXPERTO", "💎 LOMLOE TOP", "✨ MISTERIO", "🏆 CRACK"];
 
   return (
     <div id={id} className="a4-sheet bg-notebook text-slate-900 flex flex-col justify-between p-6">
@@ -79,7 +82,7 @@ export default function SheetDashboardVisual({
           <div className="flex items-center gap-3 sm:gap-3.5">
             {/* Escudo / Mascota Desbordada */}
             <div className="relative shrink-0">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-300 border-4 border-black shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_0px_#000] text-black flex items-center justify-center p-2 shrink-0 -rotate-3">
+              <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl ${activeMascot.color} border-4 border-black shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_0px_#000] text-black flex items-center justify-center p-1.5 shrink-0 -rotate-3`}>
                 {isCellTopic ? (
                   <ILLUSTRATIONS.kawaiiAnimalCell className="w-full h-full" />
                 ) : isSpaceTopic ? (
@@ -101,7 +104,7 @@ export default function SheetDashboardVisual({
                 </span>
                 <span className="text-[10px] font-black uppercase tracking-wider bg-amber-300 text-black border-2 border-black shadow-[2px_2px_0px_#000] px-2 py-0.5 rounded-full flex items-center gap-1 rotate-2">
                   <Star className="w-3.5 h-3.5 fill-black text-black" />
-                  Póster A4
+                  {activeMascot.badge}
                 </span>
               </div>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tighter text-black [text-shadow:2px_2px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000] leading-none mb-1">
@@ -130,6 +133,40 @@ export default function SheetDashboardVisual({
 
       {/* 2. CUERPO DE CROMOS COLECCIONABLES CAÓTICOS */}
       <main className="flex-1 space-y-4 my-3">
+        {/* HERO VISUAL DE LA MASCOTA OFICIAL (Para todos los temas generales) */}
+        {!isCellTopic && !isSpaceTopic && !isEnglishOrNumbers && (
+          <section className={`avoid-break relative ${activeMascot.color} border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3 -rotate-1`}>
+            <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-20" />
+            <div className="flex items-center justify-between pb-1.5 mb-2 border-b-2 border-black/30">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-black text-white px-2 py-0.5 rounded-md">
+                  {activeMascot.badge}
+                </span>
+                <span className="text-xs font-black text-black uppercase">
+                  {activeMascot.name} • {activeMascot.role}
+                </span>
+              </div>
+              <span className="text-[10px] font-black uppercase bg-white border-2 border-black px-2 py-0.5 rounded-full shadow-[2px_2px_0px_#000]">
+                +50 XP
+              </span>
+            </div>
+            <div className="flex items-center gap-3.5 bg-white/95 border-3 border-black rounded-xl p-2.5 shadow-[3px_3px_0px_#000]">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 filter drop-shadow-md -rotate-3">
+                <activeMascot.component className="w-full h-full" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="relative bg-amber-50 border-2 border-black rounded-xl p-2 shadow-[2px_2px_0px_#000]">
+                  <div className="text-[11px] font-black text-indigo-950 italic">
+                    "{activeMascot.quote}"
+                  </div>
+                  <p className="text-[9.5px] font-bold text-slate-800 mt-1">
+                    {data?.resumen || "Prepara o teu caderno de exploración e domina todos os conceptos clave desta lección!"}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
         {/* HERO VISUAL DE DUELO CELULAR (Si es célula) */}
         {isCellTopic && (
           <section className="avoid-break relative bg-pink-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3 -rotate-1">
@@ -308,48 +345,64 @@ export default function SheetDashboardVisual({
                   {data.conceptosClave.map((item, idx) => {
                     const rotClass = rotations[idx % rotations.length];
                     const bgClass = pastelBgs[idx % pastelBgs.length];
+                    const rarity = cardRarities[idx % cardRarities.length];
+                    const element = cardElements[idx % cardElements.length];
 
                     return (
                       <div
                         key={idx}
-                        className={`relative border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl ${bgClass} p-4 pt-6 ${rotClass} transition hover:scale-[1.02] avoid-break flex flex-col justify-between`}
+                        className={`relative border-4 border-black shadow-[6px_6px_0px_0px_#000] ring-2 ring-black/30 rounded-2xl ${bgClass} p-3.5 pt-6 ${rotClass} transition hover:scale-[1.02] avoid-break flex flex-col justify-between`}
                       >
                         {/* Washi Tape Superior */}
-                        <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-2 z-20 shadow-sm" />
+                        <div className="w-14 h-4 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-2 z-20 shadow-xs" />
 
                         {/* EMOJI GIGANTE DESBORDANDO LA CAJA (Overlapping) */}
                         <div className="absolute -top-7 -left-5 z-20 text-5xl md:text-6xl -rotate-12 select-none filter drop-shadow-[2px_4px_0px_rgba(0,0,0,0.35)]">
                           {item.emoji || "⭐"}
                         </div>
 
-                        {/* Medalla de Cromo Top-Right */}
-                        <div className="absolute -top-3 -right-3 z-20 bg-amber-300 border-2 border-black rounded-full w-8 h-8 flex items-center justify-center font-black text-xs shadow-[2px_2px_0px_#000] rotate-12">
-                          #{idx + 1}
+                        {/* Medalla de Cromo Top-Right con Insignia RPG */}
+                        <div className="absolute -top-3.5 -right-3 z-20 bg-amber-300 border-2 border-black rounded-full w-9 h-9 flex flex-col items-center justify-center font-black text-[9px] shadow-[2px_2px_0px_#000] rotate-12">
+                          <span>Nº</span>
+                          <span className="leading-none text-xs">{idx + 1}</span>
                         </div>
 
                         <div>
+                          {/* Franja de Rareza y Elemento */}
+                          <div className="flex items-center justify-between pl-8 mb-1.5">
+                            <span className="text-[8.5px] font-black uppercase bg-black text-amber-300 px-2 py-0.5 rounded border border-black shadow-[1px_1px_0px_#000]">
+                              {rarity}
+                            </span>
+                            <span className="text-[8.5px] font-black uppercase bg-white text-indigo-900 px-2 py-0.5 rounded border border-black">
+                              {element}
+                            </span>
+                          </div>
+
                           {/* Encabezado del Cromo */}
-                          <div className="flex items-center justify-between border-b-2 border-black/30 pb-1 mb-2 pl-7">
+                          <div className="flex items-center justify-between border-b-2 border-black/30 pb-1 mb-2 pl-8">
                             <h3 className="font-black text-xs md:text-sm uppercase tracking-tight text-black leading-tight">
                               {item.concepto}
                             </h3>
-                            <span className="text-[9px] font-black uppercase bg-black text-white px-1.5 py-0.5 rounded shadow-[1px_1px_0px_#000]">
-                              +25 XP
+                            <span className="text-[9px] font-black uppercase bg-purple-600 text-white px-1.5 py-0.5 rounded shadow-[1px_1px_0px_#000]">
+                              +30 XP
                             </span>
                           </div>
 
                           {/* Explicación Didáctica */}
-                          <p className="text-[10.5px] text-slate-900 font-bold leading-snug">
+                          <p className="text-[10.5px] text-slate-900 font-bold leading-snug bg-white/70 border border-black/20 rounded-xl p-2 shadow-xs">
                             {item.descripcion}
                           </p>
                         </div>
 
-                        {/* Barra de Atributo de Juego */}
-                        <div className="mt-3 pt-2 border-t-2 border-dashed border-black/30 flex items-center justify-between text-[9px] font-black text-black">
-                          <span className="flex items-center gap-1">
-                            <span>⚡ Nivel:</span> <strong>Dominado</strong>
+                        {/* Barra de Atributo de Juego RPG */}
+                        <div className="mt-2.5 pt-1.5 border-t-2 border-dashed border-black/30 flex items-center justify-between text-[9px] font-black text-black">
+                          <span className="flex items-center gap-1.5">
+                            <span className="bg-emerald-300 border border-black px-1.5 py-0.2 rounded text-[8px]">
+                              DEF: 95
+                            </span>
+                            <span>⚡ PODER: 100</span>
                           </span>
-                          <span className="tracking-widest text-amber-500">★★★★★</span>
+                          <span className="tracking-widest text-amber-500 font-black text-[10px]">★★★★★</span>
                         </div>
                       </div>
                     );

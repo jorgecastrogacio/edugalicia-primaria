@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { MapPin, Trophy, Sparkles, Check, RotateCw, Target, Star, Award } from 'lucide-react';
+import { MapPin, Trophy, Sparkles, Check, RotateCw, Target, Star, Award, Zap } from 'lucide-react';
+import { getUniversalMascot, ILLUSTRATIONS } from '../data/illustrationMap.jsx';
 
 export default function SheetChallenges({
   id = "edugalicia-sheet-retos",
@@ -10,6 +11,8 @@ export default function SheetChallenges({
 }) {
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [tfAnswers, setTfAnswers] = useState({});
+
+  const activeMascot = getUniversalMascot(materia, tema);
 
   const handleSelectOption = (qIdx, optIdx) => {
     setSelectedAnswers((prev) => ({
@@ -36,6 +39,12 @@ export default function SheetChallenges({
     }
   ];
 
+  // Cálculo interactivo de XP gamificado
+  const qCount = Object.keys(selectedAnswers).length;
+  const tfCount = Object.keys(tfAnswers).length;
+  const currentXP = Math.min(100, 20 + (qCount * 20) + (tfCount * 15) + 10);
+  const rankLabel = currentXP >= 90 ? "🏆 MESTRE SUPREMO" : currentXP >= 50 ? "⭐ DETECTIVE EXPERTO" : "🌱 AXENTE EN PRÁCTICAS";
+
   return (
     <div id={id} className="a4-sheet bg-notebook text-slate-900 flex flex-col justify-between p-6">
       {/* 1. CABECERA ESCAPE ROOM NEO-BRUTALISTA v2.0 */}
@@ -43,8 +52,8 @@ export default function SheetChallenges({
         <div className="absolute -top-3 -right-2 text-3xl z-20 select-none drop-shadow-sm">📍</div>
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3.5">
-            <div className="w-16 h-16 rounded-2xl bg-purple-400 border-4 border-black shadow-[6px_6px_0px_0px_#000] text-black flex items-center justify-center p-2 shrink-0 -rotate-3">
-              <Target className="w-full h-full text-black stroke-[2.5]" />
+            <div className={`w-16 h-16 rounded-2xl ${activeMascot.color} border-4 border-black shadow-[6px_6px_0px_0px_#000] text-black flex items-center justify-center p-1.5 shrink-0 -rotate-3`}>
+              <activeMascot.component className="w-full h-full" />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-1.5">
@@ -61,7 +70,7 @@ export default function SheetChallenges({
                 Misión Detective: Retos e Desafíos
               </h1>
               <p className="text-xs font-black text-purple-900 uppercase tracking-wide">
-                {curso} • {materia}
+                {curso} • {materia} • Guía: {activeMascot.name}
               </p>
             </div>
           </div>
@@ -73,17 +82,32 @@ export default function SheetChallenges({
               <span className="text-black">___________</span>
             </div>
             <div className="flex justify-between items-center text-[10px] font-black">
-              <span className="text-slate-700">Estrelas:</span>
-              <span className="text-amber-500 text-sm tracking-wider">⭐⭐⭐</span>
+              <span className="text-slate-700">Rango:</span>
+              <span className="text-purple-900 font-black">{rankLabel}</span>
             </div>
+          </div>
+        </div>
+
+        {/* BARRA DE EXPERIENCIA VIDEJUEGO XP SUPERIOR */}
+        <div className="mt-2.5 pt-2 border-t-2 border-dashed border-black/30 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+          <div className="flex items-center gap-1.5 text-[10px] font-black uppercase">
+            <Zap className="w-3.5 h-3.5 fill-amber-500 text-black" />
+            <span>Nivel XP:</span>
+            <span className="bg-black text-amber-300 px-2 py-0.2 rounded-md font-mono">{currentXP} / 100 XP</span>
+          </div>
+          <div className="flex-1 max-w-sm h-3.5 bg-slate-200 border-2 border-black rounded-full overflow-hidden p-0.5 shadow-inner">
+            <div
+              className="h-full bg-linear-to-r from-amber-400 via-rose-500 to-purple-600 rounded-full transition-all duration-300"
+              style={{ width: `${currentXP}%` }}
+            />
           </div>
         </div>
       </header>
 
       {/* 2. CUERPO DE RETOS ARCADE */}
-      <main className="flex-1 space-y-4 my-3">
-        {/* RETO 1: PREGUNTAS CON BOTONES ARCADE (active:translate-y-1 active:shadow-none) */}
-        <section className="avoid-break space-y-2.5">
+      <main className="flex-1 space-y-3.5 my-2.5">
+        {/* RETO 1: PREGUNTAS CON BOTONES ARCADE */}
+        <section className="avoid-break space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-xs font-black text-black uppercase tracking-wide">
               <span className="w-7 h-7 rounded-xl bg-purple-400 border-3 border-black shadow-[3px_3px_0px_#000] flex items-center justify-center font-black text-sm -rotate-6">
@@ -96,17 +120,17 @@ export default function SheetChallenges({
             </span>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {preguntas.slice(0, 2).map((q, idx) => {
               const selectedOpt = selectedAnswers[idx];
 
               return (
                 <div
                   key={idx}
-                  className={`relative p-3.5 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_#000] bg-white ${idx === 0 ? '-rotate-1' : 'rotate-1'} avoid-break`}
+                  className={`relative p-3 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_#000] bg-white ${idx === 0 ? '-rotate-1' : 'rotate-1'} avoid-break`}
                 >
                   <div className="w-12 h-3 bg-white/60 border border-gray-400 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 z-20" />
-                  <div className="flex items-start gap-2.5 mb-2">
+                  <div className="flex items-start gap-2.5 mb-1.5">
                     <span className="w-6 h-6 rounded-lg bg-purple-600 border-2 border-black text-white font-black text-xs flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#000]">
                       #{idx + 1}
                     </span>
@@ -121,9 +145,9 @@ export default function SheetChallenges({
                         key={oIdx}
                         type="button"
                         onClick={() => handleSelectOption(idx, oIdx)}
-                        className={`text-left text-[11px] p-2 rounded-xl border-3 border-black transition active:translate-y-1 active:shadow-none flex items-center gap-2 ${
+                        className={`text-left text-[11px] p-2 rounded-xl border-3 border-black transition active:translate-y-1 active:shadow-none flex items-center gap-2 cursor-pointer ${
                           selectedOpt === oIdx
-                            ? 'bg-purple-500 text-white font-black shadow-[4px_4px_0px_#000]'
+                            ? 'bg-purple-500 text-white font-black shadow-[4px_4px_0px_#000] scale-[1.02]'
                             : 'bg-yellow-50 text-black hover:bg-yellow-100 font-bold shadow-[3px_3px_0px_#000]'
                         }`}
                       >
@@ -142,10 +166,10 @@ export default function SheetChallenges({
           </div>
         </section>
 
-        {/* RETO 2: VERDADEIRO / FALSO CON BOTONES ARCADE (active:translate-y-1 active:shadow-none) */}
-        <section className="avoid-break relative bg-emerald-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3.5 -rotate-1">
+        {/* RETO 2: VERDADEIRO / FALSO CON BOTONES ARCADE */}
+        <section className="avoid-break relative bg-emerald-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3 -rotate-1">
           <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-2 z-20" />
-          <div className="flex items-center justify-between mb-2 pb-1 border-b-2 border-black/30">
+          <div className="flex items-center justify-between mb-1.5 pb-1 border-b-2 border-black/30">
             <div className="flex items-center gap-2 font-black text-xs text-black uppercase tracking-wide">
               <span className="text-base">⚡</span>
               <h3>Reto 2: Palanca Arcade (Verdadeiro ou Falso)</h3>
@@ -155,18 +179,18 @@ export default function SheetChallenges({
             </span>
           </div>
 
-          <div className="space-y-2.5 text-xs">
+          <div className="space-y-2 text-xs">
             <div className="bg-white border-3 border-black rounded-xl p-2.5 flex items-center justify-between shadow-[3px_3px_0px_#000]">
-              <span className="font-black text-slate-900 text-[11.5px] leading-snug">
+              <span className="font-black text-slate-900 text-[11px] leading-snug">
                 1. Os elementos fundamentais deste tema relacionanse entre si e cumpren funcións vitais.
               </span>
-              <div className="flex items-center gap-2.5 shrink-0 ml-3">
+              <div className="flex items-center gap-2 shrink-0 ml-3">
                 <button
                   type="button"
                   onClick={() => handleToggleTf(1, true)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none ${
+                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
                     tfAnswers[1] === true 
-                      ? 'bg-emerald-400 text-black shadow-[4px_4px_0px_#000]' 
+                      ? 'bg-emerald-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
                       : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-emerald-100'
                   }`}
                 >
@@ -175,9 +199,9 @@ export default function SheetChallenges({
                 <button
                   type="button"
                   onClick={() => handleToggleTf(1, false)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none ${
+                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
                     tfAnswers[1] === false 
-                      ? 'bg-rose-400 text-black shadow-[4px_4px_0px_#000]' 
+                      ? 'bg-rose-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
                       : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-rose-100'
                   }`}
                 >
@@ -187,16 +211,16 @@ export default function SheetChallenges({
             </div>
 
             <div className="bg-white border-3 border-black rounded-xl p-2.5 flex items-center justify-between shadow-[3px_3px_0px_#000]">
-              <span className="font-black text-slate-900 text-[11.5px] leading-snug">
+              <span className="font-black text-slate-900 text-[11px] leading-snug">
                 2. Podemos descubrir e protexer estes seres e fenómenos na natureza real de Galicia.
               </span>
-              <div className="flex items-center gap-2.5 shrink-0 ml-3">
+              <div className="flex items-center gap-2 shrink-0 ml-3">
                 <button
                   type="button"
                   onClick={() => handleToggleTf(2, true)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none ${
+                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
                     tfAnswers[2] === true 
-                      ? 'bg-emerald-400 text-black shadow-[4px_4px_0px_#000]' 
+                      ? 'bg-emerald-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
                       : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-emerald-100'
                   }`}
                 >
@@ -205,9 +229,9 @@ export default function SheetChallenges({
                 <button
                   type="button"
                   onClick={() => handleToggleTf(2, false)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none ${
+                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
                     tfAnswers[2] === false 
-                      ? 'bg-rose-400 text-black shadow-[4px_4px_0px_#000]' 
+                      ? 'bg-rose-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
                       : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-rose-100'
                   }`}
                 >
@@ -218,33 +242,58 @@ export default function SheetChallenges({
           </div>
         </section>
 
-        {/* RETO 3: RECUADRO GIGANTE DISCONTINUO PARA DEBUXO (border-4 border-dashed border-black bg-yellow-50) */}
-        <section className="avoid-break relative border-4 border-dashed border-black bg-yellow-50 shadow-[6px_6px_0px_0px_#000] rounded-2xl p-4 rotate-1">
+        {/* RETO 3: VISOR DE EVIDENCIAS / MARCO DE MUSEO DOURADO CON LUPA XIGANTE */}
+        <section className="avoid-break relative border-4 border-black bg-amber-100 shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3.5 rotate-1">
           <div className="absolute -top-3.5 -left-2 text-2xl z-20">📍</div>
           <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 -rotate-2 z-20" />
-          <div className="flex items-center justify-between mb-1.5 pl-4">
+          
+          {/* Lupa Gigante de Detective desbordante */}
+          <div className="absolute -top-6 -right-3 z-30 select-none filter drop-shadow-[2px_3px_0px_rgba(0,0,0,0.3)]">
+            <span className="text-4xl">🔍</span>
+          </div>
+
+          <div className="flex items-center justify-between mb-1.5 pl-4 pr-8">
             <div className="flex items-center gap-2 font-black text-xs text-black uppercase tracking-wide">
               <span className="text-lg">🎨</span>
-              <h3>Reto 3: Taller Creativo de Debuxo e Rotulado</h3>
+              <h3>Reto 3: Visor de Evidencias do Inspector (Debuxo & Esquema)</h3>
             </div>
             <span className="text-[10px] font-black text-white bg-black px-2.5 py-0.5 rounded-full shadow-[2px_2px_0px_#000]">
               +30 XP
             </span>
           </div>
 
-          <p className="text-[11px] text-slate-900 font-bold mb-2.5 pl-4 leading-snug">
+          <p className="text-[10.5px] text-slate-900 font-bold mb-2 pl-4 leading-snug">
             {data?.retoCreativo || "Debuxa aquí o concepto máis importante deste tema: ponlle unha carita kawaii feliz, o seu nome en letras de cómic xigantes e cores vivas!"}
           </p>
 
-          {/* Lienzo blanco para dibujar */}
-          <div className="w-full h-32 bg-white rounded-xl border-3 border-black shadow-[3px_3px_0px_#000] flex flex-col items-center justify-center text-slate-400 text-xs font-black gap-1">
-            <span className="text-2xl">✏️ 🎨</span>
-            <span>Espazo para o teu debuxo, esquema e cores</span>
+          {/* Lienzo estilo Marco de Museo / Regla milimetrada con fondo de cuadrícula */}
+          <div className="relative w-full h-28 sm:h-32 bg-white rounded-xl border-3 border-black shadow-[4px_4px_0px_#000] flex flex-col items-center justify-center overflow-hidden">
+            {/* Medidores de regla en la parte superior e inferior */}
+            <div className="absolute top-0 inset-x-0 h-3 border-b border-black/30 bg-amber-50 flex items-center justify-between px-3 text-[7.5px] font-mono text-slate-600 select-none">
+              <span>0 cm</span>
+              <span>•</span>
+              <span>5 cm</span>
+              <span>•</span>
+              <span>10 cm</span>
+              <span>•</span>
+              <span>15 cm</span>
+            </div>
+            
+            {/* Marca de agua didáctica infantil */}
+            <div className="flex flex-col items-center justify-center text-slate-400 text-xs font-black gap-0.5 mt-2 select-none">
+              <span className="text-xl">✏️ 🎨 🔎</span>
+              <span className="text-[10px]">Espazo oficial para o debuxo de campo do detective</span>
+            </div>
+
+            {/* Sello de museo en la esquina inferior */}
+            <div className="absolute bottom-1 right-2 bg-yellow-200 border border-black rounded px-1.5 py-0.2 text-[7.5px] font-black uppercase text-black">
+              🏛️ Galería de Arte
+            </div>
           </div>
         </section>
 
         {/* CÓDIGO SECRETO INVERTIDO */}
-        <section className="avoid-break pt-1">
+        <section className="avoid-break pt-0.5">
           <div className="flex items-center justify-between text-[10px] text-black border-t-2 border-black/30 pt-1.5 font-black">
             <div className="flex items-center gap-2">
               <span className="bg-amber-300 border-2 border-black px-2 py-0.5 rounded shadow-[1px_1px_0px_#000]">
@@ -271,3 +320,4 @@ export default function SheetChallenges({
     </div>
   );
 }
+
