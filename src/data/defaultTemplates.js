@@ -487,6 +487,7 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
     const cElemento = getAttr('elemento') || "Saber Básico";
     const cPoder = parseInt(getAttr('poder'), 10) || 95;
     const cDefensa = parseInt(getAttr('defensa'), 10) || 90;
+    const cXp = parseInt(getAttr('xp'), 10) || 30;
     const cPegatina = getTagContent('pegatina', innerContent) || getAttr('pegatina') || cIcono;
     const cDesc = getTagContent('descripcion', innerContent) || innerContent.replace(/<[^>]+>/g, '').trim();
 
