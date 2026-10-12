@@ -84,10 +84,10 @@ export default function SheetDashboardVisual({
         </div>
       </header>
 
-      {/* 2. CUERPO DE CROMOS COLECCIONABLES CAÓTICOS */}
-      <main className="flex-1 space-y-3.5 my-2.5">
+      {/* 2. CUERPO DE CROMOS COLECCIONABLES CAÓTICOS (COMPRESIÓN ELÁSTICA A4) */}
+      <main className="flex-1 space-y-2.5 my-1.5">
         {/* ESCAPARATE DE ARTE MONUMENTAL VISUAL ENGINE (VECTOR 2) */}
-        <section className="avoid-break relative overflow-visible my-1">
+        <section className="avoid-break relative overflow-visible my-0.5">
           <VisualEngine
             artePrincipal={data?.artePrincipal || "🌍🚀✨"}
             tema={data?.titulo || tema}
@@ -97,24 +97,24 @@ export default function SheetDashboardVisual({
         </section>
         {/* HERO VISUAL DE DUELO CELULAR (Si es célula) */}
         {isCellTopic && (
-          <section className="avoid-break relative bg-pink-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3 -rotate-1">
+          <section className="avoid-break relative bg-pink-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-2.5 -rotate-1">
             <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-20" />
-            <div className="flex items-center justify-between pb-1.5 mb-2 border-b-2 border-black/30">
+            <div className="flex items-center justify-between pb-1 mb-1.5 border-b-2 border-black/30">
               <span className="text-[10px] font-black uppercase tracking-wider bg-black text-white px-2 py-0.5 rounded-md">
                 ⚔️ Duelo de Células Kawaii: Animal vs Vexetal
               </span>
               <span className="text-[10px] font-black text-indigo-950 uppercase">¡Compara as súas armas!</span>
             </div>
-            <div className="grid grid-cols-2 gap-4 items-center">
-              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2.5 flex items-center gap-3 rotate-1">
-                <div className="w-16 h-16 shrink-0 filter drop-shadow-md">
+            <div className="grid grid-cols-2 gap-3 items-center">
+              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2 flex items-center gap-2.5 rotate-1">
+                <div className="w-14 h-14 shrink-0 filter drop-shadow-md">
                   <ILLUSTRATIONS.kawaiiAnimalCell className="w-full h-full" />
                 </div>
                 <div className="min-w-0">
                   <div className="font-black text-xs text-rose-600 uppercase flex items-center gap-1">
                     <span>🩷</span> Célula Animal
                   </div>
-                  <ul className="text-[9.5px] font-bold text-slate-900 list-disc list-inside leading-tight space-y-0.5 mt-0.5">
+                  <ul className="text-[9px] font-bold text-slate-900 list-disc list-inside leading-tight space-y-0.5 mt-0.5">
                     <li>Membrana flexible (forma esférica)</li>
                     <li>Sen parede nin cloroplastos</li>
                     <li>Centríolos e vacúolos diminutos</li>
@@ -122,15 +122,15 @@ export default function SheetDashboardVisual({
                 </div>
               </div>
 
-              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2.5 flex items-center gap-3 -rotate-1">
-                <div className="w-16 h-16 shrink-0 filter drop-shadow-md">
+              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2 flex items-center gap-2.5 -rotate-1">
+                <div className="w-14 h-14 shrink-0 filter drop-shadow-md">
                   <ILLUSTRATIONS.kawaiiPlantCell className="w-full h-full" />
                 </div>
                 <div className="min-w-0">
                   <div className="font-black text-xs text-emerald-700 uppercase flex items-center gap-1">
                     <span>🌿</span> Célula Vexetal
                   </div>
-                  <ul className="text-[9.5px] font-bold text-slate-900 list-disc list-inside leading-tight space-y-0.5 mt-0.5">
+                  <ul className="text-[9px] font-bold text-slate-900 list-disc list-inside leading-tight space-y-0.5 mt-0.5">
                     <li>Parede ríxida de celulosa</li>
                     <li>Cloroplastos (fotosíntese solar)</li>
                     <li>Gran vacúolo central de reserva</li>
@@ -143,33 +143,33 @@ export default function SheetDashboardVisual({
 
         {/* HERO UNIVERSO (Si es espacio) */}
         {isSpaceTopic && (
-          <section className="avoid-break relative bg-cyan-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3 rotate-1">
+          <section className="avoid-break relative bg-cyan-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-2.5 rotate-1">
             <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 -rotate-1 z-20" />
-            <div className="flex items-center justify-between pb-1.5 mb-2 border-b-2 border-black/30">
+            <div className="flex items-center justify-between pb-1 mb-1.5 border-b-2 border-black/30">
               <span className="text-[10px] font-black uppercase tracking-wider bg-black text-white px-2 py-0.5 rounded-md">
                 🚀 Misión Cósmica: O Sol e os Astros
               </span>
               <span className="text-[10px] font-black text-indigo-950 uppercase">Sistema Solar</span>
             </div>
-            <div className="grid grid-cols-2 gap-4 items-center">
-              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2.5 flex items-center gap-3 -rotate-1">
-                <div className="w-16 h-16 shrink-0 filter drop-shadow-md">
+            <div className="grid grid-cols-2 gap-3 items-center">
+              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2 flex items-center gap-2.5 -rotate-1">
+                <div className="w-14 h-14 shrink-0 filter drop-shadow-md">
                   <ILLUSTRATIONS.kawaiiSunHero className="w-full h-full" />
                 </div>
                 <div className="min-w-0">
                   <div className="font-black text-xs text-amber-600 uppercase">☀️ O Gran Sol</div>
-                  <p className="text-[9.5px] font-bold text-slate-800 leading-tight">
+                  <p className="text-[9px] font-bold text-slate-800 leading-tight">
                     Estrela nai que mantén os 8 planetas na súa órbita gravitatória.
                   </p>
                 </div>
               </div>
-              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2.5 flex items-center gap-3 rotate-1">
-                <div className="w-16 h-16 shrink-0 filter drop-shadow-md">
+              <div className="relative bg-white border-3 border-black shadow-[4px_4px_0px_#000] rounded-xl p-2 flex items-center gap-2.5 rotate-1">
+                <div className="w-14 h-14 shrink-0 filter drop-shadow-md">
                   <ILLUSTRATIONS.kawaiiEarthGlobe className="w-full h-full" />
                 </div>
                 <div className="min-w-0">
                   <div className="font-black text-xs text-blue-600 uppercase">🌍 Planeta Terra</div>
-                  <p className="text-[9.5px] font-bold text-slate-800 leading-tight">
+                  <p className="text-[9px] font-bold text-slate-800 leading-tight">
                     O noso fogar: auga líquida, atmosfera protectora e biosfera viva.
                   </p>
                 </div>
@@ -179,22 +179,22 @@ export default function SheetDashboardVisual({
         )}
 
         {/* GRID DINÁMICO DE CROMOS COLECCIONABLES (Bento / RPG con Overlapping Universal) */}
-        <div className="space-y-4">
+        <div className="space-y-3">
             {data?.conceptosClave && data.conceptosClave.length > 0 && (
               <section className="avoid-break">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2 text-xs font-black text-black uppercase tracking-wider">
-                    <span className="w-7 h-7 rounded-xl bg-amber-400 border-3 border-black shadow-[3px_3px_0px_#000] flex items-center justify-center font-black text-sm -rotate-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-1.5 text-xs font-black text-black uppercase tracking-wider">
+                    <span className="w-6 h-6 rounded-lg bg-amber-400 border-2 border-black shadow-[2px_2px_0px_#000] flex items-center justify-center font-black text-xs -rotate-6">
                       🃏
                     </span>
                     <h2>Colección de Cromos Coleccionables (Desglose 1 a 1)</h2>
                   </div>
-                  <span className="text-[10px] font-black text-white bg-black px-3 py-1 rounded-full shadow-[3px_3px_0px_#000] rotate-2">
+                  <span className="text-[9.5px] font-black text-white bg-black px-2.5 py-0.5 rounded-full shadow-[2px_2px_0px_#000] rotate-2">
                     {data.conceptosClave.length} Cartas de Poder
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                   {data.conceptosClave.map((item, idx) => {
                     const rotClass = rotations[idx % rotations.length];
                     const bgClass = pastelBgs[idx % pastelBgs.length];
@@ -204,7 +204,7 @@ export default function SheetDashboardVisual({
                     return (
                       <div
                         key={idx}
-                        className={`relative border-4 border-black shadow-[6px_6px_0px_0px_#000] ring-2 ring-black/30 rounded-2xl ${bgClass} p-3.5 pt-6 ${rotClass} transition hover:scale-[1.02] avoid-break flex flex-col justify-between`}
+                        className={`relative border-4 border-black shadow-[5px_5px_0px_0px_#000] ring-1 ring-black/30 rounded-2xl ${bgClass} p-3 pt-5 ${rotClass} transition hover:scale-[1.01] avoid-break flex flex-col justify-between`}
                       >
                         {/* Washi Tape Superior */}
                         <div className="w-14 h-4 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-2 z-20 shadow-xs" />

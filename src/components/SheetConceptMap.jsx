@@ -85,102 +85,113 @@ export default function SheetConceptMap({
           </span>
         </div>
 
-        {/* LIENZO DE MAPA MENTAL RADIAL MATEMÁTICO (FASE 3) */}
-        <div className="relative flex-1 min-h-[470px] h-[470px] bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_#000] p-4 overflow-hidden avoid-break">
-          {/* LÍNEAS CURVAS DE CONEXIÓN SVG CON MATEMÁTICA EXACTA (viewBox 800 480) */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden sm:block" viewBox="0 0 800 480" preserveAspectRatio="none">
-            <defs>
-              <marker id="comicArrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
-                <polygon points="0 0, 6 3, 0 6" fill="black" />
-              </marker>
-            </defs>
-            {/* Curva hacia Top-Left */}
-            <path d="M 400 240 Q 260 200 160 120" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
-            {/* Curva hacia Top-Right */}
-            <path d="M 400 240 Q 540 200 640 120" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
-            {/* Curva hacia Bottom-Left */}
-            <path d="M 400 240 Q 260 280 160 360" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
-            {/* Curva hacia Bottom-Right */}
-            <path d="M 400 240 Q 540 280 640 360" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
-          </svg>
+        {/* LIENZO DE MAPA CONCEPTUAL ELÁSTICO ORGANICO (CERO COLISIONES ABSOLUTAS) */}
+        <div className="relative w-full bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_#000] p-3.5 sm:p-5 avoid-break space-y-4">
+          {/* Fila Superior: Satélites 1 y 2 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+            {((data?.mapaCentral?.satelites || satelites).slice(0, 2)).map((item, idx) => {
+              const config = coloresSatelites[idx];
+              return (
+                <div
+                  key={idx}
+                  className={`relative ${config.rot} z-10 border-4 border-black shadow-[4px_4px_0px_#000] rounded-2xl ${config.bg} p-3.5 pt-4.5 h-fit break-words transition hover:scale-[1.02]`}
+                >
+                  <div className="w-12 h-3.5 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-30 shadow-xs" />
+                  
+                  {/* Comic sound badge */}
+                  <span className="absolute -top-2.5 -right-2 bg-black text-yellow-300 text-[8px] font-black px-1.5 py-0.5 rounded-md border border-black rotate-12 shadow-[1px_1px_0px_#000]">
+                    {item.sound || config.sound}
+                  </span>
 
-          {/* NODO CENTRAL: CENTRO ABSOLUTO MATEMÁTICO (top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2) */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-52 h-52 sm:w-64 sm:h-64 flex flex-col items-center justify-center p-3 text-center -rotate-1 transition hover:scale-105">
-            {/* NUBE SVG / EXPLOSIÓN CÓMIC GIGANTE DE FONDO */}
-            <svg className="absolute inset-0 w-full h-full -z-10 drop-shadow-[6px_6px_0px_#000]" viewBox="0 0 200 200">
-              {/* Nube orgánica multi-burbuja cómic */}
-              <path
-                d="M50 85 C30 85 20 105 30 125 C20 145 40 165 65 160 C80 175 120 175 135 160 C160 165 180 145 170 125 C180 105 170 85 150 85 C155 60 135 45 115 50 C100 35 70 35 55 50 C40 55 35 70 50 85 Z"
-                fill="#FEF08A"
-                stroke="#000000"
-                strokeWidth="5"
-                strokeLinejoin="round"
-              />
-              {/* Ráfaga estrella interior */}
-              <polygon
-                points="100,20 115,55 150,45 130,75 165,95 130,115 145,150 110,135 100,165 90,135 55,150 70,115 35,95 70,75 50,45 85,55"
-                fill="#FBBF24"
-                stroke="#000000"
-                strokeWidth="3"
-                opacity="0.85"
-              />
-            </svg>
+                  {/* Emoji desbordante */}
+                  <div className={`absolute -top-5 -left-4 z-30 text-4xl sm:text-5xl ${config.emojiRot} select-none filter drop-shadow-[2px_3px_0px_rgba(0,0,0,0.3)]`}>
+                    {item.icono || item.emoji || "✨"}
+                  </div>
 
-            {/* Núcleo Interior Circular */}
-            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-amber-400 border-4 border-black flex flex-col items-center justify-center p-2 shadow-inner relative">
-              {/* Icono Central Gigante */}
-              <div className="text-3xl sm:text-4xl filter drop-shadow-[2px_2px_0px_rgba(0,0,0,0.3)] mb-0.5 select-none">
-                {data?.mapaCentral?.icono || "⭐"}
+                  <div className="pl-6 pt-0.5">
+                    <div className="flex items-center justify-between border-b-2 border-black/30 pb-1 mb-1">
+                      <h3 className="font-black text-xs sm:text-sm uppercase tracking-tight text-black leading-tight">
+                        {item.titulo || item.concepto}
+                      </h3>
+                      <span className="text-[8px] font-black uppercase bg-black text-white px-1.5 py-0.2 rounded">
+                        Órbita #{idx + 1}
+                      </span>
+                    </div>
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/80 rounded-xl p-2 border border-black/20">
+                      {item.descripcion}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* NÚCLEO CENTRAL: BANNER RADIAL CONECTADO ORGÁNICO */}
+          <div className="relative z-20 bg-amber-300 border-4 border-black rounded-3xl p-4 shadow-[6px_6px_0px_0px_#000] text-center -rotate-0.5 overflow-hidden">
+            {/* Fondo con textura cómic */}
+            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#000_1.5px,transparent_1.5px)] [background-size:8px_8px] pointer-events-none" />
+
+            <div className="relative flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
+              <div className="flex items-center gap-2">
+                <span className="text-3xl sm:text-4xl filter drop-shadow-[2px_2px_0px_#000] select-none">
+                  {data?.mapaCentral?.icono || "💥"}
+                </span>
+                <div className="text-left">
+                  <span className="text-[9px] font-black uppercase bg-black text-yellow-300 px-2 py-0.5 rounded-full inline-block mb-0.5">
+                    💥 NÚCLEO CENTRAL 💥
+                  </span>
+                  <h2 className="text-sm sm:text-base md:text-lg font-black uppercase text-black tracking-tight leading-tight">
+                    {data?.mapaCentral?.titulo || data?.titulo || tema || "Concepto Principal"}
+                  </h2>
+                </div>
               </div>
 
-              {/* Sticker superior */}
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-black text-yellow-300 font-black text-[8.5px] sm:text-[9.5px] uppercase px-2.5 py-0.5 rounded-full border-2 border-black rotate-1 shadow-[2px_2px_0px_#000] whitespace-nowrap">
-                💥 NÚCLEO CENTRAL 💥
+              <div className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black text-slate-900 bg-white/90 border-2 border-black px-3 py-1 rounded-xl shadow-[2px_2px_0px_#000]">
+                <span>⚡ LOMLOE CONEXIÓNS:</span>
+                <span className="uppercase">{data?.mapaCentral?.subtitulo || "4 Órbitas Activas"}</span>
               </div>
-
-              <h2 className="text-xs sm:text-sm font-black uppercase text-black tracking-tight leading-tight [text-shadow:1.5px_1.5px_0_#fff]">
-                {data?.mapaCentral?.titulo || data?.titulo || tema || "Concepto Principal"}
-              </h2>
-              <p className="text-[8px] sm:text-[9px] font-black text-slate-900 mt-0.5 uppercase bg-white/90 px-2 py-0.2 rounded-full border border-black/40 truncate max-w-[120px]">
-                {data?.mapaCentral?.subtitulo || "Primaria LOMLOE"}
-              </p>
             </div>
           </div>
 
-          {/* SATÉLITES FIJOS ALREDEDOR EN 4 PUNTOS MATEMÁTICOS EXACTOS */}
-          {(data?.mapaCentral?.satelites || satelites).slice(0, 4).map((item, idx) => {
-            const config = coloresSatelites[idx];
-            return (
-              <div
-                key={idx}
-                className={`sm:absolute ${config.pos} ${config.rot} z-20 border-3 sm:border-4 border-black shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_0px_#000] ring-2 ring-black/20 rounded-2xl ${config.bg} p-2.5 sm:p-3 max-w-full sm:max-w-[215px] avoid-break transition hover:scale-105 my-1 sm:my-0`}
-              >
-                {/* Washi Tape */}
-                <div className="w-12 h-3.5 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-30 shadow-xs" />
+          {/* Fila Inferior: Satélites 3 y 4 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-stretch">
+            {((data?.mapaCentral?.satelites || satelites).slice(2, 4)).map((item, idx) => {
+              const realIdx = idx + 2;
+              const config = coloresSatelites[realIdx] || coloresSatelites[0];
+              return (
+                <div
+                  key={realIdx}
+                  className={`relative ${config.rot} z-10 border-4 border-black shadow-[4px_4px_0px_#000] rounded-2xl ${config.bg} p-3.5 pt-4.5 h-fit break-words transition hover:scale-[1.02]`}
+                >
+                  <div className="w-12 h-3.5 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-30 shadow-xs" />
+                  
+                  {/* Comic sound badge */}
+                  <span className="absolute -top-2.5 -right-2 bg-black text-yellow-300 text-[8px] font-black px-1.5 py-0.5 rounded-md border border-black rotate-12 shadow-[1px_1px_0px_#000]">
+                    {item.sound || config.sound}
+                  </span>
 
-                {/* Comic sound badge en esquina superior derecha */}
-                <span className="absolute -top-3 -right-2 bg-black text-yellow-300 text-[8px] font-black px-1.5 py-0.5 rounded-md border border-black rotate-12 shadow-[1px_1px_0px_#000]">
-                  {item.sound || config.sound}
-                </span>
-
-                {/* EMOJI GIGANTE DESBORDANDO LA CAJA */}
-                <div className={`absolute -top-5 sm:-top-6 -left-4 sm:-left-5 z-30 text-4xl sm:text-5xl ${config.emojiRot} select-none filter drop-shadow-[2px_3px_0px_rgba(0,0,0,0.3)]`}>
-                  {item.icono || item.emoji || "✨"}
-                </div>
-
-                <div className="pl-5 sm:pl-6 pt-1">
-                  <div className="flex items-center justify-between border-b-2 border-black/30 pb-0.5 mb-1">
-                    <h3 className="font-black text-xs uppercase tracking-tight text-black leading-tight">
-                      {item.titulo || item.concepto}
-                    </h3>
+                  {/* Emoji desbordante */}
+                  <div className={`absolute -top-5 -left-4 z-30 text-4xl sm:text-5xl ${config.emojiRot} select-none filter drop-shadow-[2px_3px_0px_rgba(0,0,0,0.3)]`}>
+                    {item.icono || item.emoji || "✨"}
                   </div>
-                  <p className="text-[9.5px] sm:text-[10px] font-bold text-slate-900 leading-snug bg-white/70 rounded-lg p-1.5 border border-black/15">
-                    {item.descripcion}
-                  </p>
+
+                  <div className="pl-6 pt-0.5">
+                    <div className="flex items-center justify-between border-b-2 border-black/30 pb-1 mb-1">
+                      <h3 className="font-black text-xs sm:text-sm uppercase tracking-tight text-black leading-tight">
+                        {item.titulo || item.concepto}
+                      </h3>
+                      <span className="text-[8px] font-black uppercase bg-black text-white px-1.5 py-0.2 rounded">
+                        Órbita #{realIdx + 1}
+                      </span>
+                    </div>
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/80 rounded-xl p-2 border border-black/20">
+                      {item.descripcion}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* ZONA INFERIOR LÚDICA: NOTAS DE CAMPO Y SELLO DE CLASIFICACIÓN */}
