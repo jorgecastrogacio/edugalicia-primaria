@@ -85,51 +85,70 @@ export default function SheetConceptMap({
           </span>
         </div>
 
-        {/* LIENZO DE MAPA MENTAL RADIAL */}
-        <div className="relative flex-1 min-h-[460px] bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_#000] p-4 flex items-center justify-center overflow-hidden avoid-break">
-          {/* LÍNEAS CURVAS DE CONEXIÓN SVG CON TRAZO DISCONTINUO */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden sm:block">
+        {/* LIENZO DE MAPA MENTAL RADIAL MATEMÁTICO (FASE 3) */}
+        <div className="relative flex-1 min-h-[470px] h-[470px] bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_#000] p-4 overflow-hidden avoid-break">
+          {/* LÍNEAS CURVAS DE CONEXIÓN SVG CON MATEMÁTICA EXACTA (viewBox 800 480) */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden sm:block" viewBox="0 0 800 480" preserveAspectRatio="none">
+            <defs>
+              <marker id="comicArrow" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+                <polygon points="0 0, 6 3, 0 6" fill="black" />
+              </marker>
+            </defs>
             {/* Curva hacia Top-Left */}
-            <path d="M 220 130 Q 320 180 400 240" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" />
+            <path d="M 400 240 Q 260 200 160 120" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
             {/* Curva hacia Top-Right */}
-            <path d="M 580 130 Q 480 180 400 240" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" />
+            <path d="M 400 240 Q 540 200 640 120" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
             {/* Curva hacia Bottom-Left */}
-            <path d="M 220 370 Q 320 320 400 260" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" />
+            <path d="M 400 240 Q 260 280 160 360" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
             {/* Curva hacia Bottom-Right */}
-            <path d="M 580 370 Q 480 320 400 260" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" />
+            <path d="M 400 240 Q 540 280 640 360" fill="none" stroke="black" strokeWidth="5" strokeDasharray="8 8" markerEnd="url(#comicArrow)" />
           </svg>
 
-          {/* NODO CENTRAL: EXPLOSIÓN CÓMIC BURST (POLYGON BURST DE FONDO + BUBBLE CIRCULAR) */}
-          <div className="relative z-10 w-48 h-48 sm:w-64 sm:h-64 flex flex-col items-center justify-center p-3 sm:p-4 text-center -rotate-1 transition hover:scale-105 my-auto">
-            {/* SVG Polígono de explosión tipo cómic */}
-            <svg className="absolute inset-0 w-full h-full -z-10 drop-shadow-[5px_5px_0px_#000]" viewBox="0 0 200 200">
-              <polygon
-                points="100,6 122,54 176,34 148,84 196,114 144,138 160,194 100,164 40,194 56,138 4,114 52,84 24,34 78,54"
-                fill="#FDE047"
+          {/* NODO CENTRAL: CENTRO ABSOLUTO MATEMÁTICO (top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2) */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-52 h-52 sm:w-64 sm:h-64 flex flex-col items-center justify-center p-3 text-center -rotate-1 transition hover:scale-105">
+            {/* NUBE SVG / EXPLOSIÓN CÓMIC GIGANTE DE FONDO */}
+            <svg className="absolute inset-0 w-full h-full -z-10 drop-shadow-[6px_6px_0px_#000]" viewBox="0 0 200 200">
+              {/* Nube orgánica multi-burbuja cómic */}
+              <path
+                d="M50 85 C30 85 20 105 30 125 C20 145 40 165 65 160 C80 175 120 175 135 160 C160 165 180 145 170 125 C180 105 170 85 150 85 C155 60 135 45 115 50 C100 35 70 35 55 50 C40 55 35 70 50 85 Z"
+                fill="#FEF08A"
                 stroke="#000000"
                 strokeWidth="5"
                 strokeLinejoin="round"
               />
+              {/* Ráfaga estrella interior */}
+              <polygon
+                points="100,20 115,55 150,45 130,75 165,95 130,115 145,150 110,135 100,165 90,135 55,150 70,115 35,95 70,75 50,45 85,55"
+                fill="#FBBF24"
+                stroke="#000000"
+                strokeWidth="3"
+                opacity="0.85"
+              />
             </svg>
 
             {/* Núcleo Interior Circular */}
-            <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-amber-400 border-4 border-black flex flex-col items-center justify-center p-2.5 shadow-inner">
-              {/* Sticker decorativo desbordante sobre el círculo central */}
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-yellow-300 font-black text-[9px] sm:text-[10px] uppercase px-3 py-0.5 rounded-full border-2 border-black rotate-2 shadow-[2px_2px_0px_#000] whitespace-nowrap">
-                💥 ¡BOOM! NÚCLEO ⭐
+            <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-amber-400 border-4 border-black flex flex-col items-center justify-center p-2 shadow-inner relative">
+              {/* Icono Central Gigante */}
+              <div className="text-3xl sm:text-4xl filter drop-shadow-[2px_2px_0px_rgba(0,0,0,0.3)] mb-0.5 select-none">
+                {data?.mapaCentral?.icono || "⭐"}
               </div>
 
-              <h2 className="text-xs sm:text-sm md:text-base font-black uppercase text-black tracking-tight leading-tight [text-shadow:1.5px_1.5px_0_#fff]">
-                {data?.titulo || tema || "Concepto Principal"}
+              {/* Sticker superior */}
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-black text-yellow-300 font-black text-[8.5px] sm:text-[9.5px] uppercase px-2.5 py-0.5 rounded-full border-2 border-black rotate-1 shadow-[2px_2px_0px_#000] whitespace-nowrap">
+                💥 NÚCLEO CENTRAL 💥
+              </div>
+
+              <h2 className="text-xs sm:text-sm font-black uppercase text-black tracking-tight leading-tight [text-shadow:1.5px_1.5px_0_#fff]">
+                {data?.mapaCentral?.titulo || data?.titulo || tema || "Concepto Principal"}
               </h2>
-              <p className="text-[8.5px] sm:text-[9.5px] font-black text-slate-900 mt-1 uppercase bg-white/90 px-2 py-0.5 rounded-full border border-black/40">
-                Primaria LOMLOE
+              <p className="text-[8px] sm:text-[9px] font-black text-slate-900 mt-0.5 uppercase bg-white/90 px-2 py-0.2 rounded-full border border-black/40 truncate max-w-[120px]">
+                {data?.mapaCentral?.subtitulo || "Primaria LOMLOE"}
               </p>
             </div>
           </div>
 
-          {/* SATÉLITES ORGÁNICOS POSICIONADOS CON ABSOLUTE EN ESCRITORIO */}
-          {satelites.map((item, idx) => {
+          {/* SATÉLITES FIJOS ALREDEDOR EN 4 PUNTOS MATEMÁTICOS EXACTOS */}
+          {(data?.mapaCentral?.satelites || satelites).slice(0, 4).map((item, idx) => {
             const config = coloresSatelites[idx];
             return (
               <div
@@ -141,18 +160,18 @@ export default function SheetConceptMap({
 
                 {/* Comic sound badge en esquina superior derecha */}
                 <span className="absolute -top-3 -right-2 bg-black text-yellow-300 text-[8px] font-black px-1.5 py-0.5 rounded-md border border-black rotate-12 shadow-[1px_1px_0px_#000]">
-                  {config.sound}
+                  {item.sound || config.sound}
                 </span>
 
                 {/* EMOJI GIGANTE DESBORDANDO LA CAJA */}
                 <div className={`absolute -top-5 sm:-top-6 -left-4 sm:-left-5 z-30 text-4xl sm:text-5xl ${config.emojiRot} select-none filter drop-shadow-[2px_3px_0px_rgba(0,0,0,0.3)]`}>
-                  {item.emoji || "✨"}
+                  {item.icono || item.emoji || "✨"}
                 </div>
 
                 <div className="pl-5 sm:pl-6 pt-1">
                   <div className="flex items-center justify-between border-b-2 border-black/30 pb-0.5 mb-1">
                     <h3 className="font-black text-xs uppercase tracking-tight text-black leading-tight">
-                      {item.concepto}
+                      {item.titulo || item.concepto}
                     </h3>
                   </div>
                   <p className="text-[9.5px] sm:text-[10px] font-bold text-slate-900 leading-snug bg-white/70 rounded-lg p-1.5 border border-black/15">

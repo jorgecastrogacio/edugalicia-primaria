@@ -180,65 +180,43 @@ export default function SheetChallenges({
           </div>
 
           <div className="space-y-2 text-xs">
-            <div className="bg-white border-3 border-black rounded-xl p-2.5 flex items-center justify-between shadow-[3px_3px_0px_#000]">
-              <span className="font-black text-slate-900 text-[11px] leading-snug">
-                1. Os elementos fundamentais deste tema relacionanse entre si e cumpren funcións vitais.
-              </span>
-              <div className="flex items-center gap-2 shrink-0 ml-3">
-                <button
-                  type="button"
-                  onClick={() => handleToggleTf(1, true)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
-                    tfAnswers[1] === true 
-                      ? 'bg-emerald-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
-                      : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-emerald-100'
-                  }`}
-                >
-                  <span className="text-base">🙂</span> V
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleToggleTf(1, false)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
-                    tfAnswers[1] === false 
-                      ? 'bg-rose-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
-                      : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-rose-100'
-                  }`}
-                >
-                  <span className="text-base">☹️</span> F
-                </button>
+            {(data?.palancasVF && data.palancasVF.length > 0
+              ? data.palancasVF
+              : [
+                  { id: 1, texto: "Os elementos fundamentais deste tema relaciónanse entre si e cumpren funcións esenciais.", correcta: "V", xp: 15 },
+                  { id: 2, texto: "Podemos descubrir e protexer estes seres e fenómenos na contorna de Galicia.", correcta: "V", xp: 15 }
+                ]
+            ).map((vf, vIdx) => (
+              <div key={vf.id || vIdx} className="bg-white border-3 border-black rounded-xl p-2.5 flex items-center justify-between shadow-[3px_3px_0px_#000]">
+                <span className="font-black text-slate-900 text-[11px] leading-snug">
+                  {vIdx + 1}. {vf.texto}
+                </span>
+                <div className="flex items-center gap-2 shrink-0 ml-3">
+                  <button
+                    type="button"
+                    onClick={() => handleToggleTf(vf.id || vIdx + 1, true)}
+                    className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
+                      tfAnswers[vf.id || vIdx + 1] === true 
+                        ? 'bg-emerald-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
+                        : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-emerald-100'
+                    }`}
+                  >
+                    <span className="text-base">🙂</span> V
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleToggleTf(vf.id || vIdx + 1, false)}
+                    className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
+                      tfAnswers[vf.id || vIdx + 1] === false 
+                        ? 'bg-rose-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
+                        : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-rose-100'
+                    }`}
+                  >
+                    <span className="text-base">☹️</span> F
+                  </button>
+                </div>
               </div>
-            </div>
-
-            <div className="bg-white border-3 border-black rounded-xl p-2.5 flex items-center justify-between shadow-[3px_3px_0px_#000]">
-              <span className="font-black text-slate-900 text-[11px] leading-snug">
-                2. Podemos descubrir e protexer estes seres e fenómenos na natureza real de Galicia.
-              </span>
-              <div className="flex items-center gap-2 shrink-0 ml-3">
-                <button
-                  type="button"
-                  onClick={() => handleToggleTf(2, true)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
-                    tfAnswers[2] === true 
-                      ? 'bg-emerald-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
-                      : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-emerald-100'
-                  }`}
-                >
-                  <span className="text-base">🙂</span> V
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleToggleTf(2, false)}
-                  className={`px-3 py-1.5 rounded-xl border-3 border-black font-black text-xs flex items-center gap-1.5 transition active:translate-y-1 active:shadow-none cursor-pointer ${
-                    tfAnswers[2] === false 
-                      ? 'bg-rose-400 text-black shadow-[4px_4px_0px_#000] scale-105' 
-                      : 'bg-slate-100 text-black shadow-[2px_2px_0px_#000] hover:bg-rose-100'
-                  }`}
-                >
-                  <span className="text-base">☹️</span> F
-                </button>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
