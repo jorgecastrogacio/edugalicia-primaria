@@ -38,16 +38,22 @@ export default function ExportToolbar({
     try {
       setIsExportingImage(true);
 
+      // REQUISITO CRÍTICO CTO: Capturar el scrollHeight completo dinámico (evita efecto ticket cortado)
+      const dynamicHeight = Math.max(targetNode.scrollHeight || 1123, 1123);
+
       const blob = await toBlob(targetNode, {
         pixelRatio: 2,
         backgroundColor: '#ffffff',
         width: 794,
+        height: dynamicHeight,
         style: {
           margin: '0',
           boxShadow: 'none',
           transform: 'none',
           width: '794px',
-          minWidth: '794px'
+          minWidth: '794px',
+          height: `${dynamicHeight}px`,
+          maxHeight: 'none'
         }
       });
 

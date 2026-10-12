@@ -100,7 +100,35 @@
     break-inside: avoid !important;
   }
 
+  /* REQUISITO CRÍTICO CTO: Solución al bug de WebKit donde break-inside: avoid se ignora en Grid y Flex */
+  .grid,
+  .flex,
+  .sm\:grid,
+  .md\:grid,
+  .sm\:flex,
+  .md\:flex,
+  [class*="grid-cols-"] {
+    display: block !important;
+  }
+
+  .grid > *,
+  .flex > *,
+  [class*="grid-cols-"] > * {
+    margin-bottom: 12mm !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    -webkit-column-break-inside: avoid !important;
+  }
+
   .avoid-break,
+  .cromo-card,
+  .satelite-card,
+  .quiz-card,
+  .creative-box,
+  .postit-note,
+  .break-inside-avoid,
   section,
   blockquote,
   .mermaid-wrapper,

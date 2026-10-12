@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { MapPin, Trophy, Sparkles, Check, RotateCw, Target, Star, Award, Zap } from 'lucide-react';
+import { MapPin, Trophy, Sparkles, Check, RotateCw, Target, Star, Award, Zap, Gamepad2 } from 'lucide-react';
 import { getUniversalMascot, ILLUSTRATIONS } from '../data/illustrationMap.jsx';
+import DynamicArtEngine from './DynamicArtEngine.jsx';
 
 export default function SheetChallenges({
   id = "edugalicia-sheet-retos",
@@ -46,7 +47,7 @@ export default function SheetChallenges({
   const rankLabel = currentXP >= 90 ? "🏆 MESTRE SUPREMO" : currentXP >= 50 ? "⭐ DETECTIVE EXPERTO" : "🌱 AXENTE EN PRÁCTICAS";
 
   return (
-    <div id={id} className="a4-sheet bg-notebook text-slate-900 flex flex-col justify-between p-6">
+    <div id={id} className="a4-sheet min-h-[1123px] h-fit bg-notebook text-slate-900 flex flex-col justify-between p-6 relative">
       {/* 1. CABECERA ESCAPE ROOM NEO-BRUTALISTA v2.0 */}
       <header className="pb-3 border-b-4 border-black avoid-break relative">
         <div className="absolute -top-3 -right-2 text-3xl z-20 select-none drop-shadow-sm">📍</div>
@@ -127,36 +128,36 @@ export default function SheetChallenges({
               return (
                 <div
                   key={idx}
-                  className={`relative p-3 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_#000] bg-white ${idx === 0 ? '-rotate-1' : 'rotate-1'} avoid-break`}
+                  className={`quiz-card relative p-3.5 rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_#000] bg-white ${idx === 0 ? '-rotate-1' : 'rotate-1'} avoid-break`}
                 >
                   <div className="w-12 h-3 bg-white/60 border border-gray-400 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 z-20" />
-                  <div className="flex items-start gap-2.5 mb-1.5">
+                  <div className="flex items-start gap-2.5 mb-2">
                     <span className="w-6 h-6 rounded-lg bg-purple-600 border-2 border-black text-white font-black text-xs flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#000]">
                       #{idx + 1}
                     </span>
-                    <p className="text-xs md:text-sm font-black text-black leading-snug">
+                    <p className="text-xs md:text-sm font-black text-black leading-snug break-words">
                       {q.pregunta}
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pl-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pl-4 sm:pl-8">
                     {q.opciones.map((opc, oIdx) => (
                       <button
                         key={oIdx}
                         type="button"
                         onClick={() => handleSelectOption(idx, oIdx)}
-                        className={`text-left text-[11px] p-2 rounded-xl border-3 border-black transition active:translate-y-1 active:shadow-none flex items-center gap-2 cursor-pointer ${
+                        className={`text-left text-[11px] p-2.5 rounded-xl border-3 border-black transition active:translate-y-1 active:shadow-none flex items-start gap-2 cursor-pointer ${
                           selectedOpt === oIdx
                             ? 'bg-purple-500 text-white font-black shadow-[4px_4px_0px_#000] scale-[1.02]'
                             : 'bg-yellow-50 text-black hover:bg-yellow-100 font-bold shadow-[3px_3px_0px_#000]'
                         }`}
                       >
-                        <span className={`w-4 h-4 rounded-full border-2 border-black flex items-center justify-center text-[10px] shrink-0 font-black ${
+                        <span className={`w-4 h-4 rounded-full border-2 border-black flex items-center justify-center text-[10px] shrink-0 font-black mt-0.5 ${
                           selectedOpt === oIdx ? 'bg-white text-black' : 'bg-white text-transparent'
                         }`}>
                           ✓
                         </span>
-                        <span className="truncate">{opc}</span>
+                        <span className="break-words leading-tight flex-1">{opc}</span>
                       </button>
                     ))}
                   </div>
@@ -167,9 +168,9 @@ export default function SheetChallenges({
         </section>
 
         {/* RETO 2: VERDADEIRO / FALSO CON BOTONES ARCADE */}
-        <section className="avoid-break relative bg-emerald-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3 -rotate-1">
+        <section className="quiz-card avoid-break relative bg-emerald-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3.5 -rotate-1">
           <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-2 z-20" />
-          <div className="flex items-center justify-between mb-1.5 pb-1 border-b-2 border-black/30">
+          <div className="flex items-center justify-between mb-2 pb-1.5 border-b-2 border-black/30">
             <div className="flex items-center gap-2 font-black text-xs text-black uppercase tracking-wide">
               <span className="text-base">⚡</span>
               <h3>Reto 2: Palanca Arcade (Verdadeiro ou Falso)</h3>
@@ -188,7 +189,7 @@ export default function SheetChallenges({
                 ]
             ).map((vf, vIdx) => (
               <div key={vf.id || vIdx} className="bg-white border-3 border-black rounded-xl p-2.5 flex items-center justify-between shadow-[3px_3px_0px_#000]">
-                <span className="font-black text-slate-900 text-[11px] leading-snug">
+                <span className="font-black text-slate-900 text-[11px] leading-snug break-words pr-2">
                   {vIdx + 1}. {vf.texto}
                 </span>
                 <div className="flex items-center gap-2 shrink-0 ml-3">
@@ -221,7 +222,7 @@ export default function SheetChallenges({
         </section>
 
         {/* RETO 3: VISOR DE EVIDENCIAS / MARCO DE MUSEO DOURADO CON LUPA XIGANTE */}
-        <section className="avoid-break relative border-4 border-black bg-amber-100 shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3.5 rotate-1">
+        <section className="creative-box avoid-break relative border-4 border-black bg-amber-100 shadow-[6px_6px_0px_0px_#000] rounded-2xl p-3.5 rotate-1">
           <div className="absolute -top-3.5 -left-2 text-2xl z-20">📍</div>
           <div className="w-14 h-4 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 -rotate-2 z-20" />
           

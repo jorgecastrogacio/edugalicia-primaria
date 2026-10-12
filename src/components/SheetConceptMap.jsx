@@ -126,29 +126,38 @@ export default function SheetConceptMap({
             })}
           </div>
 
-          {/* NÚCLEO CENTRAL: BANNER RADIAL CONECTADO ORGÁNICO */}
-          <div className="relative z-20 bg-amber-300 border-4 border-black rounded-3xl p-4 shadow-[6px_6px_0px_0px_#000] text-center -rotate-0.5 overflow-hidden">
-            {/* Fondo con textura cómic */}
-            <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#000_1.5px,transparent_1.5px)] [background-size:8px_8px] pointer-events-none" />
+          {/* NÚCLEO CENTRAL: ANCLAJE VISUAL EXPANSIVO CONECTADO */}
+          <div className="relative z-20 bg-linear-to-r from-amber-300 via-yellow-200 to-amber-400 border-4 border-black rounded-3xl p-5 shadow-[8px_8px_0px_0px_#000] text-center -rotate-0.5 overflow-hidden">
+            {/* Rayos de sol / Explosión cómic de fondo */}
+            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#000_2px,transparent_2px)] [background-size:12px_12px] pointer-events-none" />
 
-            <div className="relative flex flex-col sm:flex-row items-center justify-between gap-3 px-2">
-              <div className="flex items-center gap-2">
-                <span className="text-3xl sm:text-4xl filter drop-shadow-[2px_2px_0px_#000] select-none">
-                  {data?.mapaCentral?.icono || "💥"}
-                </span>
-                <div className="text-left">
-                  <span className="text-[9px] font-black uppercase bg-black text-yellow-300 px-2 py-0.5 rounded-full inline-block mb-0.5">
-                    💥 NÚCLEO CENTRAL 💥
+            <div className="relative flex flex-col md:flex-row items-center justify-between gap-4 px-2">
+              <div className="flex items-center gap-3.5">
+                <div className="w-16 h-16 rounded-2xl bg-white border-3 border-black shadow-[3px_3px_0px_#000] flex items-center justify-center text-4xl shrink-0 rotate-2">
+                  <span className="filter drop-shadow-[2px_2px_0px_rgba(0,0,0,0.3)] select-none">
+                    {data?.mapaCentral?.icono || "💥"}
                   </span>
-                  <h2 className="text-sm sm:text-base md:text-lg font-black uppercase text-black tracking-tight leading-tight">
+                </div>
+                <div className="text-left">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[9px] font-black uppercase bg-black text-yellow-300 px-2.5 py-0.5 rounded-full shadow-[1px_1px_0px_#000]">
+                      ⚡ NÚCLEO CENTRAL DA MISIÓN
+                    </span>
+                    <span className="text-[9px] font-black text-black bg-amber-200 border border-black px-2 py-0.5 rounded-md hidden sm:inline-block">
+                      CONEXIÓNS ACTIVAS
+                    </span>
+                  </div>
+                  <h2 className="text-base sm:text-lg md:text-xl font-black uppercase text-black tracking-tight leading-tight">
                     {data?.mapaCentral?.titulo || data?.titulo || tema || "Concepto Principal"}
                   </h2>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5 text-[9px] sm:text-[10px] font-black text-slate-900 bg-white/90 border-2 border-black px-3 py-1 rounded-xl shadow-[2px_2px_0px_#000]">
-                <span>⚡ LOMLOE CONEXIÓNS:</span>
-                <span className="uppercase">{data?.mapaCentral?.subtitulo || "4 Órbitas Activas"}</span>
+              {/* Conector Visual: Flechas cómic conectando órbitas */}
+              <div className="flex items-center gap-2 text-xs font-black text-black bg-white border-3 border-black px-3.5 py-1.5 rounded-2xl shadow-[3px_3px_0px_#000]">
+                <span className="text-amber-500 text-sm">✦</span>
+                <span className="uppercase tracking-wide">{data?.mapaCentral?.subtitulo || "Rede de Saberes LOMLOE"}</span>
+                <span className="text-amber-500 text-sm">✦</span>
               </div>
             </div>
           </div>
