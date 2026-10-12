@@ -125,8 +125,9 @@
 
 .a4-sheet {
   width: 210mm;
+  max-width: 100%;
   min-height: 297mm;
-  padding: 10mm;
+  padding: 8mm;
   margin: 0 auto;
   background-color: #ffffff;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
@@ -137,6 +138,26 @@
   justify-content: space-between;
   position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .a4-sheet {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    padding: 16px 12px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    overflow-x: hidden !important;
+  }
+}
+
+.force-print-layout .a4-sheet,
+.force-print-layout.a4-sheet {
+  width: 210mm !important;
+  max-width: 210mm !important;
+  min-height: 297mm !important;
+  padding: 10mm !important;
 }
 
 .a4-canvas {

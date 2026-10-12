@@ -85,7 +85,7 @@ export default function SheetConceptMap({
         {/* LIENZO DE MAPA MENTAL RADIAL */}
         <div className="relative flex-1 min-h-[460px] bg-white rounded-3xl border-4 border-black shadow-[8px_8px_0px_0px_#000] p-4 flex items-center justify-center overflow-hidden avoid-break">
           {/* LÍNEAS GRUESAS DE CONEXIÓN SVG CON TRAZO DISCONTINUO */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden sm:block">
             {/* Línea hacia Top-Left */}
             <line x1="22%" y1="20%" x2="50%" y2="50%" stroke="black" strokeWidth="5" strokeDasharray="8 8" />
             {/* Línea hacia Top-Right */}
@@ -97,46 +97,46 @@ export default function SheetConceptMap({
           </svg>
 
           {/* NODO CENTRAL GIGANTE CIRCULAR: rounded-full border-8 border-black shadow-[8px_8px_0px_0px_#000] */}
-          <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 rounded-full border-8 border-black shadow-[8px_8px_0px_0px_#000] bg-amber-300 flex flex-col items-center justify-center p-4 text-center -rotate-1 transition hover:scale-105">
+          <div className="relative z-10 w-44 h-44 sm:w-64 sm:h-64 rounded-full border-6 sm:border-8 border-black shadow-[6px_6px_0px_0px_#000] sm:shadow-[8px_8px_0px_0px_#000] bg-amber-300 flex flex-col items-center justify-center p-3 sm:p-4 text-center -rotate-1 transition hover:scale-105 my-auto">
             {/* Sticker decorativo desbordante sobre el círculo central */}
-            <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-5xl z-20 select-none filter drop-shadow-md">
+            <div className="absolute -top-5 sm:-top-6 left-1/2 -translate-x-1/2 text-4xl sm:text-5xl z-20 select-none filter drop-shadow-md">
               ☁️
             </div>
-            <div className="absolute -bottom-3 bg-black text-amber-300 font-black text-[10px] uppercase px-3 py-1 rounded-full border-2 border-black rotate-3 shadow-[2px_2px_0px_#000]">
+            <div className="absolute -bottom-3 bg-black text-amber-300 font-black text-[9px] sm:text-[10px] uppercase px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full border-2 border-black rotate-3 shadow-[2px_2px_0px_#000]">
               ⭐ NÚCLEO CENTRAL ⭐
             </div>
 
-            <h2 className="text-base md:text-lg font-black uppercase text-black tracking-tight leading-tight [text-shadow:1.5px_1.5px_0_#fff]">
+            <h2 className="text-sm sm:text-base md:text-lg font-black uppercase text-black tracking-tight leading-tight [text-shadow:1.5px_1.5px_0_#fff]">
               {data?.titulo || tema || "Concepto Principal"}
             </h2>
-            <p className="text-[10px] font-black text-slate-900 mt-1 uppercase bg-white/70 px-2 py-0.5 rounded-full border border-black/30">
+            <p className="text-[9px] sm:text-[10px] font-black text-slate-900 mt-1 uppercase bg-white/70 px-2 py-0.5 rounded-full border border-black/30">
               Galicia Primaria
             </p>
           </div>
 
-          {/* SATÉLITES ORGÁNICOS POSICIONADOS CON ABSOLUTE */}
+          {/* SATÉLITES ORGÁNICOS POSICIONADOS CON ABSOLUTE EN ESCRITORIO O APILADOS CON ESTILO EN MÓVIL */}
           {satelites.map((item, idx) => {
             const config = coloresSatelites[idx];
             return (
               <div
                 key={idx}
-                className={`absolute ${config.pos} ${config.rot} z-20 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl ${config.bg} p-3 max-w-[210px] avoid-break transition hover:scale-105`}
+                className={`sm:absolute ${config.pos} ${config.rot} z-20 border-3 sm:border-4 border-black shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_0px_#000] rounded-2xl ${config.bg} p-2.5 sm:p-3 max-w-full sm:max-w-[210px] avoid-break transition hover:scale-105 my-1 sm:my-0`}
               >
                 {/* Washi Tape */}
                 <div className="w-12 h-3.5 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-30" />
 
                 {/* EMOJI GIGANTE DESBORDANDO LA CAJA */}
-                <div className={`absolute -top-6 -left-5 z-30 text-5xl ${config.emojiRot} select-none filter drop-shadow-[2px_3px_0px_rgba(0,0,0,0.3)]`}>
+                <div className={`absolute -top-5 sm:-top-6 -left-4 sm:-left-5 z-30 text-4xl sm:text-5xl ${config.emojiRot} select-none filter drop-shadow-[2px_3px_0px_rgba(0,0,0,0.3)]`}>
                   {item.emoji || "✨"}
                 </div>
 
-                <div className="pl-6 pt-1">
+                <div className="pl-5 sm:pl-6 pt-1">
                   <div className="flex items-center justify-between border-b-2 border-black/30 pb-0.5 mb-1">
                     <h3 className="font-black text-xs uppercase tracking-tight text-black leading-tight">
                       {item.concepto}
                     </h3>
                   </div>
-                  <p className="text-[10px] font-bold text-slate-900 leading-snug">
+                  <p className="text-[9.5px] sm:text-[10px] font-bold text-slate-900 leading-snug">
                     {item.descripcion}
                   </p>
                 </div>

@@ -75,11 +75,11 @@ export default function SheetDashboardVisual({
         {/* Chincheta decorativa esquina */}
         <div className="absolute -top-3 -right-2 text-3xl z-20 select-none drop-shadow-sm">📍</div>
         
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3.5">
+        <div className="flex flex-col sm:flex-row items-start justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-3 sm:gap-3.5">
             {/* Escudo / Mascota Desbordada */}
-            <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-amber-300 border-4 border-black shadow-[6px_6px_0px_0px_#000] text-black flex items-center justify-center p-2 shrink-0 -rotate-3">
+            <div className="relative shrink-0">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-300 border-4 border-black shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_0px_#000] text-black flex items-center justify-center p-2 shrink-0 -rotate-3">
                 {isCellTopic ? (
                   <ILLUSTRATIONS.kawaiiAnimalCell className="w-full h-full" />
                 ) : isSpaceTopic ? (
@@ -94,27 +94,27 @@ export default function SheetDashboardVisual({
             </div>
 
             <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-[10px] font-black uppercase tracking-wider bg-blue-300 text-black border-2 border-black shadow-[2px_2px_0px_#000] px-2.5 py-0.5 rounded-full flex items-center gap-1 -rotate-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-blue-300 text-black border-2 border-black shadow-[2px_2px_0px_#000] px-2 py-0.5 rounded-full flex items-center gap-1 -rotate-1">
                   <MapPin className="w-3 h-3 text-black stroke-[3]" />
                   Galicia LOMLOE
                 </span>
-                <span className="text-[10px] font-black uppercase tracking-wider bg-amber-300 text-black border-2 border-black shadow-[2px_2px_0px_#000] px-2.5 py-0.5 rounded-full flex items-center gap-1 rotate-2">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-amber-300 text-black border-2 border-black shadow-[2px_2px_0px_#000] px-2 py-0.5 rounded-full flex items-center gap-1 rotate-2">
                   <Star className="w-3.5 h-3.5 fill-black text-black" />
-                  Póster de Cromos A4
+                  Póster A4
                 </span>
               </div>
-              <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-black [text-shadow:2px_2px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000] leading-none mb-1">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-black uppercase tracking-tighter text-black [text-shadow:2px_2px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000] leading-none mb-1">
                 {data?.titulo || tema || "Caderno de Exploración"}
               </h1>
-              <p className="text-xs font-black text-indigo-900 uppercase tracking-wide">
+              <p className="text-[11px] sm:text-xs font-black text-indigo-900 uppercase tracking-wide">
                 {curso} • {materia}
               </p>
             </div>
           </div>
 
           {/* Ficha de Detective / Investigador con cinta washi */}
-          <div className="relative text-right text-[11px] bg-yellow-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-2.5 min-w-[175px] shrink-0 rotate-2">
+          <div className="relative text-right text-[11px] bg-yellow-100 border-3 sm:border-4 border-black shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_0px_#000] rounded-2xl p-2 sm:p-2.5 w-full sm:w-auto sm:min-w-[175px] shrink-0 rotate-1 sm:rotate-2">
             <div className="w-12 h-3.5 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-2 z-20" />
             <div className="flex justify-between border-b-2 border-dashed border-black/40 pb-1 mb-1 font-black">
               <span className="text-indigo-900">🕵️ Investigador:</span>
@@ -304,7 +304,7 @@ export default function SheetDashboardVisual({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                   {data.conceptosClave.map((item, idx) => {
                     const rotClass = rotations[idx % rotations.length];
                     const bgClass = pastelBgs[idx % pastelBgs.length];

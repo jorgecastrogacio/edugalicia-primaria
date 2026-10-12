@@ -17,7 +17,7 @@ export default function ExportToolbar({
     window.print();
   };
 
-  // Exportación a imagen PNG de alta definición (pixelRatio 2)
+  // Exportación a imagen PNG de alta definición (pixelRatio 2) con soporte para Guardar en Fotos móvil
   const handleDownloadImage = async () => {
     const node = document.getElementById(sheetElementId);
     if (!node) {
@@ -40,8 +40,33 @@ export default function ExportToolbar({
 
       const sanitizedTitle = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const tabSuffix = activeTab ? `-${activeTab}` : '';
+      const fileName = `${sanitizedTitle}${tabSuffix}-lomloe.png`;
+
+      // En móviles (iOS / Android): Si el navegador soporta Web Share API con archivos,
+      // abre el menú nativo del sistema ("Guardar imagen en Fotos", AirDrop, WhatsApp)
+      if (navigator.share && navigator.canShare) {
+        try {
+          const res = await fetch(dataUrl);
+          const blob = await res.blob();
+          const file = new File([blob], fileName, { type: 'image/png' });
+
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Lámina EduGalicia',
+              text: 'Lámina educativa imprimible A4 de EduGalicia'
+            });
+            return;
+          }
+        } catch (shareErr) {
+          // Si el usuario cancela el menú nativo o no está disponible, continuar con descarga estándar
+          if (shareErr.name === 'AbortError') return;
+        }
+      }
+
+      // Descarga directa habitual en escritorio / fallback
       const link = document.createElement('a');
-      link.download = `${sanitizedTitle}${tabSuffix}-lomloe.png`;
+      link.download = fileName;
       link.href = dataUrl;
       link.click();
     } catch (err) {
