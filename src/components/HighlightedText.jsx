@@ -13,13 +13,33 @@ function renderSingleMath(rawFormula, isDisplayMode, key) {
   // 1. Normalizar barras invertidas duplicadas de serializaciones JSON/XML (\\\\frac -> \\frac)
   formula = formula.replace(/\\\\([a-zA-Z]+)/g, '\\$1');
 
-  // 2. Curación automática: comandos matemáticos generados sin barra invertida
+  // 2. Normalización de multiplicaciones con asterisco dentro de fórmulas:
+  // Convierte 3 * 5 -> 3 \cdot 5, a * b -> a \cdot b, 2 * (x - 3) -> 2 \cdot (x - 3)
+  formula = formula.replace(/([0-9a-zA-Z\)\}\]])\s*\*\s*([0-9a-zA-Z\(\{\\\-])/g, '$1 \\cdot $2');
+
+  // 3. Normalización de grados sexagesimales (90º o 90° -> 90^\circ)
+  formula = formula.replace(/([0-9]+)\s*[º°]/g, '$1^\\circ');
+
+  // 4. Normalización del número Pi (π unicode o pi aislado -> \pi)
+  formula = formula.replace(/π/g, '\\pi');
+  formula = formula.replace(/(^|[^\w\\])pi\b/g, '$1\\pi');
+
+  // 5. Curación de comandos matemáticos generados sin barra invertida
   formula = formula.replace(/(^|[^\w\\])frac\{/g, '$1\\frac{');
   formula = formula.replace(/(^|[^\w\\])sqrt\{/g, '$1\\sqrt{');
+  formula = formula.replace(/(^|[^\w\\])sqrt\[/g, '$1\\sqrt[');
   formula = formula.replace(/(^|[^\w\\])cdot\b/g, '$1\\cdot');
   formula = formula.replace(/(^|[^\w\\])times\b/g, '$1\\times');
   formula = formula.replace(/(^|[^\w\\])pm\b/g, '$1\\pm');
   formula = formula.replace(/(^|[^\w\\])implies\b/g, '$1\\implies');
+  formula = formula.replace(/(^|[^\w\\])widehat\{/g, '$1\\widehat{');
+  formula = formula.replace(/(^|[^\w\\])overline\{/g, '$1\\overline{');
+  formula = formula.replace(/(^|[^\w\\])bar\{/g, '$1\\bar{');
+  formula = formula.replace(/(^|[^\w\\])begin\{cases\}/g, '$1\\begin{cases}');
+  formula = formula.replace(/(^|[^\w\\])end\{cases\}/g, '$1\\end{cases}');
+
+  // 6. Normalizar saltos de línea dentro de sistemas de ecuaciones \begin{cases}
+  formula = formula.replace(/\\newline/g, ' \\\\ ');
 
   try {
     // Paso 3 (Renderizado KaTeX estricto): displayMode true para $$...$$ (línea horizontal pura, grande)
@@ -96,6 +116,19 @@ export default function HighlightedText({ text, className = "" }) {
   cleanText = cleanText.replace(/(?<!\$)\bfrac([0-9a-zA-Z])([0-9a-zA-Z])\b(?!\$)/g, '$\\frac{$1}{$2}$');
   // Convierte frac{a}{b} o \frac{a}{b} sueltos en $\frac{a}{b}$
   cleanText = cleanText.replace(/(?<!\$)(?:\\?frac\{([^{}]+)\}\{([^{}]+)\})(?!\$)/g, '$\\frac{$1}{$2}$');
+
+  // Auto-curación de sistemas de ecuaciones en texto plano \begin{cases}...\end{cases}
+  cleanText = cleanText.replace(/(?<!\$)\\begin\{cases\}([\s\S]*?)\\end\{cases\}(?!\$)/g, '$$\\begin{cases}$1\\end{cases}$$');
+
+  // Auto-curación de grados sexagesimales en texto plano (ej. 90º o 90°)
+  cleanText = cleanText.replace(/(?<![\$\w])(\d+)\s*[º°](?![\$\w])/g, '$$$1^\\circ$$');
+
+  // Auto-curación de decimales periódicos sueltos en texto plano con \widehat o \overline
+  cleanText = cleanText.replace(/(?<!\$)\\(widehat|overline)\{([^{}]+)\}(?!\$)/g, '$\\$1{$2}$');
+
+  // Auto-curación de media aritmética \bar{x} o Pi \pi en texto plano
+  cleanText = cleanText.replace(/(?<!\$)\\(bar|overline)\{x\}(?!\$)/g, '$\\$1{x}$');
+  cleanText = cleanText.replace(/(?<!\$)\\pi\b(?!\$)/g, '$\\pi$');
 
   // Separar fragmentos con marcado fluorescente (**...**)
   const parts = cleanText.split(/(\*\*\s*[\s\S]+?\s*\*\*)/g);

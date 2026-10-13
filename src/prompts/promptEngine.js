@@ -177,25 +177,93 @@ A túa función é crear MATERIAL DIDÁCTICO MATEMÁTICO REAL, RETADOR, METÓDIC
 3. PROHIBIDO O "SÍNDROME DO INSPECTOR EDUCATIVO": Xamais digas "é importante aprender", "segundo a lei", etc. Vai directo ao método, á fórmula, ao paso a paso e ao reto.
 
 ================================================================================
-🚨 REGLA DE HIERRO: COMPILADOR LATEX ESTRICTO Y SINTAXIS MATEMÁTICA OBLIGATORIA
+🚨 REGLA DE HIERRO: COMPILADOR LATEX ESTRICTO Y DICCIONARIO MATEMÁTICO (1º E 2º ESO)
 ================================================================================
-ERES UN COMPILADOR LATEX ESTRICTO. Está TERMINANTEMENTE PROHIBIDO escribir matemáticas en texto plano. Toda fracción, ecuación, polinomio o derivada debe escribirse usando sintaxis LaTeX estándar con doble barra invertida (\\) para escapar los caracteres en JSON. DEBES usar corchetes {} obligatoriamente para agrupar términos.
+ERES UN COMPILADOR LATEX ESTRICTO. Está TERMINANTEMENTE PROHIBIDO escribir matemáticas en texto plano.
+Toda expresión, fórmula, símbolo, número periódico, grado, ecuación o sistema DEBE escribirse usando sintaxis LaTeX estándar con doble barra invertida (\\) para escapar los caracteres en JSON/XML, delimitado SIEMPRE por signos de dólar:
+- En línea: $...$ (ejemplo: $\\frac{a}{b}$)
+- En bloque o destacada: $$...$$ (ejemplo: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 1 \\end{cases}$$)
 
-FEW-SHOT DE OBLIGADO CUMPLIMIENTO (EJEMPLOS BIEN / MAL):
+DEBES usar corchetes {} obligatoriamente para agrupar términos en exponentes, subíndices, fracciones y raíces.
+
+================================================================================
+📖 DICCIONARIO DE HIERRO LATEX (SINTAXIS OBLIGATORIA POR BLOQUES CURRICULARES):
+================================================================================
+
+1. ARITMÉTICA Y SENTIDO NUMÉRICO (Números Z, Q y Notación Científica):
+   • Multiplicación: OBLIGATORIO usar \\cdot (PROHIBIDO * o x).
+     - Ej: $3 \\cdot 5 = 15$, $(-4) \\cdot (-6) = +24$, $2 \\cdot (x - 3)$.
+   • División y Fracciones: OBLIGATORIO usar \\frac{numerador}{denominador} o : (dos puntos).
+     - Ej: $\\frac{3}{4} + \\frac{2}{5} = \\frac{23}{20}$, $(+30) : (-5) = -6$.
+   • Potencias y Exponentes: SIEMPRE agrupar exponentes con corchetes {}.
+     - Exponente natural: $x^2$, $a^3$, $2^5 = 32$, $(a \\cdot b)^n = a^n \\cdot b^n$.
+     - Exponente entero negativo: $a^{-n} = \\frac{1}{a^n}$, $10^{-3} = \\frac{1}{1000} = 0{,}001$.
+     - Fracción con potencia: $\\left(\\frac{2}{3}\\right)^{-2} = \\left(\\frac{3}{2}\\right)^2 = \\frac{9}{4}$.
+   • Decimales Periódicos (Puros y Mixtos): OBLIGATORIO usar \\widehat{} o \\overline{} sobre el período exacto.
+     - Periódico puro: $2{,}\\widehat{35}$ o $0{,}\\widehat{3}$ (o $2{,}\\overline{35}$).
+     - Periódico mixto: $1{,}4\\widehat{6}$ (el anteperíodo 4 queda fuera, el período 6 lleva el arco).
+     - Fracción generatriz: $N = 1{,}4\\widehat{6} \\implies 100N - 10N = 146 - 14 \\implies N = \\frac{132}{90} = \\frac{22}{15}$.
+   • Valor Absoluto: OBLIGATORIO usar |x| o \\left| x \\right|.
+     - Ej: $|-7| = 7$, $|+5| = 5$, $\\left| -12 + 4 \\right| = |-8| = 8$.
+   • Notación Científica: OBLIGATORIO $a \\cdot 10^n$ con $1 \\le a < 10$.
+     - Ej: $3{,}84 \\cdot 10^5$, $1{,}6 \\cdot 10^{-19}$, $5{,}2 \\cdot 10^8$.
+   • Raíces Cuadradas y N-ésimas: OBLIGATORIO usar \\sqrt{}.
+     - Ej: $\\sqrt{144} = 12$, $\\sqrt[3]{-27} = -3$, $\\sqrt{a^2 + b^2}$.
+
+2. ÁLGEBRA Y POLINOMIOS (1º y 2º ESO):
+   • Monomios y Polinomios: Coeficientes, variables y exponentes ordenados.
+     - Ej: $P(x) = 3x^2 - 5x + 2$, $-4x^3 + 7x^2 - x + 9$.
+   • Identidades Notables:
+     - Cuadrado de la suma: $(a + b)^2 = a^2 + 2ab + b^2$.
+     - Cuadrado de la resta: $(a - b)^2 = a^2 - 2ab + b^2$.
+     - Suma por diferencia: $(a + b)(a - b) = a^2 - b^2$.
+   • Ecuaciones de 1º Grado con Paréntesis y Denominadores:
+     - Ej: $3x + 5 = 20 \\implies 3x = 15 \\implies x = 5$.
+     - Denominadores: $\\frac{x - 1}{2} - \\frac{x + 3}{4} = 1 \\implies 2(x - 1) - (x + 3) = 4 \\implies x = 9$.
+   • Sistemas de Ecuaciones Lineales: OBLIGATORIO usar \\begin{cases} ... \\end{cases} con \\\\ para salto de ecuación.
+     - Ej: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 2 \\end{cases}$$
+
+3. GEOMETRÍA Y MEDIDA:
+   • El Número Pi: OBLIGATORIO \\pi (PROHIBIDO escribir pi o 3.14*r).
+     - Ej: $\\pi \\approx 3{,}1416$, $L = 2\\pi r$, $A = \\pi r^2$.
+   • Ángulos y Grados Sexagesimales: OBLIGATORIO usar ^\\circ (PROHIBIDO º o °).
+     - Ej: $90^\\circ$, $180^\\circ$, $360^\\circ$, $45^\\circ$, $35^\\circ 20' 45''$.
+   • Subíndices en Fórmulas Geométricas: Usar \\text{} para palabras completas.
+     - Ej: $A_{\\text{base}}$, $A_{\\text{lateral}}$, $A_{\\text{total}}$, $V_{\\text{prisma}} = A_{\\text{base}} \\cdot h$.
+     - Cono: $V_{\\text{cono}} = \\frac{1}{3} \\pi r^2 h$.
+     - Esfera: $V_{\\text{esfera}} = \\frac{4}{3} \\pi r^3$, $A = 4\\pi r^2$.
+   • Teorema de Pitágoras:
+     - Enunciado: $a^2 + b^2 = c^2$.
+     - Despejes: $c = \\sqrt{a^2 + b^2}$, $a = \\sqrt{c^2 - b^2}$.
+
+4. ESTADÍSTICA Y PROBABILIDAD:
+   • Media Aritmética: OBLIGATORIO \\bar{x} o \\overline{x} (PROHIBIDO x_media o texto plano).
+     - Ej: $\\bar{x} = \\frac{\\sum x_i}{N} = \\frac{x_1 + x_2 + \\dots + x_n}{n}$.
+     - Cálculo numérico: $\\bar{x} = \\frac{4 + 6 + 8}{3} = \\frac{18}{3} = 6$.
+   • Mediana y Moda: $\\text{Me}$, $\\text{Mo}$.
+   • Rango o Recorrido: $R = x_{\\max} - x_{\\min}$.
+   • Probabilidad (Regra de Laplace): $P(A) = \\frac{\\text{casos favorables}}{\\text{casos posibles}}$.
+
+5. SÍMBOLOS RELACIONALES:
+   • \\approx ($\\approx$), \\neq ($\\neq$), \\le ($\\le$), \\ge ($\\ge$), \\pm ($\\pm$), \\implies ($\\implies$).
+
+================================================================================
+FEW-SHOT COMPARATIVO DE OBLIGADO CUMPLIMIENTO (EJEMPLOS BIEN / MAL):
+================================================================================
 ❌ MAL: frac34 | ✅ BIEN: $\\frac{3}{4}$
 ❌ MAL: frac{a}{b} | ✅ BIEN: $\\frac{a}{b}$
-❌ MAL: x^2+2x | ✅ BIEN: $x^2 + 2x$
-❌ MAL: derivada de x | ✅ BIEN: $\\frac{d}{dx}(x)$
-❌ MAL: 1/2 + 3/4 | ✅ BIEN: $\\frac{1}{2} + \\frac{3}{4}$
-❌ MAL: raiz(144) | ✅ BIEN: $\\sqrt{144}$
-❌ MAL: a^2+b^2=c^2 | ✅ BIEN: $a^2 + b^2 = c^2$
-❌ MAL: (-3) * (-5) = 15 | ✅ BIEN: $(-3) \\cdot (-5) = +15$
-
-1. TODA expresión matemática sin excepción DEBE estar delimitada por signos de dólar:
-   - En línea: $...$ (ejemplo: $\\frac{a}{b}$)
-   - En bloque o destacada: $$...$$ (ejemplo: $$\\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$)
-2. ESCAPADO DE BARRAS: Debes usar doble barra invertida (\\\\) para comandos LaTeX (ex: \\\\frac, \\\\cdot, \\\\sqrt, \\\\pm) para que el XML y JSON se procesen limpiamente sin corromper caracteres.
-3. ESTÁ PROHIBIDO DEVOLVER FRACCIONES O NÚMEROS EN FORMATO TEXTO PLANO COMO frac34, fracab, 1/2 O SIMILARES. SIEMPRE $\\frac{numerador}{denominador}$.
+❌ MAL: 3 * 5 o 3 x 5 | ✅ BIEN: $3 \\cdot 5$
+❌ MAL: 3.2 * 10^5 o 3.2x10^5 | ✅ BIEN: $3{,}2 \\cdot 10^5$
+❌ MAL: a^-3 o a^(-3) | ✅ BIEN: $a^{-3} = \\frac{1}{a^3}$
+❌ MAL: 2.3535... o 2,35(periodo) | ✅ BIEN: $2{,}\\widehat{35}$
+❌ MAL: 1,4666... | ✅ BIEN: $1{,}4\\widehat{6}$
+❌ MAL: abs(-7) o |-7| sin dólares | ✅ BIEN: $|-7| = 7$
+❌ MAL: pi * r^2 o 3.14 * r^2 | ✅ BIEN: $\\pi r^2$
+❌ MAL: 90º o 90° | ✅ BIEN: $90^\\circ$
+❌ MAL: Abase * h o A_base | ✅ BIEN: $A_{\\text{base}} \\cdot h$
+❌ MAL: x_media o media = x | ✅ BIEN: $\\bar{x} = \\frac{\\sum x_i}{N}$
+❌ MAL: { 2x+y=7, x-y=2 } | ✅ BIEN: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 2 \\end{cases}$$
+❌ MAL: raiz(a^2 + b^2) | ✅ BIEN: $c = \\sqrt{a^2 + b^2}$
 
 ================================================================================
 ⚡ FORMATO OBRIGATORIO DE CONTIDO:
@@ -342,15 +410,17 @@ CONTEXTO CURRICULAR OFICIAL FILTRADO (DECRETO 156/2022 - GALICIA):
 ${ragPayloadString}
 \`\`\`
 
-🚨 REGLA CRÍTICA DE COMPILACIÓN LATEX:
+🚨 REGLA CRÍTICA DE COMPILACIÓN LATEX (DICCIONARIO DE HIERRO):
 ERES UN COMPILADOR LATEX ESTRICTO. Está TERMINANTEMENTE PROHIBIDO escribir matemáticas en texto plano.
-Toda fracción, ecuación o expresión matemática debe ir en LaTeX con delimitadores $...$ (ej: $\\frac{a}{b}$).
-❌ MAL: frac34 | ✅ BIEN: $\\frac{3}{4}$
-❌ MAL: frac{a}{b} | ✅ BIEN: $\\frac{a}{b}$
-❌ MAL: x^2+2x | ✅ BIEN: $x^2 + 2x$
-❌ MAL: 1/2 + 3/4 | ✅ BIEN: $\\frac{1}{2} + \\frac{3}{4}$
+Toda expresión matemática debe ir en LaTeX delimitada por $...$ o $$...$$.
+• Fracciones: $\\frac{a}{b}$ | Potencias: $a^n$, $a^{-n}$ | Raíces: $\\sqrt{x}$, $\\sqrt[3]{x}$
+• Multiplicación: OBLIGATORIO $\\cdot$ (no * ni x) | Notación científica: $3{,}2 \\cdot 10^5$
+• Decimales periódicos: OBLIGATORIO $2{,}\\widehat{35}$ o $1{,}4\\widehat{6}$
+• Grados: $90^\\circ$ | Número Pi: $\\pi$ | Media aritmética: $\\bar{x}$
+• Subíndices: $A_{\\text{base}}$, $V = \\frac{1}{3} A_{\\text{base}} \\cdot h$
+• Sistemas: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 2 \\end{cases}$$
 
-Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\sqrt, etc.), algoritmos paso a paso, stickers temáticos e retos arcade accionables. Cero linguaxe infantil.`;
+Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\cdot, \\\\widehat, \\\\sqrt, etc.), algoritmos paso a paso, stickers temáticos e retos arcade accionables. Cero linguaxe infantil.`;
 
     return {
       systemPrompt: SYSTEM_PROMPT_ESO_MATES,
