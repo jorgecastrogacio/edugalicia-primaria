@@ -15,8 +15,10 @@ export default function SheetPreview({
   data,
   rawContent,
   activeTab: controlledActiveTab,
-  onTabChange
+  onTabChange,
+  etapa = "primaria"
 }) {
+  const isESO = etapa === 'eso' || String(curso || '').toLowerCase().includes('eso');
   const [internalTab, setInternalTab] = useState('dashboard');
   const activeTab = controlledActiveTab !== undefined ? controlledActiveTab : internalTab;
 
@@ -105,6 +107,7 @@ export default function SheetPreview({
               materia={materia}
               tema={tema}
               data={data}
+              etapa={etapa}
             />
           </div>
         )}
@@ -117,6 +120,7 @@ export default function SheetPreview({
               materia={materia}
               tema={tema}
               data={data}
+              etapa={etapa}
             />
           </div>
         )}
@@ -129,6 +133,7 @@ export default function SheetPreview({
               materia={materia}
               tema={tema}
               data={data}
+              etapa={etapa}
             />
           </div>
         )}
@@ -154,7 +159,7 @@ export default function SheetPreview({
                     <div className="flex items-center gap-2">
                       <span className="text-3xl">🛡️</span>
                       <span className="text-xs font-black uppercase tracking-widest bg-black text-white px-3.5 py-1.5 rounded-full shadow-[2px_2px_0px_#000]">
-                        Decreto 155/2022 • Xunta de Galicia
+                        {etapa === 'eso' ? 'Decreto 156/2022' : 'Decreto 155/2022'} • Xunta de Galicia
                       </span>
                     </div>
                     <span className="text-xs font-black uppercase bg-amber-300 border-3 border-black px-3 py-1 rounded-xl shadow-[3px_3px_0px_#000] rotate-2">
@@ -177,7 +182,7 @@ export default function SheetPreview({
 
                     <div className="space-y-2">
                       <span className="text-sm font-black uppercase tracking-wider bg-purple-300 text-black border-3 border-black shadow-[3px_3px_0px_#000] px-4 py-1.5 rounded-full inline-block rotate-1">
-                        ⭐ MISIÓN DIDÁCTICA PRIMARIA ⭐
+                        ⭐ {etapa === 'eso' ? 'MISIÓN DIDÁCTICA SECUNDARIA' : 'MISIÓN DIDÁCTICA PRIMARIA'} ⭐
                       </span>
                       <h1 className="text-3xl sm:text-5xl font-black text-black tracking-tighter uppercase max-w-xl mx-auto comic-title leading-tight">
                         {data?.titulo || tema || "Caderno de Aprendizaxe"}
@@ -192,7 +197,9 @@ export default function SheetPreview({
                       <div className="w-14 h-4 bg-white/70 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 -rotate-1 z-20 shadow-xs" />
                       
                       <div className="flex justify-between items-center border-b-2 border-dashed border-black/40 pb-2">
-                        <span className="font-black text-xs text-black uppercase">🕵️ Axente Investigador/a:</span>
+                        <span className="font-black text-xs text-black uppercase">
+                          {etapa === 'eso' ? '⚡ Axente Investigador/a:' : '🕵️ Axente Investigador/a:'}
+                        </span>
                         <span className="font-bold text-xs text-slate-800">________________________</span>
                       </div>
                       <div className="flex justify-between items-center border-b-2 border-dashed border-black/40 pb-2">
@@ -207,16 +214,18 @@ export default function SheetPreview({
                       {/* Código de barras estilo dossier confidencial */}
                       <div className="pt-1 flex items-center justify-between text-[8px] font-mono font-bold text-slate-700">
                         <span className="tracking-widest">||| | |||| || | ||| |||| |</span>
-                        <span>EXPEDIENTE-GAL-2026</span>
+                        <span>{etapa === 'eso' ? 'EXPEDIENTE-ESO-2026' : 'EXPEDIENTE-GAL-2026'}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Pie Portada */}
                   <footer className="border-t-4 border-black pt-3 flex justify-between items-center text-xs font-black">
-                    <span className="text-slate-800">EduGalicia Primaria LOMLOE</span>
+                    <span className="text-slate-800">
+                      {etapa === 'eso' ? 'EduGalicia ESO LOMLOE' : 'EduGalicia Primaria LOMLOE'}
+                    </span>
                     <span className="bg-black text-white px-3.5 py-1.5 rounded-xl shadow-[3px_3px_0px_#000]">
-                      3 Láminas de Contido A4 + Retos Gamificados
+                      {etapa === 'eso' ? '3 Láminas Cyber-Math A4 + Retos Gamificados' : '3 Láminas de Contido A4 + Retos Gamificados'}
                     </span>
                   </footer>
                 </div>
@@ -229,6 +238,7 @@ export default function SheetPreview({
                   materia={materia}
                   tema={tema}
                   data={data}
+                  etapa={etapa}
                 />
               </div>
 
@@ -239,6 +249,7 @@ export default function SheetPreview({
                   materia={materia}
                   tema={tema}
                   data={data}
+                  etapa={etapa}
                 />
               </div>
 
@@ -249,6 +260,7 @@ export default function SheetPreview({
                   materia={materia}
                   tema={tema}
                   data={data}
+                  etapa={etapa}
                 />
               </div>
             </div>
@@ -265,29 +277,29 @@ export default function SheetPreview({
       >
         {activeTab === 'dashboard' && (
           <div className="w-[794px] flex justify-center">
-            <SheetDashboardVisual curso={curso} materia={materia} tema={tema} data={data} />
+            <SheetDashboardVisual curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
           </div>
         )}
         {activeTab === 'mapa' && (
           <div className="w-[794px] flex justify-center">
-            <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} />
+            <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
           </div>
         )}
         {activeTab === 'retos' && (
           <div className="w-[794px] flex justify-center">
-            <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} />
+            <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
           </div>
         )}
         {activeTab === 'todo' && (
           <div className="w-[794px] space-y-6 flex flex-col items-center">
             <div className="w-[794px] flex justify-center">
-              <SheetDashboardVisual curso={curso} materia={materia} tema={tema} data={data} />
+              <SheetDashboardVisual curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
             </div>
             <div className="w-[794px] flex justify-center">
-              <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} />
+              <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
             </div>
             <div className="w-[794px] flex justify-center">
-              <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} />
+              <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
             </div>
           </div>
         )}

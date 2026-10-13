@@ -8,8 +8,10 @@ export default function SheetConceptMap({
   curso,
   materia,
   tema,
-  data
+  data,
+  etapa = "primaria"
 }) {
+  const isESO = etapa === 'eso' || String(curso || '').toLowerCase().includes('eso');
   const activeMascot = getUniversalMascot(materia, tema, curso);
 
   const conceptos = data?.conceptosClave && data.conceptosClave.length > 0 
@@ -43,11 +45,11 @@ export default function SheetConceptMap({
               <div className="flex items-center gap-2 mb-1.5">
                 <span className="text-[10px] font-black uppercase tracking-wider bg-sky-300 text-black border-2 border-black shadow-[2px_2px_0px_#000] px-2.5 py-0.5 rounded-full flex items-center gap-1 -rotate-1">
                   <MapPin className="w-3 h-3 text-black stroke-[3]" />
-                  Galicia LOMLOE
+                  {isESO ? 'Galicia ESO LOMLOE' : 'Galicia LOMLOE'}
                 </span>
                 <span className="text-[10px] font-black uppercase tracking-wider bg-purple-300 text-black border-2 border-black shadow-[2px_2px_0px_#000] px-2.5 py-0.5 rounded-full flex items-center gap-1 rotate-2">
                   <Sparkles className="w-3 h-3 text-black fill-black" />
-                  Mapa Mental Cómic
+                  {isESO ? 'Mapa Algorítmico' : 'Mapa Mental Cómic'}
                 </span>
               </div>
               <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tighter text-black [text-shadow:2px_2px_0_#000,-1px_-1px_0_#000,1px_-1px_0_#000,-1px_1px_0_#000,1px_1px_0_#000] leading-none mb-1">
@@ -62,7 +64,7 @@ export default function SheetConceptMap({
           <div className="relative text-right text-[11px] bg-sky-100 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-2xl p-2.5 min-w-[175px] shrink-0 -rotate-2">
             <div className="w-12 h-3.5 bg-white/60 border border-gray-400 absolute -top-2 left-1/2 -translate-x-1/2 rotate-1 z-20" />
             <div className="flex justify-between border-b-2 border-dashed border-black/40 pb-1 mb-1 font-black">
-              <span className="text-sky-950">🧭 Explorador:</span>
+              <span className="text-sky-950">{isESO ? '📐 Analista:' : '🧭 Explorador:'}</span>
               <span className="text-black">___________</span>
             </div>
             <div className="flex justify-between items-center text-[10px] font-black">
@@ -262,9 +264,9 @@ export default function SheetConceptMap({
 
       {/* 3. PIE DE PÁGINA */}
       <footer className="pt-2 border-t-3 border-black text-[10px] font-black text-slate-700 flex items-center justify-between avoid-break">
-        <span>EduGalicia • Decreto 155/2022 • Xunta de Galicia</span>
+        <span>EduGalicia • {etapa === 'eso' || isESO ? 'Decreto 156/2022' : 'Decreto 155/2022'} • Xunta de Galicia</span>
         <span className="font-black text-black uppercase bg-sky-300 border-2 border-black px-2.5 py-0.5 rounded-md shadow-[2px_2px_0px_#000]">
-          Lámina 2: Mapa Mental Orgánico A4
+          {isESO ? 'Lámina 2: Algoritmo Radial A4' : 'Lámina 2: Mapa Mental Orgánico A4'}
         </span>
       </footer>
     </div>

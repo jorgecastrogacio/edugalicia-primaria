@@ -156,6 +156,13 @@
   .quiz-card {
     font-size: clamp(9px, 1vw, 11px) !important;
   }
+
+  /* 9. Blindaje de Línea Horizontal de Fracción KaTeX */
+  .katex .mfrac .frac-line {
+    border-bottom-style: solid !important;
+    border-bottom-color: currentColor !important;
+    min-height: 1.2px !important;
+  }
 }
 
 /* ============================================================
@@ -331,3 +338,11 @@
   max-height: 100mm !important;
   height: auto !important;
 }
+
+/* Blindaje de Línea Horizontal de Fracción KaTeX Universal */
+.katex .mfrac .frac-line {
+  border-bottom-style: solid !important;
+  border-bottom-color: currentColor !important;
+  min-height: 1.2px !important;
+}
+

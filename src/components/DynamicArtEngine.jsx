@@ -11,8 +11,10 @@ export default function DynamicArtEngine({
   tema = "",
   materia = "",
   lema = "",
-  className = ""
+  className = "",
+  etapa = "primaria"
 }) {
+  const isESO = etapa === 'eso' || (String(materia).toLowerCase().includes('matemát') && (String(tema).toLowerCase().includes('eso') || String(tema).toLowerCase().includes('enteir') || String(tema).toLowerCase().includes('ecuac')));
   const mascot = getUniversalMascot(materia, tema);
   const normTema = (tema + " " + materia).toLowerCase();
 
@@ -135,7 +137,7 @@ export default function DynamicArtEngine({
           <div className="flex-1 text-center sm:text-left order-2 sm:order-1 space-y-2.5 min-w-0">
             <div className="inline-flex items-center gap-2 bg-black text-amber-300 font-black text-[10px] sm:text-xs uppercase px-3 py-1 rounded-full shadow-[2px_2px_0px_#000]">
               <span>🛡️</span>
-              <span>Decreto 155/2022 • Saber Básico Galego</span>
+              <span>{isESO ? 'Decreto 156/2022 • Saber Básico Secundaria' : 'Decreto 155/2022 • Saber Básico Galego'}</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-black tracking-tight leading-tight uppercase break-words">

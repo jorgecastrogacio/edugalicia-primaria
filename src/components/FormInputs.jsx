@@ -209,6 +209,13 @@ export default function FormInputs({
                   </button>
                   <button
                     type="button"
+                    onClick={() => onSelectTemplate('fraccionesESO')}
+                    className="text-[11px] font-bold bg-purple-50 hover:bg-purple-100 text-purple-900 px-3 py-1.5 rounded-lg border border-purple-300 transition flex items-center gap-1"
+                  >
+                    <span>🧮</span> 1º ESO: Fraccións e M.C.M.
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => onSelectTemplate('ecuacionesESO')}
                     className="text-[11px] font-bold bg-amber-50 hover:bg-amber-100 text-amber-900 px-3 py-1.5 rounded-lg border border-amber-300 transition flex items-center gap-1"
                   >

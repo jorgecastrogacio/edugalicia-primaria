@@ -444,6 +444,7 @@ export default function App() {
                 rawContent={rawAiResponse}
                 activeTab={activeTab}
                 onTabChange={setActiveTab}
+                etapa={etapa}
               />
             </div>
           </section>

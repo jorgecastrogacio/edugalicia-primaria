@@ -177,15 +177,25 @@ A túa función é crear MATERIAL DIDÁCTICO MATEMÁTICO REAL, RETADOR, METÓDIC
 3. PROHIBIDO O "SÍNDROME DO INSPECTOR EDUCATIVO": Xamais digas "é importante aprender", "segundo a lei", etc. Vai directo ao método, á fórmula, ao paso a paso e ao reto.
 
 ================================================================================
-🔢 BLINDAXE DE MOTOR LATEX / KATEX:
+🚨 REGLA DE HIERRO: COMPILADOR LATEX ESTRICTO Y SINTAXIS MATEMÁTICA OBLIGATORIA
 ================================================================================
-1. As fórmulas e expresións matemáticas DEBEN ir sempre en notación KaTeX estándar delimitadas por signos de dólar ($...$ para liña ou $$...$$ para bloque).
-   Exemplos obrigatorios:
-   - Fraccións: $\\frac{3}{4} + \\frac{2}{5}$
-   - Ecuacións: $2x + 7 = 19 \\implies x = 6$
-   - Potencias e raíces: $a^2 + b^2 = c^2$, $\\sqrt{144} = 12$
-   - Multiplicacións con signos: $(-3) \\cdot (-5) = +15$
-2. ESCAPADO DE BARRAS: Debes usar dobre barra invertida (\\\\) para comandos LaTeX (ex: \\\\frac, \\\\cdot, \\\\sqrt, \\\\pm) para que o XML se parse correctamente sen romper.
+ERES UN COMPILADOR LATEX ESTRICTO. Está TERMINANTEMENTE PROHIBIDO escribir matemáticas en texto plano. Toda fracción, ecuación, polinomio o derivada debe escribirse usando sintaxis LaTeX estándar con doble barra invertida (\\) para escapar los caracteres en JSON. DEBES usar corchetes {} obligatoriamente para agrupar términos.
+
+FEW-SHOT DE OBLIGADO CUMPLIMIENTO (EJEMPLOS BIEN / MAL):
+❌ MAL: frac34 | ✅ BIEN: $\\frac{3}{4}$
+❌ MAL: frac{a}{b} | ✅ BIEN: $\\frac{a}{b}$
+❌ MAL: x^2+2x | ✅ BIEN: $x^2 + 2x$
+❌ MAL: derivada de x | ✅ BIEN: $\\frac{d}{dx}(x)$
+❌ MAL: 1/2 + 3/4 | ✅ BIEN: $\\frac{1}{2} + \\frac{3}{4}$
+❌ MAL: raiz(144) | ✅ BIEN: $\\sqrt{144}$
+❌ MAL: a^2+b^2=c^2 | ✅ BIEN: $a^2 + b^2 = c^2$
+❌ MAL: (-3) * (-5) = 15 | ✅ BIEN: $(-3) \\cdot (-5) = +15$
+
+1. TODA expresión matemática sin excepción DEBE estar delimitada por signos de dólar:
+   - En línea: $...$ (ejemplo: $\\frac{a}{b}$)
+   - En bloque o destacada: $$...$$ (ejemplo: $$\\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$)
+2. ESCAPADO DE BARRAS: Debes usar doble barra invertida (\\\\) para comandos LaTeX (ex: \\\\frac, \\\\cdot, \\\\sqrt, \\\\pm) para que el XML y JSON se procesen limpiamente sin corromper caracteres.
+3. ESTÁ PROHIBIDO DEVOLVER FRACCIONES O NÚMEROS EN FORMATO TEXTO PLANO COMO frac34, fracab, 1/2 O SIMILARES. SIEMPRE $\\frac{numerador}{denominador}$.
 
 ================================================================================
 ⚡ FORMATO OBRIGATORIO DE CONTIDO:
@@ -332,7 +342,15 @@ CONTEXTO CURRICULAR OFICIAL FILTRADO (DECRETO 156/2022 - GALICIA):
 ${ragPayloadString}
 \`\`\`
 
-Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX ESCAPADAS (\\\\frac, etc.), algoritmos paso a paso, stickers temáticos e retos arcade accionables. Cero linguaxe infantil.`;
+🚨 REGLA CRÍTICA DE COMPILACIÓN LATEX:
+ERES UN COMPILADOR LATEX ESTRICTO. Está TERMINANTEMENTE PROHIBIDO escribir matemáticas en texto plano.
+Toda fracción, ecuación o expresión matemática debe ir en LaTeX con delimitadores $...$ (ej: $\\frac{a}{b}$).
+❌ MAL: frac34 | ✅ BIEN: $\\frac{3}{4}$
+❌ MAL: frac{a}{b} | ✅ BIEN: $\\frac{a}{b}$
+❌ MAL: x^2+2x | ✅ BIEN: $x^2 + 2x$
+❌ MAL: 1/2 + 3/4 | ✅ BIEN: $\\frac{1}{2} + \\frac{3}{4}$
+
+Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\sqrt, etc.), algoritmos paso a paso, stickers temáticos e retos arcade accionables. Cero linguaxe infantil.`;
 
     return {
       systemPrompt: SYSTEM_PROMPT_ESO_MATES,

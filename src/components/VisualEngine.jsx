@@ -12,8 +12,10 @@ export default function VisualEngine({
   materia = "",
   lema = "",
   modo = "hero", // "hero" | "card" | "badge"
-  className = ""
+  className = "",
+  etapa = "primaria"
 }) {
+  const isESO = etapa === 'eso' || (String(materia).toLowerCase().includes('matemát') && (String(tema).toLowerCase().includes('eso') || String(tema).toLowerCase().includes('enteir') || String(tema).toLowerCase().includes('ecuac')));
   const mascot = getUniversalMascot(materia, tema);
 
   // Si viene una combinación de emojis o un solo emoji
@@ -73,7 +75,7 @@ export default function VisualEngine({
           <div className="flex-1 text-center sm:text-left order-2 sm:order-1 space-y-2">
             <div className="inline-flex items-center gap-2 bg-black text-amber-300 font-black text-[10px] sm:text-xs uppercase px-3 py-1 rounded-full shadow-[2px_2px_0px_#000]">
               <span>🛡️</span>
-              <span>Decreto 155/2022 • Saber Básico</span>
+              <span>{isESO ? 'Decreto 156/2022 • Saber Básico Secundaria' : 'Decreto 155/2022 • Saber Básico'}</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-black tracking-tight leading-none uppercase">

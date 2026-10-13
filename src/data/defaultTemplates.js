@@ -403,9 +403,9 @@ export const DEFAULT_TEMPLATES = {
       artePrincipal: "⚡📐🧮💻",
       colorPaleta: "azul_espacial",
       lemaMascota: "¡Domina os signos positivos e negativos con precisión algorítmica!",
-      resumen: "Os **números enteiros (\\mathbb{Z})** comprenden os números positivos, o cero e os negativos, esenciais para expresar temperaturas baixo cero, niveis e balances.",
+      resumen: "Os **números enteiros ($\\mathbb{Z}$)** comprenden os números positivos, o cero e os negativos, esenciais para expresar temperaturas baixo cero, niveis e balances.",
       curiosidad: "Os números negativos foron considerados 'falsos' durante séculos en Europa ata que se popularizou o cálculo de débedas comerciais no Renacemento!",
-      trucoExamen: "¡Coidado co signo menos diante dun paréntese!: **-(a - b) = -a + b**. Cambia radicalmente o signo de todos os termos interiores!",
+      trucoExamen: "¡Coidado co signo menos diante dun paréntese!: **$-(a - b) = -a + b$**. Cambia radicalmente o signo de todos os termos interiores!",
       conceptosClave: [
         {
           emoji: "➕",
@@ -601,6 +601,112 @@ export const DEFAULT_TEMPLATES = {
         { id: 2, texto: "O Teorema de Pitágoras pode aplicarse en calquera clase de triángulo, aínda que non teña ningún ángulo recto.", correcta: "F", xp: 15 }
       ],
       retoCreativo: "Deseña un triángulo rectángulo Cyber-Math con catetos 9 e 12 cm. Calcula a hipotenusa mediante $c = \\sqrt{a^2 + b^2}$ paso a paso!"
+    }
+  },
+
+  fraccionesESO: {
+    etapa: "eso",
+    curso: "1º de ESO",
+    materia: "Matemáticas",
+    tema: "Operacións con Fraccións e Mínimo Común Múltiplo",
+    formato: "Dashboard Visual (1 página)",
+    data: {
+      titulo: "Operacións con Fraccións e M.C.M.",
+      artePrincipal: "🧮⚡📐👾",
+      colorPaleta: "azul_espacial",
+      lemaMascota: "¡Suma, resta e simplifica fraccións dominando o denominador común!",
+      resumen: "Unha fracción representa unha parte dun todo: **$\\frac{a}{b}$**, onde $a$ é o numerador e $b$ é o denominador. Para operar con distinto denominador, calculamos o **m.c.m.**",
+      curiosidad: "Os antigos exipcios só utilizaban fraccións unitarias (con numerador 1, coma $\\frac{1}{2}$, $\\frac{1}{3}$, $\\frac{1}{7}$), escribindo calquera outra fracción como suma delas!",
+      trucoExamen: "Para multiplicar fraccións faise en liña recta: **$\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{a \\cdot c}{b \\cdot d}$**. Para dividir, multiplícase en cruz: **$\\frac{a}{b} : \\frac{c}{d} = \\frac{a \\cdot d}{b \\cdot c}$**.",
+      conceptosClave: [
+        {
+          emoji: "➕",
+          icono: "➕",
+          pegatina: "⚡",
+          concepto: "Suma con Mesmo Denominador",
+          rareza: "epica",
+          elemento: "Aritmética Q",
+          poder: 90,
+          defensa: 85,
+          xp: 30,
+          descripcion: "Mantense o denominador e súmanse directamente os numeradores:\n**$$\\frac{2}{7} + \\frac{3}{7} = \\frac{5}{7}$$**"
+        },
+        {
+          emoji: "🔄",
+          icono: "🔄",
+          pegatina: "🎯",
+          concepto: "Redución a Común Denominador",
+          rareza: "lendaria",
+          elemento: "Aritmética Q",
+          poder: 95,
+          defensa: 90,
+          xp: 35,
+          descripcion: "Calcula o $\\text{m.c.m.}(b, d)$ e amplifica cada fracción:\n**$$\\frac{1}{2} + \\frac{1}{3} = \\frac{3}{6} + \\frac{2}{6} = \\frac{5}{6}$$**"
+        },
+        {
+          emoji: "✖️",
+          icono: "✖️",
+          pegatina: "📐",
+          concepto: "Multiplicación de Fraccións",
+          rareza: "epica",
+          elemento: "Álxebra Q",
+          poder: 92,
+          defensa: 95,
+          xp: 30,
+          descripcion: "Multiplícanse numeradores entre si e denominadores entre si:\n**$$\\frac{3}{4} \\cdot \\frac{2}{5} = \\frac{6}{20} = \\frac{3}{10}$$**"
+        },
+        {
+          emoji: "➗",
+          icono: "➗",
+          pegatina: "✂️",
+          concepto: "División (Multiplicación en Cruz)",
+          rareza: "dominada",
+          elemento: "Álxebra Q",
+          poder: 100,
+          defensa: 95,
+          xp: 40,
+          descripcion: "Multiplícase polo inverso da segunda fracción:\n**$$\\frac{3}{4} : \\frac{2}{3} = \\frac{3 \\cdot 3}{4 \\cdot 2} = \\frac{9}{8}$$**"
+        }
+      ],
+      tablaEsquema: {
+        columnas: ["Operación", "Fórmula Algorítmica", "Exemplo Resolto"],
+        filas: [
+          ["Suma / Resta", "$\\frac{a}{m} \\pm \\frac{b}{m} = \\frac{a \\pm b}{m}$", "$\\frac{5}{9} - \\frac{2}{9} = \\frac{3}{9} = \\frac{1}{3}$"],
+          ["Distinto denominador", "Calcular m.c.m. dos denominadores", "$\\frac{3}{4} + \\frac{1}{6} = \\frac{9}{12} + \\frac{2}{12} = \\frac{11}{12}$"],
+          ["Produto", "$\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{a \\cdot c}{b \\cdot d}$", "$\\frac{2}{3} \\cdot \\frac{5}{7} = \\frac{10}{21}$"],
+          ["Cociente", "$\\frac{a}{b} : \\frac{c}{d} = \\frac{a \\cdot d}{b \\cdot c}$", "$\\frac{4}{5} : \\frac{2}{3} = \\frac{12}{10} = \\frac{6}{5}$"]
+        ]
+      },
+      mapaCentral: {
+        titulo: "Algoritmo Q",
+        subtitulo: "Secundaria 1º ESO",
+        icono: "🧮",
+        satelites: [
+          { titulo: "Numerador / Denominador", icono: "🔢", sound: "¡POW!", pegatina: "📐", descripcion: "En $\\frac{a}{b}$, $b \\neq 0$ indica as partes en que se divide a unidade." },
+          { titulo: "Fraccións Equivalentes", icono: "⚖️", sound: "¡BOOM!", pegatina: "✨", descripcion: "Dúas fraccións son equivalentes se os produtos cruzados son iguais: **$ad = bc$**." },
+          { titulo: "Fracción Irredutible", icono: "✂️", sound: "¡ZAP!", pegatina: "🎯", descripcion: "Divídese numerador e denominador polo seu **m.c.d.** para simplificar ao máximo." },
+          { titulo: "Inverso dunha Fracción", icono: "🔄", sound: "¡TOP!", pegatina: "⚡", descripcion: "O inverso de $\\frac{a}{b}$ é $\\frac{b}{a}$, cumpríndose que $\\frac{a}{b} \\cdot \\frac{b}{a} = 1$." }
+        ]
+      },
+      preguntasTrivial: [
+        {
+          pregunta: "Cal é o resultado irreducible da suma $\\frac{1}{3} + \\frac{1}{6}$?",
+          opciones: ["$\\frac{1}{2}$", "$\\frac{2}{9}$", "$\\frac{3}{6}$", "$\\frac{2}{3}$"],
+          correctaIndex: 0,
+          xp: 25
+        },
+        {
+          pregunta: "Ao calcular $\\frac{2}{5} \\cdot \\frac{3}{4}$, cal é a fracción resultante simplificada?",
+          opciones: ["$\\frac{3}{10}$", "$\\frac{6}{20}$", "$\\frac{8}{15}$", "$\\frac{5}{9}$"],
+          correctaIndex: 0,
+          xp: 25
+        }
+      ],
+      palancasVF: [
+        { id: 1, texto: "Para sumar dúas fraccións con distinto denominador, débense sumar os numeradores e os denominadores directamente.", correcta: "F", xp: 15 },
+        { id: 2, texto: "A fracción $\\frac{3}{4}$ e a fracción $\\frac{6}{8}$ representan exactamente o mesmo número racional.", correcta: "V", xp: 15 }
+      ],
+      retoCreativo: "Debuxa un círculo dividido en 8 sectores iguais. Colorea $\\frac{3}{8}$ en azul e $\\frac{2}{8}$ en vermello, e calcula a fracción total coloreada e a fracción restante!"
     }
   }
 };
