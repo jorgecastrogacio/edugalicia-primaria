@@ -136,7 +136,7 @@ export default function SheetChallenges({
                     <span className="w-6 h-6 rounded-lg bg-purple-600 border-2 border-black text-white font-black text-xs flex items-center justify-center shrink-0 shadow-[2px_2px_0px_#000]">
                       #{idx + 1}
                     </span>
-                    <p className="text-xs md:text-sm font-black text-black leading-snug break-words flex items-center gap-1.5 flex-wrap">
+                    <p className="text-[clamp(10px,1.1vw,12.5px)] font-black text-black leading-snug break-words flex items-center gap-1.5 flex-wrap">
                       <span className="text-amber-500 select-none pointer-events-none text-xs">⚡</span>
                       <HighlightedText text={q.pregunta} />
                     </p>
@@ -148,7 +148,7 @@ export default function SheetChallenges({
                         key={oIdx}
                         type="button"
                         onClick={() => handleSelectOption(idx, oIdx)}
-                        className={`text-left text-[11px] p-2.5 rounded-xl border-3 border-black transition active:translate-y-1 active:shadow-none flex items-start gap-2 cursor-pointer ${
+                        className={`text-left text-[clamp(9px,0.95vw,11px)] p-2.5 rounded-xl border-3 border-black transition active:translate-y-1 active:shadow-none flex items-start gap-2 cursor-pointer ${
                           selectedOpt === oIdx
                             ? 'bg-purple-500 text-white font-black shadow-[4px_4px_0px_#000] scale-[1.02]'
                             : 'bg-yellow-50 text-black hover:bg-yellow-100 font-bold shadow-[3px_3px_0px_#000]'

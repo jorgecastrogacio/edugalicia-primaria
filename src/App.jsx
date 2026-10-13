@@ -57,6 +57,12 @@ export default function App() {
   const [loadingStepIndex, setLoadingStepIndex] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const loadingIntervalRef = useRef(null);
+  const abortControllerRef = useRef(null);
+  const currentEtapaRef = useRef(etapa);
+
+  useEffect(() => {
+    currentEtapaRef.current = etapa;
+  }, [etapa]);
 
   // 3. Modales
   const [isPromptModalOpen, setIsPromptModalOpen] = useState(false);
@@ -67,9 +73,16 @@ export default function App() {
   );
   const [rawAiResponse, setRawAiResponse] = useState('');
 
-  // BLINDAJE 2: Reset Atómico Seguro de Estado al cambiar de Etapa
+  // BLINDAJE 2 & FASE 1: Reset Atómico Seguro y Cancelación de Fetch en Vuelo al cambiar de Etapa
   const handleEtapaChange = (newEtapa) => {
     if (newEtapa === etapa) return;
+
+    // FASE 1: Abortar inmediatamente cualquier llamada LLM activa para erradicar condiciones de carrera
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsLoading(false);
 
     try {
       localStorage.setItem('edugalicia_etapa', newEtapa);
@@ -95,6 +108,21 @@ export default function App() {
       setSheetData(DEFAULT_TEMPLATES.ecosistemas.data);
     }
   };
+
+  // Sincronización con historial del navegador (Botones Atrás / Adelante del navegador)
+  useEffect(() => {
+    const handlePopState = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramEtapa = urlParams.get('etapa');
+      const targetEtapa = (paramEtapa === 'eso' || paramEtapa === 'primaria') ? paramEtapa : 'primaria';
+      if (targetEtapa !== currentEtapaRef.current) {
+        handleEtapaChange(targetEtapa);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const handleFormatoChange = (newFormato) => {
     setFormato(newFormato);
@@ -207,8 +235,16 @@ export default function App() {
     setErrorMessage('');
   };
 
-  // Disparo directo a Gemini con recuperación automática y cero bloqueos
+  // Disparo directo a Gemini con recuperación automática, cancelación de llamadas y cero bloqueos
   const handleGenerar = async () => {
+    // Abortar llamada previa si aún estuviera en vuelo
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    const requestEtapa = currentEtapaRef.current;
     setIsLoading(true);
     setErrorMessage('');
 
@@ -216,21 +252,37 @@ export default function App() {
       const resultText = await executeGeminiGeneration({
         model: "gemini-1.5-flash",
         systemPrompt: assembledPrompts.systemPrompt,
-        userPrompt: assembledPrompts.userPrompt
+        userPrompt: assembledPrompts.userPrompt,
+        signal: controller.signal
       });
+
+      // Blindaje contra condición de carrera: si la etapa cambió durante el fetch, descartar
+      if (controller.signal.aborted || currentEtapaRef.current !== requestEtapa) {
+        console.warn("EduGalicia: Respuesta de IA descartada por cambio de etapa durante la llamada.");
+        return;
+      }
 
       setRawAiResponse(resultText);
       const parsed = parseAiOutputToSheet(resultText, tema, cursoObj?.label, materiaObj?.nombre);
       setSheetData(parsed);
     } catch (err) {
-      console.warn("EduGalicia: Activando adaptación pedagógica inmediata tras aviso de IA:", err);
-      const offlineFallback = parseAiOutputToSheet("", tema, cursoObj?.label, materiaObj?.nombre);
-      if (offlineFallback) {
-        setSheetData(offlineFallback);
+      if (err.name === 'AbortError' || controller.signal.aborted) {
+        console.log("EduGalicia: Petición cancelada limpiamente.");
+        return;
       }
-      setErrorMessage(`Aviso: ${err.message || "Error al conectar con Gemini."} Hemos adaptado la lámina a "${tema}".`);
+      console.warn("EduGalicia: Activando adaptación pedagógica inmediata tras aviso de IA:", err);
+      if (currentEtapaRef.current === requestEtapa) {
+        const offlineFallback = parseAiOutputToSheet("", tema, cursoObj?.label, materiaObj?.nombre);
+        if (offlineFallback) {
+          setSheetData(offlineFallback);
+        }
+        setErrorMessage(`Aviso: ${err.message || "Error al conectar con Gemini."} Hemos adaptado la lámina a "${tema}".`);
+      }
     } finally {
-      setIsLoading(false);
+      if (abortControllerRef.current === controller) {
+        setIsLoading(false);
+        abortControllerRef.current = null;
+      }
     }
   };
 

@@ -129,7 +129,7 @@ export default function SheetConceptMap({
                         Órbita #{idx + 1}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/85 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line relative z-10">
+                    <p className="text-[clamp(9px,0.95vw,11px)] font-bold text-slate-900 leading-snug bg-white/85 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line relative z-10 satelite-desc">
                       <HighlightedText text={item.descripcion} />
                     </p>
                   </div>
@@ -216,7 +216,7 @@ export default function SheetConceptMap({
                         Órbita #{realIdx + 1}
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-900 leading-snug bg-white/85 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line relative z-10">
+                    <p className="text-[clamp(9px,0.95vw,11px)] font-bold text-slate-900 leading-snug bg-white/85 rounded-xl p-2 border border-black/20 break-words whitespace-pre-line relative z-10 satelite-desc">
                       <HighlightedText text={item.descripcion} />
                     </p>
                   </div>

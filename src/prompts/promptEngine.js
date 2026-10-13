@@ -400,7 +400,11 @@ const ACTIVE_MODELS = [
  * Ejecutor con la API de Google Gemini leyendo VITE_GEMINI_API_KEY desde .env.local
  * Incluye failover transparente y timeout con AbortController contra cuelgues.
  */
-export async function executeGeminiGeneration({ systemPrompt, userPrompt }) {
+export async function executeGeminiGeneration({ systemPrompt, userPrompt, signal }) {
+  if (signal?.aborted) {
+    throw new DOMException("Operación cancelada por el usuario", "AbortError");
+  }
+
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
   if (!apiKey || apiKey.trim() === "") {
@@ -426,9 +430,16 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt }) {
 
   // Intentar con la lista de modelos activos compatibles
   for (const model of ACTIVE_MODELS) {
+    if (signal?.aborted) {
+      throw new DOMException("Operación cancelada por el usuario", "AbortError");
+    }
+
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    const onExternalAbort = () => controller.abort();
+    if (signal) signal.addEventListener('abort', onExternalAbort, { once: true });
 
     try {
       const response = await fetch(endpoint, {
@@ -438,6 +449,7 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt }) {
         signal: controller.signal
       });
       clearTimeout(timeoutId);
+      if (signal) signal.removeEventListener('abort', onExternalAbort);
 
       if (response.ok) {
         const data = await response.json();
@@ -462,6 +474,9 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt }) {
       console.warn(`EduGalicia: Modelo ${model} no disponible (${lastError}). Intentando siguiente modelo...`);
     } catch (fetchErr) {
       clearTimeout(timeoutId);
+      if (signal?.aborted) {
+        throw new DOMException("Operación cancelada por el usuario", "AbortError");
+      }
       if (fetchErr.name === 'AbortError') {
         console.warn(`EduGalicia: Modelo ${model} tardó más de 15s. Pasando al siguiente modelo...`);
         lastError = `Timeout en ${model}`;

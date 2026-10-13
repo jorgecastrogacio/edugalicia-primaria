@@ -145,6 +145,17 @@
     page-break-inside: avoid !important;
     break-inside: avoid !important;
   }
+
+  /* 8. Tipografía Elástica Anti-Guillotina (Ajuste milimétrico A4) */
+  .cromo-desc,
+  .satelite-desc {
+    font-size: clamp(8.5px, 0.95vw, 10.5px) !important;
+    line-height: 1.25 !important;
+  }
+
+  .quiz-card {
+    font-size: clamp(9px, 1vw, 11px) !important;
+  }
 }
 
 /* ============================================================

@@ -38,6 +38,11 @@ export default function ExportToolbar({
     try {
       setIsExportingImage(true);
 
+      // FASE 2: Sincronización Gráfica de Fuentes (KaTeX WOFF2 + WebFonts para iOS Safari)
+      if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+
       // REQUISITO CRÍTICO CTO: Capturar el scrollHeight completo dinámico (evita efecto ticket cortado)
       const dynamicHeight = Math.max(targetNode.scrollHeight || 1123, 1123);
 

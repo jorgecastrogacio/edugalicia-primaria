@@ -255,7 +255,7 @@ export default function SheetDashboardVisual({
                           </div>
 
                           {/* Explicación Didáctica con ROTULADOR FLUORESCENTE */}
-                          <p className="text-[10.5px] sm:text-xs text-slate-900 font-bold leading-relaxed bg-white/85 border border-black/20 rounded-xl p-2.5 shadow-xs break-words whitespace-pre-line relative z-10">
+                          <p className="text-[clamp(9px,1.05vw,11.5px)] text-slate-900 font-bold leading-snug bg-white/85 border border-black/20 rounded-xl p-2.5 shadow-xs break-words whitespace-pre-line relative z-10 cromo-desc">
                             <HighlightedText text={item.descripcion} />
                           </p>
                         </div>
