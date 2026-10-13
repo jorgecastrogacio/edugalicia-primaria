@@ -355,8 +355,8 @@ export default function App() {
       </header>
 
       {/* Contenido Principal */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 print:p-0 print:m-0 print:max-w-none print:w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start print:block print:w-full print:m-0 print:p-0">
           {/* COLUMNA IZQUIERDA: Formulario de Entradas (no se imprime) */}
           <aside className="no-print lg:col-span-5 space-y-4">
             <FormInputs
@@ -425,7 +425,7 @@ export default function App() {
           </aside>
 
           {/* COLUMNA DERECHA: Visor A4 y Barra de Exportación */}
-          <section className="lg:col-span-7 space-y-4">
+          <section className="lg:col-span-7 space-y-4 print:w-full print:max-w-none print:m-0 print:p-0 print:block">
             {/* Barra de Acciones de Exportación */}
             <ExportToolbar
               sheetElementId="edugalicia-a4-sheet"
@@ -436,7 +436,7 @@ export default function App() {
             />
 
             {/* Visor WYSIWYG de la Hoja A4 con Selector de Láminas */}
-            <div className="overflow-x-auto pb-6 flex justify-center">
+            <div className="overflow-x-auto pb-6 flex justify-center print:overflow-visible print:p-0 print:m-0 print:block print:w-full">
               <SheetPreview
                 id="edugalicia-a4-sheet"
                 curso={cursoObj?.label || (isESO ? "1º de ESO" : "4º de Primaria")}

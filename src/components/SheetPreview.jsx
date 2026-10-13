@@ -105,11 +105,11 @@ export default function SheetPreview({
       {/* 2. CONTENEDOR VISIBLE RESPONSIVE EN PANTALLA (CERO HACKS DE SCALE) */}
       <div 
         id={id} 
-        className="w-full max-w-4xl flex flex-col items-center"
+        className="w-full max-w-4xl flex flex-col items-center print:max-w-none print:w-full print:block print:p-0 print:m-0"
       >
         {/* VISTA 1: DASHBOARD VISUAL (LÁMINA 1) */}
         {activeTab === 'dashboard' && (
-          <div className="sheet-page w-full flex justify-center">
+          <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
             <SheetDashboardVisual
               curso={curso}
               materia={materia}
@@ -122,7 +122,7 @@ export default function SheetPreview({
 
         {/* VISTA 2: MAPA CONCEPTUAL (LÁMINA 2) */}
         {activeTab === 'mapa' && (
-          <div className="sheet-page w-full flex justify-center">
+          <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
             <SheetConceptMap
               curso={curso}
               materia={materia}
@@ -135,7 +135,7 @@ export default function SheetPreview({
 
         {/* VISTA 3: BATALLA DE EXERCICIOS (LÁMINA 3) */}
         {activeTab === 'batalla' && (
-          <div className="sheet-page w-full flex justify-center">
+          <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
             <SheetExercises
               curso={curso}
               materia={materia}
@@ -148,7 +148,7 @@ export default function SheetPreview({
 
         {/* VISTA 4: RETOS Y PREGUNTAS (LÁMINA 4) */}
         {activeTab === 'retos' && (
-          <div className="sheet-page w-full flex justify-center">
+          <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
             <SheetChallenges
               curso={curso}
               materia={materia}
@@ -163,9 +163,9 @@ export default function SheetPreview({
         {activeTab === 'todo' && (() => {
           const activeMascot = getUniversalMascot(materia, tema, curso);
           return (
-            <div className="w-full space-y-6 flex flex-col items-center">
+            <div className="w-full space-y-6 flex flex-col items-center print:space-y-0 print:w-full print:block print:p-0 print:m-0">
               {/* MINI-PORTADA ESCOLAR: MISIÓN SECRETA DO EXPLORADOR */}
-              <div className="sheet-page w-full flex justify-center">
+              <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
                 <div className="a4-sheet bg-notebook text-slate-900 flex flex-col justify-between border-4 border-black shadow-[8px_8px_0px_0px_#000] p-8 relative">
                   {/* Chincheta Superior */}
                   <div className="absolute -top-3.5 -right-2 text-4xl z-20 select-none">📍</div>
@@ -253,7 +253,7 @@ export default function SheetPreview({
               </div>
 
               {/* LÁMINA 1: DASHBOARD */}
-              <div className="sheet-page w-full flex justify-center">
+              <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
                 <SheetDashboardVisual
                   curso={curso}
                   materia={materia}
@@ -264,7 +264,7 @@ export default function SheetPreview({
               </div>
 
               {/* LÁMINA 2: MAPA CONCEPTUAL */}
-              <div className="sheet-page w-full flex justify-center">
+              <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
                 <SheetConceptMap
                   curso={curso}
                   materia={materia}
@@ -275,7 +275,7 @@ export default function SheetPreview({
               </div>
 
               {/* LÁMINA 3: BATALLA DE EXERCICIOS */}
-              <div className="sheet-page w-full flex justify-center">
+              <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
                 <SheetExercises
                   curso={curso}
                   materia={materia}
@@ -286,7 +286,7 @@ export default function SheetPreview({
               </div>
 
               {/* LÁMINA 4: RETOS Y PREGUNTAS */}
-              <div className="sheet-page w-full flex justify-center">
+              <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
                 <SheetChallenges
                   curso={curso}
                   materia={materia}

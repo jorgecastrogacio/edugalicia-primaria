@@ -5,7 +5,7 @@
 
 @page {
   size: A4 portrait;
-  margin: 0; /* Erradica cabeceras y pies de página automáticos del navegador */
+  margin: 0mm; /* Erradica cabeceras y pies de página automáticos del navegador */
 }
 
 @media print {
@@ -20,7 +20,8 @@
   .settings-modal,
   .no-print-card,
   nav,
-  button {
+  button,
+  #edugalicia-a4-offscreen {
     display: none !important;
     visibility: hidden !important;
     height: 0 !important;
@@ -29,31 +30,7 @@
     padding: 0 !important;
   }
 
-  main {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  section.lg\:col-span-7 {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* 2. Mostrar la versión imprimible fija del Trivial */
-  .quiz-card-screen {
-    display: none !important;
-  }
-  .quiz-card-print {
-    display: block !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  /* 3. Ajuste universal de página y colores exactos para PDF */
+  /* 2. Ajuste universal de página y colores exactos para PDF */
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -62,46 +39,86 @@
   body, html {
     background: #ffffff !important;
     color: #0f172a !important;
-    width: 210mm !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  #root {
-    padding: 0 !important;
+  /* 3. DESMANTELAMIENTO TOTAL DE WRAPPERS DE PANTALLA (Grid 12 col, Flex, Max-Width, Overflow) */
+  #root,
+  #root > div,
+  .min-h-screen,
+  main,
+  main > div,
+  .grid,
+  .lg\:grid-cols-12,
+  section,
+  .lg\:col-span-7,
+  .overflow-x-auto {
+    display: block !important;
+    grid-template-columns: none !important;
+    grid-column: auto !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
     margin: 0 !important;
-    background: #ffffff !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+    gap: 0 !important;
+    transform: none !important;
   }
 
-  /* 4. Neutralización Estricta de Escala y Aislamiento de Hoja A4 */
-  #edugalicia-a4-sheet,
-  .a4-sheet,
-  div[style*="scale"] {
-    transform: none !important;
-    margin: 0 auto !important;
+  /* 4. Contenedor de Láminas #edugalicia-a4-sheet */
+  #edugalicia-a4-sheet {
+    display: block !important;
     width: 210mm !important;
     max-width: 210mm !important;
-    box-sizing: border-box !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: none !important;
     box-shadow: none !important;
-    border-radius: 0 !important;
-    padding: 8mm 10mm !important; /* Padding seguro interior */
-    overflow: visible !important; /* Fin del corte guillotina: el contenido fluye de forma orgánica */
-    position: relative !important;
+    background: transparent !important;
+    transform: none !important;
+  }
+
+  #edugalicia-a4-sheet > div {
+    display: block !important;
+    width: 210mm !important;
+    max-width: 210mm !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Neutralizar space-y-6 de pantalla entre láminas en impresión */
+  #edugalicia-a4-sheet > div > * + * {
+    margin-top: 0 !important;
   }
 
   /* 5. Clases de Hoja y Paginación Dinámica Multi-Página */
   .sheet-page {
+    display: block !important;
     width: 210mm !important;
     max-width: 210mm !important;
     min-height: 297mm !important;
-    height: auto !important; /* Altura elástica: permite expandirse a múltiples folios si el contenido lo requiere */
+    height: auto !important;
     box-sizing: border-box !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
     overflow: visible !important;
-    position: relative !important;
     page-break-after: always !important;
     break-after: page !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
     clear: both !important;
   }
 
@@ -110,10 +127,31 @@
     break-after: auto !important;
   }
 
+  /* 6. Folio A4 real (.a4-sheet) dentro de cada sheet-page */
+  .a4-sheet {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    width: 210mm !important;
+    min-width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 auto !important;
+    padding: 8mm 10mm !important; /* Margen seguro interior */
+    overflow: visible !important;
+    position: relative !important;
+    background-color: #ffffff !important;
+    transform: none !important;
+  }
+
   /* Portada Dedicada de Folio Completo */
   .notebook-cover-page {
-    min-height: 277mm !important;
-    height: 277mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
     break-after: page !important;
     page-break-after: always !important;
   }
@@ -129,10 +167,17 @@
     page-break-after: always !important;
   }
 
-  /* 6. Conservación Íntegra de Grids y Flexbox */
-  /* Los layouts de columnas ahora respiran y se respetan en impresión */
+  /* 7. Mostrar la versión imprimible fija del Trivial */
+  .quiz-card-screen {
+    display: none !important;
+  }
+  .quiz-card-print {
+    display: block !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
 
-  /* 7. Reglas de No-Corte Quirúrgicas por Componente Semántico (Paginación Atómica) */
+  /* 8. Reglas de No-Corte Quirúrgicas por Componente Semántico (Paginación Atómica) */
   .cromo-card,
   .satelite-card,
   .exercise-card,
