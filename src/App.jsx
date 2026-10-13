@@ -250,7 +250,6 @@ export default function App() {
 
     try {
       const resultText = await executeGeminiGeneration({
-        model: "gemini-1.5-flash",
         systemPrompt: assembledPrompts.systemPrompt,
         userPrompt: assembledPrompts.userPrompt,
         signal: controller.signal
@@ -276,7 +275,8 @@ export default function App() {
         if (offlineFallback) {
           setSheetData(offlineFallback);
         }
-        setErrorMessage(`Aviso: ${err.message || "Error al conectar con Gemini."} Hemos adaptado la lámina a "${tema}".`);
+        const cleanMsg = (err.message || "Error al conectar con Gemini.").replace(/^Aviso:\s*/i, '');
+        setErrorMessage(`${cleanMsg}. Hemos adaptado la lámina a "${tema}".`);
       }
     } finally {
       if (abortControllerRef.current === controller) {
@@ -391,6 +391,9 @@ export default function App() {
                     style={{ width: `${((loadingStepIndex + 1) / loadingMessages.length) * 100}%` }}
                   />
                 </div>
+                <p className="text-[10px] text-slate-500 font-medium">
+                  ⏳ A IA está a redixir o caderno completo (isto pode levar 25-40s)...
+                </p>
               </div>
             )}
 

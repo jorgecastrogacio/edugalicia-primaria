@@ -560,19 +560,20 @@ Devuelve exclusivamente el XML estructurado <edugalicia_lamina>...</edugalicia_l
   };
 }
 
-// Lista de modelos compatibles de última generación ordenados por velocidad y disponibilidad
+// Lista de modelos de última generación de Google Gemini ordenados por estabilidad y velocidad
+// Nota: modelos obsoletos como gemini-1.5-flash y gemini-2.0-flash fueron retirados en v1beta (404)
 const ACTIVE_MODELS = [
-  "gemini-3.5-flash-lite",
-  "gemini-3.1-flash-lite",
-  "gemini-3.1-flash-lite-preview",
-  "gemini-2.5-flash",
-  "gemini-2.0-flash",
-  "gemini-1.5-flash"
+  { id: "gemini-3.1-flash-lite", thinkingBudget: null },
+  { id: "gemini-3.6-flash", thinkingBudget: 0 },
+  { id: "gemini-3.5-flash", thinkingBudget: 0 },
+  { id: "gemini-3.1-flash-lite-preview", thinkingBudget: null },
+  { id: "gemini-3.8-flash", thinkingBudget: 0 },
+  { id: "gemini-flash-latest", thinkingBudget: null }
 ];
 
 /**
  * Ejecutor con la API de Google Gemini leyendo VITE_GEMINI_API_KEY desde .env.local
- * Incluye failover transparente y timeout con AbortController contra cuelgues.
+ * Incluye failover transparente, reintento en picos 503 y timeout extendido (50s).
  */
 export async function executeGeminiGeneration({ systemPrompt, userPrompt, signal }) {
   if (signal?.aborted) {
@@ -582,86 +583,109 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt, signal
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
   if (!apiKey || apiKey.trim() === "") {
-    throw new Error("No se ha detectado la clave API. Añade VITE_GEMINI_API_KEY=tu_clave en el archivo .env.local de la raíz del proyecto.");
+    throw new Error("No se ha detectado la clave API. Añade VITE_GEMINI_API_KEY=tu_clave en el archivo .env.local de la raíz del proyecto o en las variables de entorno de Vercel.");
   }
-
-  const payload = {
-    contents: [
-      {
-        role: "user",
-        parts: [
-          { text: `${systemPrompt}\n\n---\n\n${userPrompt}` }
-        ]
-      }
-    ],
-    generationConfig: {
-      temperature: 0.3,
-      maxOutputTokens: 8192,
-    }
-  };
 
   let lastError = null;
 
   // Intentar con la lista de modelos activos compatibles
-  for (const model of ACTIVE_MODELS) {
+  for (const modelConfig of ACTIVE_MODELS) {
+    const model = modelConfig.id;
+
     if (signal?.aborted) {
       throw new DOMException("Operación cancelada por el usuario", "AbortError");
     }
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-    const onExternalAbort = () => controller.abort();
-    if (signal) signal.addEventListener('abort', onExternalAbort, { once: true });
-
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      if (signal) signal.removeEventListener('abort', onExternalAbort);
-
-      if (response.ok) {
-        const data = await response.json();
-        const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (textOutput) {
-          return textOutput;
-        }
-      }
-
-      // Si hay error, inspeccionar
-      const errorData = await response.json().catch(() => ({}));
-      lastError = errorData?.error?.message || `HTTP ${response.status}`;
-
-      if (response.status === 429) {
-        throw new Error("LÍMITE ALCANZADO (Rate Limit 429): Has superado las peticiones por minuto. Espera 30 segundos y vuelve a pulsar el botón.");
-      }
-      if (response.status === 400 || response.status === 403) {
-        throw new Error("CLAVE INVÁLIDA (Error 400/403): La clave API configurada en .env.local no es válida o ha caducado en Google AI Studio.");
-      }
-
-      // Si es un error 404 o 503 temporal, continúa al siguiente modelo de la lista
-      console.warn(`EduGalicia: Modelo ${model} no disponible (${lastError}). Intentando siguiente modelo...`);
-    } catch (fetchErr) {
-      clearTimeout(timeoutId);
+    // Permitir hasta 2 intentos por modelo en caso de picos temporales de alta demanda (503)
+    for (let attempt = 1; attempt <= 2; attempt++) {
       if (signal?.aborted) {
         throw new DOMException("Operación cancelada por el usuario", "AbortError");
       }
-      if (fetchErr.name === 'AbortError') {
-        console.warn(`EduGalicia: Modelo ${model} tardó más de 15s. Pasando al siguiente modelo...`);
-        lastError = `Timeout en ${model}`;
-        continue;
+
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
+      const controller = new AbortController();
+      // Timeout seguro de 50s para permitir la generación completa de las 4 láminas didácticas
+      const timeoutId = setTimeout(() => controller.abort(), 50000);
+
+      const onExternalAbort = () => controller.abort();
+      if (signal) signal.addEventListener('abort', onExternalAbort, { once: true });
+
+      const generationConfig = {
+        temperature: 0.3,
+        maxOutputTokens: 3000
+      };
+      if (modelConfig.thinkingBudget !== null) {
+        generationConfig.thinkingConfig = { thinkingBudget: modelConfig.thinkingBudget };
       }
-      if (fetchErr.message.includes("LÍMITE ALCANZADO") || fetchErr.message.includes("CLAVE INVÁLIDA")) {
-        throw fetchErr;
+
+      const payload = {
+        contents: [
+          {
+            role: "user",
+            parts: [
+              { text: `${systemPrompt}\n\n---\n\n${userPrompt}` }
+            ]
+          }
+        ],
+        generationConfig
+      };
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (signal) signal.removeEventListener('abort', onExternalAbort);
+
+        if (response.ok) {
+          const data = await response.json();
+          const textOutput = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (textOutput) {
+            return textOutput;
+          }
+        }
+
+        // Si hay error HTTP, inspeccionar respuesta
+        const errorData = await response.json().catch(() => ({}));
+        lastError = errorData?.error?.message || `HTTP ${response.status}`;
+
+        if (response.status === 429) {
+          throw new Error("LÍMITE ALCANZADO (Rate Limit 429): Has superado las peticiones por minuto. Espera 30 segundos y vuelve a pulsar el botón.");
+        }
+        if (response.status === 400 && lastError.toLowerCase().includes("key")) {
+          throw new Error("CLAVE INVÁLIDA (Error 400/403): La clave API configurada no es válida o ha caducado en Google AI Studio.");
+        }
+
+        // En caso de pico temporal 503, esperar brevemente antes del 2º intento
+        if (response.status === 503 && attempt === 1) {
+          console.warn(`EduGalicia: Modelo ${model} ocupado (503). Reintentando en 1s...`);
+          await new Promise(r => setTimeout(r, 1000));
+          continue;
+        }
+
+        console.warn(`EduGalicia: Modelo ${model} no disponible (${lastError}). Probando siguiente modelo...`);
+        break; // Pasar al siguiente modelo de la lista
+      } catch (fetchErr) {
+        clearTimeout(timeoutId);
+        if (signal?.aborted) {
+          throw new DOMException("Operación cancelada por el usuario", "AbortError");
+        }
+        if (fetchErr.name === 'AbortError') {
+          console.warn(`EduGalicia: Modelo ${model} tardó más de 50s. Probando siguiente modelo...`);
+          lastError = `Timeout en ${model}`;
+          break;
+        }
+        if (fetchErr.message.includes("LÍMITE ALCANZADO") || fetchErr.message.includes("CLAVE INVÁLIDA")) {
+          throw fetchErr;
+        }
+        lastError = fetchErr.message;
+        break;
       }
-      lastError = fetchErr.message;
     }
   }
 
-  throw new Error(`No se pudo generar con los modelos disponibles: ${lastError}`);
+  throw new Error(`Non se puido conectar cos modelos dispoñibles de Google Gemini (${lastError}).`);
 }
