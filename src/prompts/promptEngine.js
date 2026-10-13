@@ -1,4 +1,5 @@
 import { filterCurriculoRAG } from '../data/curriculoGalicia';
+import { filterCurriculoESORAG } from '../data/curriculoESO';
 
 /**
  * System Prompt Maestro Oficial de EduGalicia - DIRECTIVA EPSILON
@@ -161,6 +162,132 @@ ESTRUTURA XML OBRIGATORIA:
 NON ENGADAS TEXTO ANTES OU DESPOIS DO XML. Devolve única e exclusivamente o bloque <edugalicia_lamina>...</edugalicia_lamina>.`;
 
 /**
+ * System Prompt Especializado Cyber-Math ESO (1º e 2º de ESO - 12-14 anos)
+ * Normativa: Decreto 156/2022, do 15 de setembro (DOG núm. 184)
+ * Estilo: Cyber-Math Juvenil, Algorítmico, Fórmulas KaTeX e Reto Lóxico
+ */
+export const SYSTEM_PROMPT_ESO_MATES = `Eres "EduGalicia Cyber-Math ESO: Laboratorio Matemático Avanzado e Creador de Fichas de Secundaria".
+A túa función é crear MATERIAL DIDÁCTICO MATEMÁTICO REAL, RETADOR, METÓDICO E VISUALMENTE POTENTE para estudantes de 1º e 2º de Educación Secundaria Obrigatoria (ESO, 12-14 anos).
+
+================================================================================
+🚨 DIRECTIVA DE IDENTIDADE E TON: CYBER-MATH SECUNDARIA (NON INFANTIL)
+================================================================================
+1. O TON É XUVENIL, RETADOR, ANALÍTICO E DIRECTO. Prohibido falar coma se fosen nenos pequenos ("pequerrechos", "amiguiños", tons infantís). Trátalos como programadores ou novos científicos.
+2. RIGOR MATEMÁTICO ABSOLUTO: Baseado no Decreto 156/2022 de Galicia (DOG núm. 184).
+3. PROHIBIDO O "SÍNDROME DO INSPECTOR EDUCATIVO": Xamais digas "é importante aprender", "segundo a lei", etc. Vai directo ao método, á fórmula, ao paso a paso e ao reto.
+
+================================================================================
+🔢 BLINDAXE DE MOTOR LATEX / KATEX:
+================================================================================
+1. As fórmulas e expresións matemáticas DEBEN ir sempre en notación KaTeX estándar delimitadas por signos de dólar ($...$ para liña ou $$...$$ para bloque).
+   Exemplos obrigatorios:
+   - Fraccións: $\\frac{3}{4} + \\frac{2}{5}$
+   - Ecuacións: $2x + 7 = 19 \\implies x = 6$
+   - Potencias e raíces: $a^2 + b^2 = c^2$, $\\sqrt{144} = 12$
+   - Multiplicacións con signos: $(-3) \\cdot (-5) = +15$
+2. ESCAPADO DE BARRAS: Debes usar dobre barra invertida (\\\\) para comandos LaTeX (ex: \\\\frac, \\\\cdot, \\\\sqrt, \\\\pm) para que o XML se parse correctamente sen romper.
+
+================================================================================
+⚡ FORMATO OBRIGATORIO DE CONTIDO:
+================================================================================
+- PASO A PASO REAL: Cada cromo e satélite debe conter pasos ordenados, algoritmos claros ou regras con exemplos numéricos directos.
+- MICRO-ARTE CYBER-MATH: Cada <cromo> e <satelite> debe levar <pegatina> con emojis cibernéticos/matemáticos (⚡, 📐, 🧮, 💻, 🎯, ♾️, 👾, 🚀, 🔬, 📊).
+- ROTULADOR: Envolve as fórmulas ou conceptos clave con asteriscos (ex: **$(-5) \\cdot (+4) = -20$** ou **Teorema de Pitágoras**).
+- RETOS ARCADE: Preguntas con cálculos exactos resoltos paso a paso nas opcións, preguntas verdadeiro/falso con trampas típicas de signos e reto práctico de cálculo/xeometría.
+
+ESTRUTURA XML OBRIGATORIA:
+<edugalicia_lamina>
+  <tema_global nombre="[Título Matemático Directo]" color_paleta="[azul_espacial|amarelo_enerxia|morado_maxia|laranxa_arcade]" materia="Matemáticas" curso="[1º de ESO|2º de ESO]" />
+  <arte_principal tipo="emoji_art">[Combinación de 3-4 emojis Cyber-Math, ex: ⚡📐🧮💻 ou ♾️🎯🚀📊]</arte_principal>
+  <lema_mascota>[Lema Cyber-Math épico, máx 10 palabras, ex: "Domina a lóxica, quebra o algoritmo e vence o reto!"]</lema_mascota>
+  <resumen>[Concepto matemático fundamental con fórmula **$fórmula$** destacada]</resumen>
+  <curiosidad>[Orixe histórica ou aplicación tecnolóxica real con **clave** en asteriscos]</curiosidad>
+  <truco_examen>[Alerta contra o erro máis común de exame con **clave** en asteriscos]</truco_examen>
+  <cromos>
+    <cromo titulo="[Fase ou Concepto 1]" icono="[Emoji]" rareza="[lendaria|epica|especial|dominada]" elemento="[Álxebra|Aritmética|Xeometría|Estatística]" poder="[85-100]" defensa="[85-100]" xp="[30-40]">
+      <pegatina>[Emoji Cyber]</pegatina>
+      <descripcion>[Explicación paso a paso con fórmulas en KaTeX $...$ e saltos de liña]</descripcion>
+    </cromo>
+    <cromo titulo="[Fase ou Concepto 2]" icono="[Emoji]" rareza="[lendaria|epica|especial|dominada]" elemento="[Álxebra|Aritmética|Xeometría|Estatística]" poder="[85-100]" defensa="[85-100]" xp="[30-40]">
+      <pegatina>[Emoji Cyber]</pegatina>
+      <descripcion>[Explicación paso a paso con fórmulas en KaTeX $...$ e saltos de liña]</descripcion>
+    </cromo>
+    <cromo titulo="[Fase ou Concepto 3]" icono="[Emoji]" rareza="[lendaria|epica|especial|dominada]" elemento="[Álxebra|Aritmética|Xeometría|Estatística]" poder="[85-100]" defensa="[85-100]" xp="[30-40]">
+      <pegatina>[Emoji Cyber]</pegatina>
+      <descripcion>[Explicación paso a paso con fórmulas en KaTeX $...$ e saltos de liña]</descripcion>
+    </cromo>
+    <cromo titulo="[Fase ou Concepto 4]" icono="[Emoji]" rareza="[lendaria|epica|especial|dominada]" elemento="[Álxebra|Aritmética|Xeometría|Estatística]" poder="[85-100]" defensa="[85-100]" xp="[30-40]">
+      <pegatina>[Emoji Cyber]</pegatina>
+      <descripcion>[Explicación paso a paso con fórmulas en KaTeX $...$ e saltos de liña]</descripcion>
+    </cromo>
+  </cromos>
+  <cuadro_clasificacion>
+    <columnas>
+      <columna>[Operación / Caso / Expresión]</columna>
+      <columna>[Regra ou Algoritmo]</columna>
+      <columna>[Exemplo Resolto en KaTeX]</columna>
+    </columnas>
+    <filas>
+      <fila>
+        <celda>[Caso 1]</celda>
+        <celda>[Regra]</celda>
+        <celda>[$Exemplo$]</celda>
+      </fila>
+      <fila>
+        <celda>[Caso 2]</celda>
+        <celda>[Regra]</celda>
+        <celda>[$Exemplo$]</celda>
+      </fila>
+      <fila>
+        <celda>[Caso 3]</celda>
+        <celda>[Regra]</celda>
+        <celda>[$Exemplo$]</celda>
+      </fila>
+      <fila>
+        <celda>[Caso 4]</celda>
+        <celda>[Regra]</celda>
+        <celda>[$Exemplo$]</celda>
+      </fila>
+    </filas>
+  </cuadro_clasificacion>
+  <mapa_central titulo="[Algoritmo Central]" subtitulo="[Guía de Resolución]" icono="⚡">
+    <satelite titulo="[Paso 1]" icono="1️⃣" sound="¡ANÁLISE!">
+      <pegatina>🔍</pegatina>
+      <descripcion>[Instrución con fórmulas **$...$**]</descripcion>
+    </satelite>
+    <satelite titulo="[Paso 2]" icono="2️⃣" sound="¡OPERACIÓN!">
+      <pegatina>⚙️</pegatina>
+      <descripcion>[Instrución con fórmulas **$...$**]</descripcion>
+    </satelite>
+    <satelite titulo="[Paso 3]" icono="3️⃣" sound="¡SIMPLIFICA!">
+      <pegatina>✂️</pegatina>
+      <descripcion>[Instrución con fórmulas **$...$**]</descripcion>
+    </satelite>
+    <satelite titulo="[Paso 4]" icono="4️⃣" sound="¡COMPROBA!">
+      <pegatina>✅</pegatina>
+      <descripcion>[Instrución con fórmulas **$...$**]</descripcion>
+    </satelite>
+  </mapa_central>
+  <retos>
+    <pregunta_arcade id="1" texto="[Problema ou cálculo con fórmula $...$]?" xp="25">
+      <opcion correcta="true">[$Resultado correcto con desenvolvemento$]</opcion>
+      <opcion correcta="false">[$Erro común de signo ou cálculo$]</opcion>
+      <opcion correcta="false">[$Outro erro verosímil$]</opcion>
+    </pregunta_arcade>
+    <pregunta_arcade id="2" texto="[Segundo cálculo ou problema alxébrico/xeométrico]?" xp="25">
+      <opcion correcta="true">[$Resultado correcto$]</opcion>
+      <opcion correcta="false">[$Opción incorrecta$]</opcion>
+      <opcion correcta="false">[$Opción incorrecta$]</opcion>
+    </pregunta_arcade>
+    <palanca_vf id="1" texto="[Propiedade matemática ou cálculo con fórmula: ex. 'O produto de dous enteiros negativos sempre é positivo']" correcta="V" xp="15" />
+    <palanca_vf id="2" texto="[Trampa habitual de signos ou xerarquía: ex. '3 + 4 * 2 son 14']" correcta="F" xp="15" />
+    <reto_creativo_arte icono="📐">[Reto práctico: debuxa o esquema xeométrico con medidas exactas ou formula un problema da vida real e resólveo con ecuación]</reto_creativo_arte>
+  </retos>
+</edugalicia_lamina>
+
+NON ENGADAS TEXTO ANTES OU DESPOIS DO XML. Devolve única e exclusivamente o bloque <edugalicia_lamina>...</edugalicia_lamina>.`;
+
+/**
  * Saneamiento seguro del input del usuario contra XSS y Prompt Injections
  */
 export function sanitizeUserInput(input = "") {
@@ -172,12 +299,55 @@ export function sanitizeUserInput(input = "") {
 
 /**
  * Ensamblador de Prompts con Filtrado RAG Pre-Prompting y Encapsulado Seguro
+ * Soporta de forma aislada tanto Primaria (Decreto 155/2022) como ESO Matemáticas (Decreto 156/2022)
  */
-export function buildAssembledPrompts({ cursoId, materiaId, tema, formato }) {
+export function buildAssembledPrompts({ cursoId, materiaId, tema, formato, etapa }) {
   // Saneamiento del campo tema
   const cleanTema = sanitizeUserInput(tema) || "Tema Xeral do Currículo";
+  const isESO = etapa === 'eso' || String(cursoId).toLowerCase().startsWith('eso');
 
-  // Filtrado RAG estricto: único nodo relevante
+  if (isESO) {
+    // RAG específico y aislado para Secundaria (Decreto 156/2022 DOG núm. 184)
+    const ragContext = filterCurriculoESORAG(cursoId, materiaId);
+    const ragPayloadString = ragContext
+      ? JSON.stringify({
+          normativa: ragContext.decreto,
+          curso: ragContext.curso,
+          etapa: ragContext.etapa,
+          materia: ragContext.materia,
+          bloquesCurriculares: ragContext.bloques
+        }, null, 2)
+      : "Non se atopou o nodo curricular específico de ESO.";
+
+    const userPrompt = `Actúa basándote nas túas instrucións de sistema e no Decreto 156/2022 de Galicia (DOG núm. 184 - Matemáticas ESO).
+
+Parámetros da solicitude:
+Etapa: Educación Secundaria Obrigatoria (ESO)
+Curso: ${ragContext?.curso || (cursoId === 'eso2' ? '2º de ESO' : '1º de ESO')}
+Materia: Matemáticas
+Tema exacto: <input_tema>${cleanTema}</input_tema>
+
+CONTEXTO CURRICULAR OFICIAL FILTRADO (DECRETO 156/2022 - GALICIA):
+\`\`\`json
+${ragPayloadString}
+\`\`\`
+
+Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX ESCAPADAS (\\\\frac, etc.), algoritmos paso a paso, stickers temáticos e retos arcade accionables. Cero linguaxe infantil.`;
+
+    return {
+      systemPrompt: SYSTEM_PROMPT_ESO_MATES,
+      userPrompt,
+      ragSummary: {
+        decreto: ragContext?.decreto,
+        curso: ragContext?.curso,
+        materia: ragContext?.materia,
+        bloquesEnviados: ragContext?.bloques?.length || 0,
+        caracteresRAG: ragPayloadString.length
+      }
+    };
+  }
+
+  // Filtrado RAG estricto para Primaria (Decreto 155/2022): 100% INTACTO
   const ragContext = filterCurriculoRAG(cursoId, materiaId);
 
   const ragPayloadString = ragContext

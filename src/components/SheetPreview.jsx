@@ -135,7 +135,7 @@ export default function SheetPreview({
 
         {/* VISTA 4: CUADERNO COMPLETO CON MINI-PORTADA ESCOLAR NEO-BRUTALISTA */}
         {activeTab === 'todo' && (() => {
-          const activeMascot = getUniversalMascot(materia, tema);
+          const activeMascot = getUniversalMascot(materia, tema, curso);
           return (
             <div className="w-full space-y-6 flex flex-col items-center">
               {/* MINI-PORTADA ESCOLAR: MISIÓN SECRETA DO EXPLORADOR */}

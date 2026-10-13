@@ -17,7 +17,7 @@ export default function SheetDashboardVisual({
   const isCellTopic = normTema.includes("célula") || normTema.includes("celula") || normTema.includes("citoplasma") || normTema.includes("orgánulo") || normTema.includes("organulo");
   const isSpaceTopic = normTema.includes("universo") || normTema.includes("sistema solar") || normTema.includes("planeta") || normTema.includes("terra") || normTema.includes("astro");
 
-  const activeMascot = getUniversalMascot(materia, tema);
+  const activeMascot = getUniversalMascot(materia, tema, curso);
   const SubjectIcon = activeMascot.component;
 
   const rotations = ["-rotate-2", "rotate-3", "-rotate-1", "rotate-2", "-rotate-3", "rotate-1"];

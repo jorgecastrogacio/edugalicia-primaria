@@ -14,7 +14,7 @@ export default function SheetChallenges({
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [tfAnswers, setTfAnswers] = useState({});
 
-  const activeMascot = getUniversalMascot(materia, tema);
+  const activeMascot = getUniversalMascot(materia, tema, curso);
 
   const handleSelectOption = (qIdx, optIdx) => {
     setSelectedAnswers((prev) => ({

@@ -390,6 +390,218 @@ export const DEFAULT_TEMPLATES = {
       ],
       retoCreativo: "Debuxa a Terra co seu eixo inclinado e sinala o lado de DÍA (iluminado polo Sol) e o lado de NOITE (escuro). ¡Colorea e escribe o teu nome!"
     }
+  },
+
+  enterosESO: {
+    etapa: "eso",
+    curso: "1º de ESO",
+    materia: "Matemáticas",
+    tema: "Números enteiros e regra dos signos",
+    formato: "Dashboard Visual (1 página)",
+    data: {
+      titulo: "Números Enteiros (Z) e Regra dos Signos",
+      artePrincipal: "⚡📐🧮💻",
+      colorPaleta: "azul_espacial",
+      lemaMascota: "¡Domina os signos positivos e negativos con precisión algorítmica!",
+      resumen: "Os **números enteiros (\\mathbb{Z})** comprenden os números positivos, o cero e os negativos, esenciais para expresar temperaturas baixo cero, niveis e balances.",
+      curiosidad: "Os números negativos foron considerados 'falsos' durante séculos en Europa ata que se popularizou o cálculo de débedas comerciais no Renacemento!",
+      trucoExamen: "¡Coidado co signo menos diante dun paréntese!: **-(a - b) = -a + b**. Cambia radicalmente o signo de todos os termos interiores!",
+      conceptosClave: [
+        {
+          emoji: "➕",
+          icono: "➕",
+          pegatina: "⚡",
+          concepto: "Suma con Mesmo Signo",
+          rareza: "epica",
+          elemento: "Aritmética Z",
+          poder: 90,
+          defensa: 85,
+          xp: 30,
+          descripcion: "Súmanse os seus valores absolutos e mantense o signo común:\n**$(+3) + (+5) = +8$**\n**$(-4) + (-6) = -10$**"
+        },
+        {
+          emoji: "⚖️",
+          icono: "⚖️",
+          pegatina: "🎯",
+          concepto: "Suma con Distinto Signo",
+          rareza: "lendaria",
+          elemento: "Aritmética Z",
+          poder: 95,
+          defensa: 90,
+          xp: 35,
+          descripcion: "Réstanse os valores absolutos e colócase o signo do número con maior valor absoluto:\n**$(-7) + (+10) = +3$**\n**$(+4) + (-9) = -5$**"
+        },
+        {
+          emoji: "✖️",
+          icono: "✖️",
+          pegatina: "👾",
+          concepto: "Regra dos Signos (Produto)",
+          rareza: "epica",
+          elemento: "Álxebra Z",
+          poder: 92,
+          defensa: 95,
+          xp: 30,
+          descripcion: "Signos iguais dan positivo; signos distintos dan negativo:\n**$(+) \\cdot (+) = +$** | **$(-) \\cdot (-) = +$**\n**$(+) \\cdot (-) = -$** | **$(-) \\cdot (+) = -$**"
+        },
+        {
+          emoji: "🪜",
+          icono: "🪜",
+          pegatina: "♾️",
+          concepto: "Xerarquía de Operacións",
+          rareza: "dominada",
+          elemento: "Prioridade",
+          poder: 100,
+          defensa: 95,
+          xp: 40,
+          descripcion: "1º Parénteses e corchetes\n2º Potencias e raíces cadradas\n3º Multiplicacións e divisións (de esquerda a dereita)\n4º Sumas e restas"
+        }
+      ],
+      tablaEsquema: {
+        columnas: ["Operación", "Regra de Signos", "Exemplo Resolto"],
+        filas: [
+          ["Multiplicación", "Negativo por Negativo = Positivo", "$(-6) \\cdot (-4) = +24$"],
+          ["División", "Positivo entre Negativo = Negativo", "$(30) : (-5) = -6$"],
+          ["Resta con paréntese", "Menos diante de menos convértese en máis", "$5 - (-8) = 5 + 8 = 13$"],
+          ["Operación combinada", "Prioridade do produto fronte á suma", "$-2 + 3 \\cdot (-4) = -2 - 12 = -14$"]
+        ]
+      },
+      mapaCentral: {
+        titulo: "Algoritmo Z",
+        subtitulo: "Secundaria 1º ESO",
+        icono: "⚡",
+        satelites: [
+          { titulo: "Recta Numérica", icono: "📏", sound: "¡ZAP!", pegatina: "📍", descripcion: "Os números negativos sitúanse á esquerda do 0: **$-5 < -2$**." },
+          { titulo: "Valor Absoluto", icono: "📦", sound: "¡POW!", pegatina: "🔢", descripcion: "Distancia ata a orixe sen considerar signo: **$|-7| = 7$**." },
+          { titulo: "Regra do Produto", icono: "✖️", sound: "¡BOOM!", pegatina: "⚡", descripcion: "Multiplicar dous negativos produce un positivo: **$(-a) \\cdot (-b) = ab$**." },
+          { titulo: "Parénteses", icono: "🧱", sound: "¡TOP!", pegatina: "🎯", descripcion: "Elimina signos anidados antes de sumar os termos: **$+(-) \\to -$**, **$-(-) \\to +$**." }
+        ]
+      },
+      preguntasTrivial: [
+        {
+          pregunta: "Cal é o resultado exacto da operación combinada: $(-5) + 3 \\cdot (-2)$?",
+          opciones: ["-11", "+1", "-16", "+11"],
+          correctaIndex: 0,
+          xp: 25
+        },
+        {
+          pregunta: "Se multiplicamos tres números enteiros negativos entre si, que signo terá o produto final?",
+          opciones: ["Signo negativo (-)", "Signo positivo (+)", "Depende do valor absoluto", "Sempre cero"],
+          correctaIndex: 0,
+          xp: 25
+        }
+      ],
+      palancasVF: [
+        { id: 1, texto: "O produto de dous números enteiros negativos sempre dá como resultado un número positivo.", correcta: "V", xp: 15 },
+        { id: 2, texto: "O número -9 é estritamente maior ca o número -2 na recta numérica real.", correcta: "F", xp: 15 }
+      ],
+      retoCreativo: "Debuxa unha recta numérica Cyber-Math do -10 ao +10. Representa un batiscafo a -7 m e un satélite a +9 m, calculando a diferenza en metros!"
+    }
+  },
+
+  ecuacionesESO: {
+    etapa: "eso",
+    curso: "2º de ESO",
+    materia: "Matemáticas",
+    tema: "Ecuacións de primeiro grao e Teorema de Pitágoras",
+    formato: "Dashboard Visual (1 página)",
+    data: {
+      titulo: "Ecuacións Lineais e Teorema de Pitágoras",
+      artePrincipal: "📐⚡🎯🚀",
+      colorPaleta: "laranxa_arcade",
+      lemaMascota: "¡Despexa a incógnita x e calcula a hipotenusa co poder da xeometría!",
+      resumen: "Unha **ecuación de 1º grao** é unha igualdade alxébrica con incógnitas. O **Teorema de Pitágoras** conecta os catetos e a hipotenusa: **$a^2 + b^2 = c^2$**.",
+      curiosidad: "Pitágoras e a súa escola consideraban que os números rexían o cosmos, e o descubrimento de que $\\sqrt{2}$ non era racional causou unha verdadeira crise mística!",
+      trucoExamen: "Regra da balanza: o que está sumando pasa restando, e o que está multiplicando pasa dividindo con TODO o seu signo: **$-3x = 12 \\implies x = \\frac{12}{-3} = -4$**.",
+      conceptosClave: [
+        {
+          emoji: "🎯",
+          icono: "🎯",
+          pegatina: "⚡",
+          concepto: "Despexar a Incógnita x",
+          rareza: "epica",
+          elemento: "Álxebra ESO",
+          poder: 95,
+          defensa: 90,
+          xp: 35,
+          descripcion: "Agrupa as incógnitas nun membro e os números noutro:\n**$3x + 5 = 20 \\implies 3x = 15 \\implies x = 5$**"
+        },
+        {
+          emoji: "📐",
+          icono: "📐",
+          pegatina: "🔺",
+          concepto: "Teorema de Pitágoras",
+          rareza: "lendaria",
+          elemento: "Xeometría ESO",
+          poder: 100,
+          defensa: 95,
+          xp: 40,
+          descripcion: "En calquera triángulo rectángulo:\n**$c^2 = a^2 + b^2$**\n**$c = \\sqrt{a^2 + b^2}$**"
+        },
+        {
+          emoji: "✂️",
+          icono: "✂️",
+          pegatina: "🔢",
+          concepto: "Ecuacións con Parénteses",
+          rareza: "epica",
+          elemento: "Álxebra ESO",
+          poder: 90,
+          defensa: 92,
+          xp: 35,
+          descripcion: "Aplica a propiedade distributiva antes de mover termos:\n**$2(x - 3) = 8 \\implies 2x - 6 = 8 \\implies 2x = 14 \\implies x = 7$**"
+        },
+        {
+          emoji: "📏",
+          icono: "📏",
+          pegatina: "📐",
+          concepto: "Cálculo dun Cateto",
+          rareza: "especial",
+          elemento: "Xeometría ESO",
+          poder: 88,
+          defensa: 90,
+          xp: 30,
+          descripcion: "Para despexar un cateto coñecendo a hipotenusa:\n**$a^2 = c^2 - b^2 \\implies a = \\sqrt{c^2 - b^2}$**\nExemplo: $\\sqrt{5^2 - 3^2} = \\sqrt{16} = 4$"
+        }
+      ],
+      tablaEsquema: {
+        columnas: ["Estrutura / Fórmula", "Algoritmo de Paso", "Exemplo Resolto"],
+        filas: [
+          ["$ax + b = c$", "Resta $b$ e divide entre $a$", "$4x + 8 = 24 \\implies 4x = 16 \\implies x = 4$"],
+          ["$ax + b = cx + d$", "Agrupa incógnitas á esquerda", "$5x - 3 = 2x + 9 \\implies 3x = 12 \\implies x = 4$"],
+          ["$c = \\sqrt{a^2 + b^2}$", "Suma cadrados dos catetos e extrae raíz", "Catetos 6 e 8: $c = \\sqrt{36 + 64} = \\sqrt{100} = 10$"],
+          ["$a = \\sqrt{c^2 - b^2}$", "Resta o cadrado do cateto á hipotenusa", "Hipotenusa 13, cateto 5: $a = \\sqrt{169 - 25} = \\sqrt{144} = 12$"]
+        ]
+      },
+      mapaCentral: {
+        titulo: "Lóxica de Ecuacións",
+        subtitulo: "Resolución e Xeometría",
+        icono: "📐",
+        satelites: [
+          { titulo: "Distributiva", icono: "🔄", sound: "¡POW!", pegatina: "⚡", descripcion: "Multiplica o número exterior por cada termo do paréntese." },
+          { titulo: "Transposición", icono: "⚖️", sound: "¡BOOM!", pegatina: "🎯", descripcion: "Ao cruzar o signo igual, cada termo cambia á operación inversa." },
+          { titulo: "Hipotenusa", icono: "📐", sound: "¡ZAP!", pegatina: "🔺", descripcion: "É sempre o lado oposto ao ángulo recto de 90 graos e o máis longo." },
+          { titulo: "Comprobación", icono: "✅", sound: "¡TOP!", pegatina: "💻", descripcion: "Substitúe a solución achada na ecuación inicial para verificar $0 = 0$." }
+        ]
+      },
+      preguntasTrivial: [
+        {
+          pregunta: "Cal é a solución da ecuación: $3x - 7 = 2x + 5$?",
+          opciones: ["x = 12", "x = -2", "x = 2", "x = -12"],
+          correctaIndex: 0,
+          xp: 25
+        },
+        {
+          pregunta: "Nun triángulo rectángulo con catetos de lonxitude 3 cm e 4 cm, canto mide a hipotenusa?",
+          opciones: ["5 cm", "7 cm", "25 cm", "6 cm"],
+          correctaIndex: 0,
+          xp: 25
+        }
+      ],
+      palancasVF: [
+        { id: 1, texto: "Na ecuación $2x = 10$, a incógnita x despexase dividindo 10 entre 2, obtendo x = 5.", correcta: "V", xp: 15 },
+        { id: 2, texto: "O Teorema de Pitágoras pode aplicarse en calquera clase de triángulo, aínda que non teña ningún ángulo recto.", correcta: "F", xp: 15 }
+      ],
+      retoCreativo: "Deseña un triángulo rectángulo Cyber-Math con catetos 9 e 12 cm. Calcula a hipotenusa mediante $c = \\sqrt{a^2 + b^2}$ paso a paso!"
+    }
   }
 };
 
@@ -447,8 +659,8 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
       artePrincipal = "🌍🚀✨";
     } else if (normTopic.includes('nature') || normTopic.includes('ecosistem') || normTopic.includes('animal') || normTopic.includes('árbor')) {
       artePrincipal = "🌳🦊🍃";
-    } else if (normTopic.includes('matemát') || normTopic.includes('númer') || normTopic.includes('cálcul') || normTopic.includes('fracc')) {
-      artePrincipal = "🔢📐⚡";
+    } else if (normTopic.includes('matemát') || normTopic.includes('númer') || normTopic.includes('cálcul') || normTopic.includes('fracc') || normTopic.includes('álxebra') || normTopic.includes('pitágoras') || normTopic.includes('ecuac') || normTopic.includes('enteir')) {
+      artePrincipal = "⚡📐🧮💻";
     } else if (normTopic.includes('inglés') || normTopic.includes('english')) {
       artePrincipal = "🇬🇧🎒⭐";
     } else if (normTopic.includes('lingua') || normTopic.includes('lengua') || normTopic.includes('lectur')) {

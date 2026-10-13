@@ -454,6 +454,76 @@ export const ILLUSTRATIONS = {
       <circle cx="44" cy="90" r="3" fill="#FBBF24" stroke="#000000" strokeWidth="1.5" />
       <circle cx="76" cy="90" r="3" fill="#38BDF8" stroke="#000000" strokeWidth="1.5" />
     </svg>
+  ),
+
+  // 9. Cyber-Math Mascots (Secundaria ESO - 12-14 anos)
+  cyberPitagoras: (props) => (
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      {/* Halo geométrico cyber */}
+      <circle cx="60" cy="60" r="54" stroke="#6366F1" strokeWidth="3" strokeDasharray="6 4" />
+      <polygon points="60,14 104,96 16,96" stroke="#EC4899" strokeWidth="2.5" fill="none" opacity="0.6" />
+      {/* Cabeza / Cara */}
+      <circle cx="60" cy="56" r="32" fill="#FDE047" stroke="#000000" strokeWidth="3.5" />
+      {/* Pelo y barba geométrica arcade */}
+      <path d="M34 50C34 36 46 26 60 26C74 26 86 36 86 50" stroke="#000000" strokeWidth="4" strokeLinecap="round" />
+      <polygon points="46,76 74,76 60,94" fill="#3B82F6" stroke="#000000" strokeWidth="2.5" />
+      {/* Gafas Pixel/Cyberpunk */}
+      <polygon points="38,48 56,48 54,58 40,58" fill="#0F172A" stroke="#000000" strokeWidth="2" />
+      <polygon points="64,48 82,48 80,58 66,58" fill="#0F172A" stroke="#000000" strokeWidth="2" />
+      <line x1="56" y1="52" x2="64" y2="52" stroke="#000000" strokeWidth="3" />
+      {/* Brillo neón en visor */}
+      <line x1="42" y1="52" x2="52" y2="52" stroke="#22D3EE" strokeWidth="2" />
+      <line x1="68" y1="52" x2="78" y2="52" stroke="#22D3EE" strokeWidth="2" />
+      {/* Sonrisa audaz */}
+      <path d="M52 68C56 71 64 71 68 68" stroke="#000000" strokeWidth="3" strokeLinecap="round" />
+      {/* Mini triángulo a² + b² = c² flotante */}
+      <polygon points="90,20 110,40 90,40" fill="#A855F7" stroke="#000000" strokeWidth="2" />
+    </svg>
+  ),
+
+  quantumBot: (props) => (
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      {/* Grid cyber de fondo */}
+      <rect x="10" y="10" width="100" height="100" rx="20" fill="#0F172A" stroke="#000000" strokeWidth="4" />
+      <line x1="20" y1="60" x2="100" y2="60" stroke="#334155" strokeWidth="1.5" strokeDasharray="3 3" />
+      <line x1="60" y1="20" x2="60" y2="100" stroke="#334155" strokeWidth="1.5" strokeDasharray="3 3" />
+      {/* Antenas receptoras */}
+      <line x1="60" y1="26" x2="60" y2="14" stroke="#F43F5E" strokeWidth="3" />
+      <circle cx="60" cy="12" r="4" fill="#F43F5E" />
+      {/* Cabeza robotica */}
+      <rect x="28" y="28" width="64" height="46" rx="12" fill="#1E293B" stroke="#38BDF8" strokeWidth="3" />
+      {/* Visor digital con fórmula KaTeX/Matrix */}
+      <rect x="36" y="36" width="48" height="28" rx="6" fill="#020617" stroke="#22C55E" strokeWidth="2" />
+      <text x="60" y="55" fontSize="13" textAnchor="middle" fill="#4ADE80" fontFamily="monospace" fontWeight="bold">f(x)=x²</text>
+      {/* Medidor inferior */}
+      <rect x="36" y="82" width="48" height="18" rx="6" fill="#3B82F6" stroke="#000000" strokeWidth="2.5" />
+      <circle cx="48" cy="91" r="3" fill="#FBBF24" />
+      <circle cx="60" cy="91" r="3" fill="#EC4899" />
+      <circle cx="72" cy="91" r="3" fill="#10B981" />
+    </svg>
+  ),
+
+  vectorAda: (props) => (
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <circle cx="60" cy="60" r="52" fill="#FEF08A" stroke="#000000" strokeWidth="3.5" />
+      {/* Cabello cyberpunk púrpura */}
+      <path d="M30 62C26 40 40 22 60 22C80 22 94 40 90 62C88 50 82 32 60 32C38 32 32 50 30 62Z" fill="#9333EA" stroke="#000000" strokeWidth="2.5" />
+      {/* Auriculares gamer / hacker */}
+      <rect x="22" y="44" width="8" height="22" rx="4" fill="#EC4899" stroke="#000000" strokeWidth="2" />
+      <rect x="90" y="44" width="8" height="22" rx="4" fill="#EC4899" stroke="#000000" strokeWidth="2" />
+      <path d="M26 44C26 24 94 24 94 44" stroke="#000000" strokeWidth="3" />
+      {/* Cara */}
+      <circle cx="60" cy="60" r="28" fill="#FDE047" stroke="#000000" strokeWidth="2.5" />
+      {/* Ojos manga determinados */}
+      <polygon points="46,54 54,58 48,60" fill="#0F172A" />
+      <polygon points="74,54 66,58 72,60" fill="#0F172A" />
+      {/* Tatuaje cyber en mejilla (símbolo raíz) */}
+      <path d="M40 68L42 72L46 66H49" stroke="#06B6D4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Sonrisa segura */}
+      <path d="M54 74C58 76 62 76 66 74" stroke="#000000" strokeWidth="2.5" strokeLinecap="round" />
+      {/* Compás flotante */}
+      <path d="M84 76L96 98M96 98L104 80" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" />
+    </svg>
   )
 };
 
@@ -536,13 +606,70 @@ export const MASCOT_ROSTER = [
 ];
 
 /**
- * Función que asigna UNA de las 8 mascotas universales de forma inteligente y determinista.
- * NINGÚN tema quedará jamás vacío o sin mascota.
+ * Catálogo de Mascotas Especializadas Cyber-Math ESO (1º e 2º de ESO - 12-14 anos)
+ * Estética: Manga, Arcade Vectorial, Hacker Lóxico e Xeometría
  */
-export function getUniversalMascot(materia = "", tema = "") {
-  const norm = (materia + " " + tema).toLowerCase();
+export const ESO_MASCOT_ROSTER = [
+  {
+    id: "cyberPitagoras",
+    name: "Cyber-Pitágoras",
+    role: "Mestre da Xeometría Vectorial",
+    component: ILLUSTRATIONS.cyberPitagoras,
+    badge: "📐 Teorema Master",
+    color: "bg-indigo-300",
+    quote: "¡O universo está codificado en números e triángulos rectángulos!"
+  },
+  {
+    id: "quantumBot",
+    name: "Quantum-Bot Z",
+    role: "Algoritmo de Precisión",
+    component: ILLUSTRATIONS.quantumBot,
+    badge: "⚡ Núcleo Z",
+    color: "bg-cyan-300",
+    quote: "¡Executando regra dos signos... 0 erros atopados no sistema!"
+  },
+  {
+    id: "vectorAda",
+    name: "Ada Vectorial",
+    role: "Hacker do Sentido Alxébrico",
+    component: ILLUSTRATIONS.vectorAda,
+    badge: "🎯 Despexadora Pro",
+    color: "bg-fuchsia-300",
+    quote: "¡Despexa a incógnita x e vencerás calquera desafío!"
+  }
+];
 
-  // 1. Detección por palabras clave directas
+/**
+ * Función que asigna UNA de las mascotas universales de forma inteligente y determinista.
+ * En Secundaria ESO asigna avatares Cyber-Math acordes a la madurez de 12-14 años.
+ */
+export function getUniversalMascot(materia = "", tema = "", curso = "") {
+  const norm = (materia + " " + tema + " " + curso).toLowerCase();
+  const isESO = norm.includes("eso") || norm.includes("secundaria") || norm.includes("enteir") || norm.includes("signo") || norm.includes("pitágoras") || norm.includes("ecuac") || norm.includes("álxebra") || norm.includes("monomio");
+
+  // Roster Especializado Cyber-Math para ESO
+  if (isESO) {
+    if (norm.includes("pitágoras") || norm.includes("xeometr") || norm.includes("triángul") || norm.includes("rectángul") || norm.includes("cateto") || norm.includes("hipotenusa")) {
+      return ESO_MASCOT_ROSTER[0]; // Cyber-Pitágoras
+    }
+    if (norm.includes("enteir") || norm.includes("signo") || norm.includes("cálcul") || norm.includes("potenc") || norm.includes("operac") || norm.includes("fracc")) {
+      return ESO_MASCOT_ROSTER[1]; // Quantum-Bot Z
+    }
+    if (norm.includes("ecuac") || norm.includes("álxebra") || norm.includes("incógnit") || norm.includes("monomio") || norm.includes("despexar")) {
+      return ESO_MASCOT_ROSTER[2]; // Ada Vectorial
+    }
+
+    // Determinista por hash
+    let hash = 0;
+    for (let i = 0; i < norm.length; i++) {
+      hash = (hash << 5) - hash + norm.charCodeAt(i);
+      hash |= 0;
+    }
+    const idx = Math.abs(hash) % ESO_MASCOT_ROSTER.length;
+    return ESO_MASCOT_ROSTER[idx];
+  }
+
+  // 1. Detección por palabras clave directas en Primaria
   if (norm.includes("célula") || norm.includes("organism") || norm.includes("laboratorio") || norm.includes("microscop") || norm.includes("química")) {
     return MASCOT_ROSTER[4]; // Microscopio Risón
   }
@@ -581,8 +708,8 @@ export function getUniversalMascot(materia = "", tema = "") {
 /**
  * Función que selecciona el icono/ilustración más adecuado para el tema y materia
  */
-export function getSubjectIllustration(materia = "", tema = "") {
-  const mascot = getUniversalMascot(materia, tema);
+export function getSubjectIllustration(materia = "", tema = "", curso = "") {
+  const mascot = getUniversalMascot(materia, tema, curso);
   return mascot.component;
 }
 

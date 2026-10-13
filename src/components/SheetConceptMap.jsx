@@ -10,7 +10,7 @@ export default function SheetConceptMap({
   tema,
   data
 }) {
-  const activeMascot = getUniversalMascot(materia, tema);
+  const activeMascot = getUniversalMascot(materia, tema, curso);
 
   const conceptos = data?.conceptosClave && data.conceptosClave.length > 0 
     ? data.conceptosClave 
