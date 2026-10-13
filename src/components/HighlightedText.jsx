@@ -17,14 +17,20 @@ function renderSingleMath(rawFormula, isDisplayMode, key) {
   // Convierte 3 * 5 -> 3 \cdot 5, a * b -> a \cdot b, 2 * (x - 3) -> 2 \cdot (x - 3)
   formula = formula.replace(/([0-9a-zA-Z\)\}\]])\s*\*\s*([0-9a-zA-Z\(\{\\\-])/g, '$1 \\cdot $2');
 
-  // 3. Normalización de grados sexagesimales (90º o 90° -> 90^\circ)
+  // 3. Normalización de operadores relacionales no estándar (<=, >=, !=, <>)
+  formula = formula.replace(/<=/g, '\\le ');
+  formula = formula.replace(/>=/g, '\\ge ');
+  formula = formula.replace(/!=/g, '\\neq ');
+  formula = formula.replace(/<>/g, '\\neq ');
+
+  // 4. Normalización de grados sexagesimales (90º o 90° -> 90^\circ)
   formula = formula.replace(/([0-9]+)\s*[º°]/g, '$1^\\circ');
 
-  // 4. Normalización del número Pi (π unicode o pi aislado -> \pi)
+  // 5. Normalización del número Pi (π unicode o pi aislado -> \pi)
   formula = formula.replace(/π/g, '\\pi');
   formula = formula.replace(/(^|[^\w\\])pi\b/g, '$1\\pi');
 
-  // 5. Curación de comandos matemáticos generados sin barra invertida
+  // 6. Curación de comandos matemáticos generados sin barra invertida
   formula = formula.replace(/(^|[^\w\\])frac\{/g, '$1\\frac{');
   formula = formula.replace(/(^|[^\w\\])sqrt\{/g, '$1\\sqrt{');
   formula = formula.replace(/(^|[^\w\\])sqrt\[/g, '$1\\sqrt[');
@@ -37,8 +43,18 @@ function renderSingleMath(rawFormula, isDisplayMode, key) {
   formula = formula.replace(/(^|[^\w\\])bar\{/g, '$1\\bar{');
   formula = formula.replace(/(^|[^\w\\])begin\{cases\}/g, '$1\\begin{cases}');
   formula = formula.replace(/(^|[^\w\\])end\{cases\}/g, '$1\\end{cases}');
+  // Curación de conjuntos, relaciones y ángulos (Directiva Phi)
+  formula = formula.replace(/(^|[^\w\\])mathbb\{/g, '$1\\mathbb{');
+  formula = formula.replace(/(^|[^\w\\])angle\b/g, '$1\\angle ');
+  formula = formula.replace(/(^|[^\w\\])approx\b/g, '$1\\approx ');
+  formula = formula.replace(/(^|[^\w\\])le\b/g, '$1\\le ');
+  formula = formula.replace(/(^|[^\w\\])ge\b/g, '$1\\ge ');
+  formula = formula.replace(/(^|[^\w\\])neq\b/g, '$1\\neq ');
+  formula = formula.replace(/(^|[^\w\\])notin\b/g, '$1\\notin ');
+  formula = formula.replace(/(^|[^\w\\])subset\b/g, '$1\\subset ');
+  formula = formula.replace(/(^|[^\w\\])in\b(?!\s*\{)/g, '$1\\in ');
 
-  // 6. Normalizar saltos de línea dentro de sistemas de ecuaciones \begin{cases}
+  // 7. Normalizar saltos de línea dentro de sistemas de ecuaciones \begin{cases}
   formula = formula.replace(/\\newline/g, ' \\\\ ');
 
   try {
@@ -70,6 +86,52 @@ function renderSingleMath(rawFormula, isDisplayMode, key) {
     console.warn("EduGalicia: Error al renderizar KaTeX:", err);
     return <code key={key} className="font-mono bg-slate-100 text-xs px-1 py-0.5 rounded">{formula}</code>;
   }
+}
+
+/**
+ * Auto-curación de texto plano fuera de bloques matemáticos ($...$, $$...$$)
+ * Protege las fórmulas existentes evitando dobles envolturas o corrupciones de sintaxis.
+ */
+function autoHealOutsideMath(raw) {
+  if (!raw) return raw;
+  const mathRegex = /(\$\$[\s\S]+?\$\$|\$(?:\\\$|[^\$\n])+?\$)/g;
+  const segments = String(raw).split(mathRegex);
+
+  return segments.map((seg) => {
+    if (!seg) return '';
+    // Si ya es un bloque delimitado de matemáticas, preservarlo intacto
+    if ((seg.startsWith('$$') && seg.endsWith('$$') && seg.length >= 4) ||
+        (seg.startsWith('$') && seg.endsWith('$') && seg.length >= 2)) {
+      return seg;
+    }
+
+    let healed = seg;
+
+    // 1. Fracciones sin formato: frac34 -> $\frac{3}{4}$, fracab -> $\frac{a}{b}$, frac{a}{b} -> $\frac{a}{b}$
+    healed = healed.replace(/\bfrac([0-9a-zA-Z])([0-9a-zA-Z])\b/g, '$\\frac{$1}{$2}$');
+    healed = healed.replace(/(?:\\?frac\{([^{}]+)\}\{([^{}]+)\})/g, '$\\frac{$1}{$2}$');
+
+    // 2. Sistemas de ecuaciones en texto plano \begin{cases}...\end{cases}
+    healed = healed.replace(/\\begin\{cases\}([\s\S]*?)\\end\{cases\}/g, '$$\\begin{cases}$1\\end{cases}$$');
+
+    // 3. Grados sexagesimales (90º o 90°)
+    healed = healed.replace(/(?<!\w)(\d+)\s*[º°](?!\w)/g, '$$$1^\\circ$$');
+
+    // 4. Decimales periódicos (\widehat o \overline)
+    healed = healed.replace(/\\(widehat|overline)\{([^{}]+)\}/g, '$\\$1{$2}$');
+
+    // 5. Media aritmética \bar{x} y Pi \pi
+    healed = healed.replace(/\\(bar|overline)\{x\}/g, '$\\$1{x}$');
+    healed = healed.replace(/\\pi\b/g, '$\\pi$');
+
+    // 6. Directiva Phi: Conjuntos numéricos Blackboard Bold sueltos (\mathbb{Z}, \mathbb{Q}, \mathbb{N}, \mathbb{R})
+    healed = healed.replace(/\\?mathbb\{([A-Za-z]+)\}/g, '$\\mathbb{$1}$');
+
+    // 7. Directiva Phi: Notación angular suelta (\angle ABC, \angle A)
+    healed = healed.replace(/\\angle\s*([A-Za-z0-9]+)/g, '$\\angle $1$');
+
+    return healed;
+  }).join('');
 }
 
 /**
@@ -111,24 +173,8 @@ export default function HighlightedText({ text, className = "" }) {
     .replace(/\\n/g, '\n')
     .replace(/<br\s*\/?>/gi, '\n');
 
-  // Auto-curación de texto plano emitido erróneamente por la IA sin delimitadores
-  // Convierte frac34 -> $\frac{3}{4}$ o fracab -> $\frac{a}{b}$
-  cleanText = cleanText.replace(/(?<!\$)\bfrac([0-9a-zA-Z])([0-9a-zA-Z])\b(?!\$)/g, '$\\frac{$1}{$2}$');
-  // Convierte frac{a}{b} o \frac{a}{b} sueltos en $\frac{a}{b}$
-  cleanText = cleanText.replace(/(?<!\$)(?:\\?frac\{([^{}]+)\}\{([^{}]+)\})(?!\$)/g, '$\\frac{$1}{$2}$');
-
-  // Auto-curación de sistemas de ecuaciones en texto plano \begin{cases}...\end{cases}
-  cleanText = cleanText.replace(/(?<!\$)\\begin\{cases\}([\s\S]*?)\\end\{cases\}(?!\$)/g, '$$\\begin{cases}$1\\end{cases}$$');
-
-  // Auto-curación de grados sexagesimales en texto plano (ej. 90º o 90°)
-  cleanText = cleanText.replace(/(?<![\$\w])(\d+)\s*[º°](?![\$\w])/g, '$$$1^\\circ$$');
-
-  // Auto-curación de decimales periódicos sueltos en texto plano con \widehat o \overline
-  cleanText = cleanText.replace(/(?<!\$)\\(widehat|overline)\{([^{}]+)\}(?!\$)/g, '$\\$1{$2}$');
-
-  // Auto-curación de media aritmética \bar{x} o Pi \pi en texto plano
-  cleanText = cleanText.replace(/(?<!\$)\\(bar|overline)\{x\}(?!\$)/g, '$\\$1{x}$');
-  cleanText = cleanText.replace(/(?<!\$)\\pi\b(?!\$)/g, '$\\pi$');
+  // Curación inteligente de expresiones matemáticas huérfanas en texto plano sin alterar fórmulas existentes
+  cleanText = autoHealOutsideMath(cleanText);
 
   // Separar fragmentos con marcado fluorescente (**...**)
   const parts = cleanText.split(/(\*\*\s*[\s\S]+?\s*\*\*)/g);

@@ -190,7 +190,14 @@ DEBES usar corchetes {} obligatoriamente para agrupar términos en exponentes, s
 📖 DICCIONARIO DE HIERRO LATEX (SINTAXIS OBLIGATORIA POR BLOQUES CURRICULARES):
 ================================================================================
 
-1. ARITMÉTICA Y SENTIDO NUMÉRICO (Números Z, Q y Notación Científica):
+1. ARITMÉTICA Y SENTIDO NUMÉRICO (Números N, Z, Q y Notación Científica):
+   • Conjuntos Numéricos: OBLIGATORIO usar sintaxis Blackboard Bold:
+     - Naturales: $\\mathbb{N}$
+     - Enteros: $\\mathbb{Z}$
+     - Racionales: $\\mathbb{Q}$
+     - Reales: $\\mathbb{R}$
+   • Relaciones de Pertenencia e Inclusión: OBLIGATORIO usar \\in, \\notin, \\subset.
+     - Ej: $-5 \\in \\mathbb{Z}$, $\\frac{3}{4} \\in \\mathbb{Q}$, $\\sqrt{2} \\notin \\mathbb{Q}$, $\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}$.
    • Multiplicación: OBLIGATORIO usar \\cdot (PROHIBIDO * o x).
      - Ej: $3 \\cdot 5 = 15$, $(-4) \\cdot (-6) = +24$, $2 \\cdot (x - 3)$.
    • División y Fracciones: OBLIGATORIO usar \\frac{numerador}{denominador} o : (dos puntos).
@@ -210,7 +217,7 @@ DEBES usar corchetes {} obligatoriamente para agrupar términos en exponentes, s
    • Raíces Cuadradas y N-ésimas: OBLIGATORIO usar \\sqrt{}.
      - Ej: $\\sqrt{144} = 12$, $\\sqrt[3]{-27} = -3$, $\\sqrt{a^2 + b^2}$.
 
-2. ÁLGEBRA Y POLINOMIOS (1º y 2º ESO):
+2. ÁLGEBRA, POLINOMIOS Y FUNCIONES (1º y 2º ESO):
    • Monomios y Polinomios: Coeficientes, variables y exponentes ordenados.
      - Ej: $P(x) = 3x^2 - 5x + 2$, $-4x^3 + 7x^2 - x + 9$.
    • Identidades Notables:
@@ -222,12 +229,19 @@ DEBES usar corchetes {} obligatoriamente para agrupar términos en exponentes, s
      - Denominadores: $\\frac{x - 1}{2} - \\frac{x + 3}{4} = 1 \\implies 2(x - 1) - (x + 3) = 4 \\implies x = 9$.
    • Sistemas de Ecuaciones Lineales: OBLIGATORIO usar \\begin{cases} ... \\end{cases} con \\\\ para salto de ecuación.
      - Ej: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 2 \\end{cases}$$
+   • Funciones Lineales, Afines y Coordenadas Cartesianas (1º e 2º ESO):
+     - Puntos en el plano cartesiano: $P(x, y)$, $A(2, -3)$, $B(0, 4)$, origen $O(0, 0)$.
+     - Función Lineal y Afín: $f(x) = mx + n$ o $y = mx + n$.
+     - Pendiente y Ordenada: pendiente $m = \\frac{y_2 - y_1}{x_2 - x_1}$, ordenada en el origen $n$.
+     - Ejemplo de recta: $y = 2x - 3$, tabla de pares ordenados $(x, y)$.
 
 3. GEOMETRÍA Y MEDIDA:
+   • Ángulos y Notación Angular: OBLIGATORIO usar \\widehat{ABC} (con vértice en el medio) o \\angle ABC (o \\widehat{A}).
+     - Ej: $\\widehat{ABC} = 60^\\circ$, $\\angle A = 45^\\circ$, $\\widehat{A} + \\widehat{B} + \\widehat{C} = 180^\\circ$.
+   • Grados Sexagesimales: OBLIGATORIO usar ^\\circ (PROHIBIDO º o °).
+     - Ej: $90^\\circ$, $180^\\circ$, $360^\\circ$, $45^\\circ$, $35^\\circ 20' 45''$.
    • El Número Pi: OBLIGATORIO \\pi (PROHIBIDO escribir pi o 3.14*r).
      - Ej: $\\pi \\approx 3{,}1416$, $L = 2\\pi r$, $A = \\pi r^2$.
-   • Ángulos y Grados Sexagesimales: OBLIGATORIO usar ^\\circ (PROHIBIDO º o °).
-     - Ej: $90^\\circ$, $180^\\circ$, $360^\\circ$, $45^\\circ$, $35^\\circ 20' 45''$.
    • Subíndices en Fórmulas Geométricas: Usar \\text{} para palabras completas.
      - Ej: $A_{\\text{base}}$, $A_{\\text{lateral}}$, $A_{\\text{total}}$, $V_{\\text{prisma}} = A_{\\text{base}} \\cdot h$.
      - Cono: $V_{\\text{cono}} = \\frac{1}{3} \\pi r^2 h$.
@@ -244,8 +258,10 @@ DEBES usar corchetes {} obligatoriamente para agrupar términos en exponentes, s
    • Rango o Recorrido: $R = x_{\\max} - x_{\\min}$.
    • Probabilidad (Regra de Laplace): $P(A) = \\frac{\\text{casos favorables}}{\\text{casos posibles}}$.
 
-5. SÍMBOLOS RELACIONALES:
-   • \\approx ($\\approx$), \\neq ($\\neq$), \\le ($\\le$), \\ge ($\\ge$), \\pm ($\\pm$), \\implies ($\\implies$).
+5. SÍMBOLOS RELACIONALES Y DE CONJUNTOS (PROHIBICIÓN ESTRICTA):
+   • Desigualdades: OBLIGATORIO usar \\le ($\\le$), \\ge ($\\ge$), \\neq ($\\neq$).
+   • TERMINANTEMENTE PROHIBIDO el uso de <=, >=, != en cualquier texto o fórmula.
+   • Relaciones: \\in ($\\in$), \\notin ($\\notin$), \\subset ($\\subset$), \\approx ($\\approx$), \\pm ($\\pm$), \\implies ($\\implies$).
 
 ================================================================================
 FEW-SHOT COMPARATIVO DE OBLIGADO CUMPLIMIENTO (EJEMPLOS BIEN / MAL):
@@ -258,6 +274,12 @@ FEW-SHOT COMPARATIVO DE OBLIGADO CUMPLIMIENTO (EJEMPLOS BIEN / MAL):
 ❌ MAL: 2.3535... o 2,35(periodo) | ✅ BIEN: $2{,}\\widehat{35}$
 ❌ MAL: 1,4666... | ✅ BIEN: $1{,}4\\widehat{6}$
 ❌ MAL: abs(-7) o |-7| sin dólares | ✅ BIEN: $|-7| = 7$
+❌ MAL: x pertenece a Z o x e Z | ✅ BIEN: $x \\in \\mathbb{Z}$
+❌ MAL: 3/4 pertenece a Q | ✅ BIEN: $\\frac{3}{4} \\in \\mathbb{Q}$
+❌ MAL: x <= 5 o x >= -2 o a != b | ✅ BIEN: $x \\le 5$, $x \\ge -2$, $a \\neq b$
+❌ MAL: P(3, 4) sin dólares | ✅ BIEN: $P(3, 4)$
+❌ MAL: f(x) = 2x + 1 o y = mx + n sin dólares | ✅ BIEN: $f(x) = 2x + 1$, $y = mx + n$
+❌ MAL: angulo ABC o <ABC o angulo B | ✅ BIEN: $\\widehat{ABC}$ o $\\angle ABC$ o $\\widehat{B}$
 ❌ MAL: pi * r^2 o 3.14 * r^2 | ✅ BIEN: $\\pi r^2$
 ❌ MAL: 90º o 90° | ✅ BIEN: $90^\\circ$
 ❌ MAL: Abase * h o A_base | ✅ BIEN: $A_{\\text{base}} \\cdot h$
@@ -414,9 +436,11 @@ ${ragPayloadString}
 ERES UN COMPILADOR LATEX ESTRICTO. Está TERMINANTEMENTE PROHIBIDO escribir matemáticas en texto plano.
 Toda expresión matemática debe ir en LaTeX delimitada por $...$ o $$...$$.
 • Fracciones: $\\frac{a}{b}$ | Potencias: $a^n$, $a^{-n}$ | Raíces: $\\sqrt{x}$, $\\sqrt[3]{x}$
+• Conjuntos: $\\mathbb{Z}, \\mathbb{Q}, \\mathbb{N}, \\mathbb{R}$ | Pertenencia: $\\in, \\notin$ | Desigualdades: $\\le, \\ge, \\neq$ (PROHIBIDO <=, >=, !=)
+• Funciones y Puntos: $P(x_1, y_1)$, $f(x) = mx + n$, $y = 2x - 3$
+• Geometría y Ángulos: $\\widehat{ABC}$, $\\angle ABC$, $90^\\circ$ | Número Pi: $\\pi$ | Teorema Pitágoras: $c = \\sqrt{a^2 + b^2}$
 • Multiplicación: OBLIGATORIO $\\cdot$ (no * ni x) | Notación científica: $3{,}2 \\cdot 10^5$
-• Decimales periódicos: OBLIGATORIO $2{,}\\widehat{35}$ o $1{,}4\\widehat{6}$
-• Grados: $90^\\circ$ | Número Pi: $\\pi$ | Media aritmética: $\\bar{x}$
+• Decimales periódicos: OBLIGATORIO $2{,}\\widehat{35}$ o $1{,}4\\widehat{6}$ | Media aritmética: $\\bar{x}$
 • Subíndices: $A_{\\text{base}}$, $V = \\frac{1}{3} A_{\\text{base}} \\cdot h$
 • Sistemas: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 2 \\end{cases}$$
 
