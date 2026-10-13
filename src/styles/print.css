@@ -86,23 +86,20 @@
     box-sizing: border-box !important;
     box-shadow: none !important;
     border-radius: 0 !important;
-    padding: 10mm !important; /* Padding seguro interior para no pegarse al borde */
-    overflow: hidden !important; /* Clipping estricto contra desbordes de rotación */
+    padding: 8mm 10mm !important; /* Padding seguro interior */
+    overflow: visible !important; /* Fin del corte guillotina: el contenido fluye de forma orgánica */
     position: relative !important;
   }
 
-  /* 5. Clases de Hoja y Paginación Matemática para Modo Cuaderno */
+  /* 5. Clases de Hoja y Paginación Dinámica Multi-Página */
   .sheet-page {
     width: 210mm !important;
     max-width: 210mm !important;
     min-height: 297mm !important;
-    max-height: 297mm !important;
-    height: 297mm !important;
+    height: auto !important; /* Altura elástica: permite expandirse a múltiples folios si el contenido lo requiere */
     box-sizing: border-box !important;
-    overflow: hidden !important;
+    overflow: visible !important;
     position: relative !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
     page-break-after: always !important;
     break-after: page !important;
     clear: both !important;
@@ -113,18 +110,40 @@
     break-after: auto !important;
   }
 
-  /* 6. Conservación Íntegra de Grids y Flexbox (Desmantelado el hack destructor) */
+  /* Portada Dedicada de Folio Completo */
+  .notebook-cover-page {
+    min-height: 277mm !important;
+    height: 277mm !important;
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+
+  /* Clases de control explícito de saltos de página */
+  .page-break-before {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+
+  .page-break-after {
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+
+  /* 6. Conservación Íntegra de Grids y Flexbox */
   /* Los layouts de columnas ahora respiran y se respetan en impresión */
 
-  /* 7. Reglas de No-Corte Quirúrgicas por Componente Semántico */
+  /* 7. Reglas de No-Corte Quirúrgicas por Componente Semántico (Paginación Atómica) */
   .cromo-card,
   .satelite-card,
+  .exercise-card,
   .quiz-card,
   .creative-box,
   .postit-note,
   .avoid-break,
+  .avoid-page-break,
   .break-inside-avoid,
-  .info-banner {
+  .info-banner,
+  .header-banner {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     -webkit-column-break-inside: avoid !important;

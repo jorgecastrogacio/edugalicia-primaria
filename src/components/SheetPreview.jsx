@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import SheetDashboardVisual from './SheetDashboardVisual';
 import SheetConceptMap from './SheetConceptMap';
 import SheetChallenges from './SheetChallenges';
+import SheetExercises from './SheetExercises';
 import HtmlCanvasRenderer from './HtmlCanvasRenderer';
-import { Layout, Compass, Target, BookOpen, Sparkles, ShieldCheck } from 'lucide-react';
+import { Layout, Compass, Target, BookOpen, Sparkles, ShieldCheck, Swords } from 'lucide-react';
 import { getUniversalMascot } from '../data/illustrationMap.jsx';
 
 export default function SheetPreview({
@@ -33,7 +34,7 @@ export default function SheetPreview({
   const tabs = [
     {
       id: 'dashboard',
-      label: '1. Dashboard Visual',
+      label: '1. Dashboard',
       icon: '📊',
       badge: 'Lámina 1',
       color: 'bg-amber-500 text-white hover:bg-amber-600'
@@ -46,17 +47,24 @@ export default function SheetPreview({
       color: 'bg-sky-500 text-white hover:bg-sky-600'
     },
     {
-      id: 'retos',
-      label: '3. Retos y Preguntas',
-      icon: '🎯',
+      id: 'batalla',
+      label: '3. Batalla Exercicios',
+      icon: '⚔️',
       badge: 'Lámina 3',
+      color: 'bg-rose-500 text-white hover:bg-rose-600'
+    },
+    {
+      id: 'retos',
+      label: '4. Retos Arcade',
+      icon: '🎯',
+      badge: 'Lámina 4',
       color: 'bg-purple-600 text-white hover:bg-purple-700'
     },
     {
       id: 'todo',
-      label: '📚 Cuaderno Completo (3 Páginas)',
+      label: '📚 Cuaderno Completo',
       icon: '✨',
-      badge: 'Todo A4',
+      badge: 'Multi-Página',
       color: 'bg-slate-800 text-white hover:bg-slate-900'
     }
   ];
@@ -65,7 +73,7 @@ export default function SheetPreview({
     <div className="w-full flex flex-col items-center px-1 sm:px-4">
       {/* 1. SELECTOR SUPERIOR DE PESTAÑAS (NO SE IMPRIME) */}
       <nav aria-label="Selección de Lámina" className="no-print mb-4 w-full max-w-4xl bg-white/95 backdrop-blur-xs p-2 rounded-2xl border border-slate-200/90 shadow-xs">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
@@ -73,7 +81,7 @@ export default function SheetPreview({
                 key={tab.id}
                 type="button"
                 onClick={() => handleTabClick(tab.id)}
-                className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
+                className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   isSelected
                     ? `${tab.color} shadow-sm ring-2 ring-offset-1 ring-blue-500/40 scale-[1.02]`
                     : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/70'
@@ -94,12 +102,12 @@ export default function SheetPreview({
         </div>
       </nav>
 
-      {/* 2. CONTENEDOR VISIBLE RESPONSIVE EN PANTALLA (VECTOR 3: CERO HACKS DE SCALE) */}
+      {/* 2. CONTENEDOR VISIBLE RESPONSIVE EN PANTALLA (CERO HACKS DE SCALE) */}
       <div 
         id={id} 
         className="w-full max-w-4xl flex flex-col items-center"
       >
-        {/* VISTA 1: DASHBOARD VISUAL (SÓLO LÁMINA 1) */}
+        {/* VISTA 1: DASHBOARD VISUAL (LÁMINA 1) */}
         {activeTab === 'dashboard' && (
           <div className="sheet-page w-full flex justify-center">
             <SheetDashboardVisual
@@ -112,7 +120,7 @@ export default function SheetPreview({
           </div>
         )}
 
-        {/* VISTA 2: MAPA CONCEPTUAL (SÓLO LÁMINA 2) */}
+        {/* VISTA 2: MAPA CONCEPTUAL (LÁMINA 2) */}
         {activeTab === 'mapa' && (
           <div className="sheet-page w-full flex justify-center">
             <SheetConceptMap
@@ -125,7 +133,20 @@ export default function SheetPreview({
           </div>
         )}
 
-        {/* VISTA 3: RETOS Y PREGUNTAS (SÓLO LÁMINA 3) */}
+        {/* VISTA 3: BATALLA DE EXERCICIOS (LÁMINA 3) */}
+        {activeTab === 'batalla' && (
+          <div className="sheet-page w-full flex justify-center">
+            <SheetExercises
+              curso={curso}
+              materia={materia}
+              tema={tema}
+              data={data}
+              etapa={etapa}
+            />
+          </div>
+        )}
+
+        {/* VISTA 4: RETOS Y PREGUNTAS (LÁMINA 4) */}
         {activeTab === 'retos' && (
           <div className="sheet-page w-full flex justify-center">
             <SheetChallenges
@@ -225,7 +246,7 @@ export default function SheetPreview({
                       {etapa === 'eso' ? 'EduGalicia ESO LOMLOE' : 'EduGalicia Primaria LOMLOE'}
                     </span>
                     <span className="bg-black text-white px-3.5 py-1.5 rounded-xl shadow-[3px_3px_0px_#000]">
-                      {etapa === 'eso' ? '3 Láminas Cyber-Math A4 + Retos Gamificados' : '3 Láminas de Contido A4 + Retos Gamificados'}
+                      {etapa === 'eso' ? '4 Láminas Cyber-Math A4 + Batalla + Retos' : '4 Láminas de Contido A4 + Batalla + Retos'}
                     </span>
                   </footer>
                 </div>
@@ -253,7 +274,18 @@ export default function SheetPreview({
                 />
               </div>
 
-              {/* LÁMINA 3: RETOS Y PREGUNTAS */}
+              {/* LÁMINA 3: BATALLA DE EXERCICIOS */}
+              <div className="sheet-page w-full flex justify-center">
+                <SheetExercises
+                  curso={curso}
+                  materia={materia}
+                  tema={tema}
+                  data={data}
+                  etapa={etapa}
+                />
+              </div>
+
+              {/* LÁMINA 4: RETOS Y PREGUNTAS */}
               <div className="sheet-page w-full flex justify-center">
                 <SheetChallenges
                   curso={curso}
@@ -285,6 +317,11 @@ export default function SheetPreview({
             <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
           </div>
         )}
+        {activeTab === 'batalla' && (
+          <div className="w-[794px] flex justify-center">
+            <SheetExercises curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
+          </div>
+        )}
         {activeTab === 'retos' && (
           <div className="w-[794px] flex justify-center">
             <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
@@ -297,6 +334,9 @@ export default function SheetPreview({
             </div>
             <div className="w-[794px] flex justify-center">
               <SheetConceptMap curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
+            </div>
+            <div className="w-[794px] flex justify-center">
+              <SheetExercises curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
             </div>
             <div className="w-[794px] flex justify-center">
               <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />

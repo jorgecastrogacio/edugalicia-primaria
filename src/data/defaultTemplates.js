@@ -96,7 +96,57 @@ export const DEFAULT_TEMPLATES = {
         { id: 1, texto: "Os produtores fabrican o seu propio alimento grazas á enerxía da luz solar.", correcta: "V", xp: 15 },
         { id: 2, texto: "Se desaparecen os descompoñedores, as follas e restos recíclanse máis rápido.", correcta: "F", xp: 15 }
       ],
-      retoCreativo: "Debuxa unha árbore centenaria dunha fraga galega, con caritas felices nas súas follas e un pequeno esquío no seu tronco!"
+      retoCreativo: "Debuxa unha árbore centenaria dunha fraga galega, con caritas felices nas súas follas e un pequeno esquío no seu tronco!",
+      batallaExercicios: [
+        {
+          id: 1,
+          tipo: "aplicacion_real",
+          categoria: "🎯 APLICACIÓN PRÁCTICA",
+          nivel: "⭐⭐⭐ (Avanzado)",
+          xp: 25,
+          titulo: "Cadea Trófica nas Fragas do Eume",
+          enunciado: "Se nun bosque atlántico galego aumenta a poboación de **corzos** pero diminúen os depredadores coma o **lobo**, que consecuencias inmediatas haberá sobre a vexetación de carballos novos? Xustifica a resposta.",
+          pista: "Lembra a relación herbívoro-produtor e o equilibrio do ecosistema.",
+          pauta: "lineas",
+          solucion: "A sobrepoboación de corzos provocará un sobrepastoreo dos brotes de carballo, impedindo a rexeneración do bosque."
+        },
+        {
+          id: 2,
+          tipo: "analise_errores",
+          categoria: "🔍 ANÁLISE DE ERROS",
+          nivel: "⭐⭐⭐⭐ (Experto)",
+          xp: 30,
+          titulo: "Caza da Trampa: Os Mexillóns",
+          enunciado: "Un biólogo en prácticas escribe: 'Nas rías galegas, o mexillón é un organismo produtor porque vive adherido ás cordas das bateas sen moverse nin cazar'. Localiza o erro científico e corríxeo.",
+          pista: "Fabrica o mexillón o seu alimento por fotosíntese ou filtra organismos vexetais?",
+          pauta: "lineas",
+          solucion: "Falso: é un consumidor primario filtrador (alimentase de fitoplancto), non un produtor vexetal."
+        },
+        {
+          id: 3,
+          tipo: "calculo_ou_estrutura",
+          categoria: "⚙️ CÁLCULO ESTRUTURADO",
+          nivel: "⭐⭐⭐ (Avanzado)",
+          xp: 25,
+          titulo: "Censo de Especies nunha Marisma Galega",
+          enunciado: "Nunha marisma costeira regístranse 15 garzas reais. O número de patos culleretes é o dobre das garzas máis 8, e os peixes pequenos multiplican por 10 o total de aves. Cantos peixes e cantas aves hai no ecosistema?",
+          pista: "Paso 1: Garzas = 15. Paso 2: Patos = (15 x 2) + 8 = 38. Paso 3: Total aves = 15 + 38 = 53.",
+          pauta: "cuadricula",
+          solucion: "Total aves: 15 + 38 = 53 aves. Total peixes pequenos: 53 x 10 = 530 peixes."
+        },
+        {
+          id: 4,
+          tipo: "desafio_experto",
+          categoria: "🏆 DESAFÍO SUPREMO",
+          nivel: "⭐⭐⭐⭐⭐ (Mestre)",
+          xp: 35,
+          titulo: "Plan de Restauración dun Río Galego",
+          enunciado: "Un vertido nun río de Galicia afecta gravemente aos macroinvertebrados acuáticos e ás troitas. Formula unha hipótese de impacto e deseña un plan de recuperación sostible en 2 fases con especies autóctonas.",
+          pista: "Fase 1: Limpeza e análise da auga. Fase 2: Repoboación de vexetación de ribeira (ameneiros) e fauna.",
+          pauta: "lineas",
+          solucion: "Plan de 2 fases: 1. Cesamento do vertido e filtrado bioecolóxico. 2. Rexeneración do bosque de ribeira e bioindicadores."
+        }
+      ]
     }
   },
 
@@ -494,7 +544,57 @@ export const DEFAULT_TEMPLATES = {
         { id: 1, texto: "O produto de dous números enteiros negativos sempre dá como resultado un número positivo.", correcta: "V", xp: 15 },
         { id: 2, texto: "O número -9 é estritamente maior ca o número -2 na recta numérica real.", correcta: "F", xp: 15 }
       ],
-      retoCreativo: "Debuxa unha recta numérica Cyber-Math do -10 ao +10. Representa un batiscafo a -7 m e un satélite a +9 m, calculando a diferenza en metros!"
+      retoCreativo: "Debuxa unha recta numérica Cyber-Math do -10 ao +10. Representa un batiscafo a -7 m e un satélite a +9 m, calculando a diferenza en metros!",
+      batallaExercicios: [
+        {
+          id: 1,
+          tipo: "aplicacion_real",
+          categoria: "🎯 APLICACIÓN PRÁCTICA",
+          nivel: "⭐⭐⭐ (Avanzado)",
+          xp: 25,
+          titulo: "Diferenza Térmica en Manzaneda",
+          enunciado: "Na estación de montaña de Manzaneda a temperatura ás 06:00 h é de **$-6^\\circ\\text{C}$**. Ás 14:00 h subiu **$+11^\\circ\\text{C}$**, e pola noite baixou **$8^\\circ\\text{C}$**. Escribe a operación combinada con números enteiros $\\mathbb{Z}$ e calcula a temperatura final.",
+          pista: "Formula: $(-6) + (+11) - (+8)$.",
+          pauta: "cuadricula",
+          solucion: "$(-6) + 11 - 8 = +5 - 8 = -3^\\circ\\text{C}$."
+        },
+        {
+          id: 2,
+          tipo: "analise_errores",
+          categoria: "🔍 ANÁLISE DE ERROS",
+          nivel: "⭐⭐⭐⭐ (Experto)",
+          xp: 30,
+          titulo: "Caza do Erro de Signos",
+          enunciado: "Un estudante resolveu a seguinte operación: **$(-4) \\cdot (-3) - (-5) = -12 + 5 = -7$**. Localiza os dous erros graves cometidos polo estudante e resólveo de xeito impecable.",
+          pista: "Revisa canto dá $(-4) \\cdot (-3)$ e o cambio de signo de $-(-5)$.",
+          pauta: "cuadricula",
+          solucion: "Erro 1: $(-4) \\cdot (-3) = +12$ (non -12). Erro 2: $-(-5) = +5$. Resultado correcto: $+12 + 5 = +17$."
+        },
+        {
+          id: 3,
+          tipo: "calculo_ou_estrutura",
+          categoria: "⚙️ CÁLCULO E LÓXICA",
+          nivel: "⭐⭐⭐ (Avanzado)",
+          xp: 25,
+          titulo: "Xerarquía de Operacións con Corchetes",
+          enunciado: "Resolve paso a paso respectando a prioridade dos parénteses e a regra dos signos: $$-20 + 3 \\cdot \\left[ (-8) : (+2) - (-1) \\right] - (-4)^2$$",
+          pista: "Paso 1: Paréntese interior $(-8):(+2) = -4$. Paso 2: Corchete $[-4 + 1] = -3$. Paso 3: Potencia $(-4)^2 = +16$.",
+          pauta: "cuadricula",
+          solucion: "$$-20 + 3 \\cdot [-3] - 16 = -20 - 9 - 16 = -45$$"
+        },
+        {
+          id: 4,
+          tipo: "desafio_experto",
+          categoria: "🏆 DESAFÍO SUPREMO",
+          nivel: "⭐⭐⭐⭐⭐ (Mestre)",
+          xp: 35,
+          titulo: "Desafío Submarino e Rango Relativo",
+          enunciado: "Un submarino de investigación oceanográfica na ría de Vigo opera a **$-140\\text{ m}$**. Descende un cuarto da súa profundidade actual e despois ascende dous quintos da nova cota. A que profundidade final se atopa? Demóstrao con números enteiros $\\mathbb{Z}$.",
+          pista: "Descenso: $-140 - 35 = -175\\text{ m}$. Ascenso: $-175 + \\frac{2}{5}(175) = -175 + 70$.",
+          pauta: "cuadricula",
+          solucion: "Cota 1: $-140 - 35 = -175\\text{ m}$. Cota final: $-175 + 70 = -105\\text{ m}$."
+        }
+      ]
     }
   },
 
@@ -1080,6 +1180,105 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
   const desafioMatch = text.match(/(?:Desafío|Reto Creativo)[^:]*:\s*([^\n\r]+)/i);
   const retoCreativo = retoTag || (desafioMatch ? desafioMatch[1].trim() : `Debuxa o concepto máis importante deste tema: ponlle unha carita kawaii feliz, o seu nome en letras de cómic xigantes e cores vivas!`);
 
+  // 9. Extraer Batalla de Exercicios (<batalla_exercicios> e <exercicio>)
+  const batallaExercicios = [];
+  const batallaBlock = getTagContent('batalla_exercicios') || text;
+
+  const exercicioMatches = batallaBlock.matchAll(/<exercicio([^>]*)>([\s\S]*?)<\/exercicio>/gi);
+  for (const em of exercicioMatches) {
+    const attrStr = em[1];
+    const inner = em[2];
+    const getAttr = (n) => {
+      const m = attrStr.match(new RegExp(`${n}=["']([^"']*)["']`, 'i'));
+      return m ? m[1] : '';
+    };
+
+    const eId = parseInt(getAttr('id'), 10) || batallaExercicios.length + 1;
+    const eTipo = getAttr('tipo') || "aplicacion_real";
+    const eNivel = getAttr('nivel') || "⭐⭐⭐ (Avanzado)";
+    const eXp = parseInt(getAttr('xp'), 10) || 25;
+
+    const eTitulo = getTagContent('titulo', inner) || `Reto #${eId}`;
+    const eEnunciado = getTagContent('enunciado', inner) || inner.replace(/<[^>]+>/g, '').trim();
+    const ePista = getTagContent('pista', inner) || "";
+    const ePauta = (getTagContent('pauta_resolucion', inner) || getTagContent('pauta', inner) || "lineas").toLowerCase().includes('cuad') ? 'cuadricula' : 'lineas';
+    const eSolucion = getTagContent('solucion_pasos', inner) || getTagContent('solucion', inner) || "Comprobación polo docente";
+
+    const categoriaMap = {
+      aplicacion_real: "🎯 APLICACIÓN PRÁCTICA",
+      analise_errores: "🔍 ANÁLISE DE ERROS",
+      calculo_ou_estrutura: "⚙️ CÁLCULO E LÓXICA",
+      desafio_experto: "🏆 DESAFÍO SUPREMO"
+    };
+
+    batallaExercicios.push({
+      id: eId,
+      tipo: eTipo,
+      categoria: categoriaMap[eTipo] || "🎯 RETO PRÁCTICO",
+      nivel: eNivel,
+      xp: eXp,
+      titulo: eTitulo,
+      enunciado: eEnunciado,
+      pista: ePista,
+      pauta: ePauta,
+      solucion: eSolucion
+    });
+  }
+
+  // Fallback si no vinieron en XML
+  if (batallaExercicios.length === 0) {
+    batallaExercicios.push(
+      {
+        id: 1,
+        tipo: "aplicacion_real",
+        categoria: "🎯 APLICACIÓN PRÁCTICA",
+        nivel: "⭐⭐⭐ (Avanzado)",
+        xp: 25,
+        titulo: `Misión Práctica: Aplicación de ${tema}`,
+        enunciado: `Nunha situación real na túa contorna ou escola en Galicia, como aplicarías o concepto de **${tema}**? Explica dous efectos directos e xustifica o teu razoamento.`,
+        pista: "Lembra relacionar os elementos clave que aprendiches na lámina.",
+        pauta: "lineas",
+        solucion: "Identificar dous factores claros e explicar a relación con datos."
+      },
+      {
+        id: 2,
+        tipo: "analise_errores",
+        categoria: "🔍 ANÁLISE DE ERROS",
+        nivel: "⭐⭐⭐⭐ (Experto)",
+        xp: 30,
+        titulo: "Caza da Trampa: Onde está o erro?",
+        enunciado: `Un compañeiro afirma: *"Este tema non ten ningunha relación co resto de saberes nin cambia co paso do tempo"*. Localiza o erro lóxico ou científico e corrixe a frase.`,
+        pista: "Lembra que todos os elementos forman parte dun sistema conectado.",
+        pauta: "lineas",
+        solucion: "Falso: todos os elementos interactúan e evolucionan de forma continua."
+      },
+      {
+        id: 3,
+        tipo: "calculo_ou_estrutura",
+        categoria: "⚙️ CÁLCULO E LÓXICA",
+        nivel: "⭐⭐⭐ (Avanzado)",
+        xp: 25,
+        titulo: "Resolución de Problema Estruturado",
+        enunciado: `Se recollemos 12 datos do grupo principal e o triplo do segundo grupo menos 5, cantos datos temos en total? Mostra o teu procedemento paso a paso.`,
+        pista: "Paso 1: Calcula o segundo grupo. Paso 2: Suma ambos grupos.",
+        pauta: "cuadricula",
+        solucion: "Grupo 2: 12 x 3 - 5 = 31. Total: 12 + 31 = 43 elementos."
+      },
+      {
+        id: 4,
+        tipo: "desafio_experto",
+        categoria: "🏆 DESAFÍO SUPREMO",
+        nivel: "⭐⭐⭐⭐⭐ (Mestre)",
+        xp: 35,
+        titulo: "Reto Aberto: Hipótese e Acción",
+        enunciado: `Que ocorrería se un dos elementos esenciais deste tema desaparecese de súpeto? Formula unha hipótese e propón un plan de dous pasos para restauralo.`,
+        pista: "Aplica o método científico de causa, efecto e solución.",
+        pauta: "lineas",
+        solucion: "A hipótese debe reflectir o impacto e dous pasos realistas de restauración."
+      }
+    );
+  }
+
   return {
     titulo,
     colorPaleta,
@@ -1093,6 +1292,7 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
     mapaCentral,
     preguntasTrivial,
     palancasVF,
-    retoCreativo
+    retoCreativo,
+    batallaExercicios
   };
 }

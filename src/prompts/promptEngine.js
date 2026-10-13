@@ -157,6 +157,37 @@ ESTRUTURA XML OBRIGATORIA:
     <palanca_vf id="2" texto="[Afirmación factual falsa: ex. '15 + 7 son 25']" correcta="F" xp="15" />
     <reto_creativo_arte icono="🎨">[Instrución directa para debuxar ou rotular un elemento concreto aprendido hoxe]</reto_creativo_arte>
   </retos>
+  <batalla_exercicios>
+    <!-- 4 EXERCICIOS DE ALTA ESIXENCIA PEDAGÓXICA (RESOLUCIÓN PRÁCTICA EN PAPEL) -->
+    <exercicio id="1" tipo="aplicacion_real" nivel="⭐⭐⭐ (Avanzado)" xp="25">
+      <titulo>[Título do Reto de Aplicación Real]</titulo>
+      <enunciado>[Problema contextualizado na vida real ou contorna de Galicia con **datos concretos**]</enunciado>
+      <pista>[Pista metodolóxica breve]</pista>
+      <pauta_resolucion>lineas</pauta_resolucion>
+      <solucion_pasos>[Solución concreta e directa]</solucion_pasos>
+    </exercicio>
+    <exercicio id="2" tipo="analise_errores" nivel="⭐⭐⭐⭐ (Experto)" xp="30">
+      <titulo>[Caza da Trampa: Onde está o erro?]</titulo>
+      <enunciado>[Afirmación falsa ou razoamento con trampa para que o alumno localice e corrixa]</enunciado>
+      <pista>[Punto clave onde fixarse]</pista>
+      <pauta_resolucion>lineas</pauta_resolucion>
+      <solucion_pasos>[Erro identificado e corrección xustificada]</solucion_pasos>
+    </exercicio>
+    <exercicio id="3" tipo="calculo_ou_estrutura" nivel="⭐⭐⭐ (Avanzado)" xp="25">
+      <titulo>[Problema Estruturado con Operacións / Esquema]</titulo>
+      <enunciado>[Exercicio con números, medidas ou táboa para resolver paso a paso]</enunciado>
+      <pista>[Primeiro paso ou fórmula inicial]</pista>
+      <pauta_resolucion>cuadricula</pauta_resolucion>
+      <solucion_pasos>[Operacións e resultado final]</solucion_pasos>
+    </exercicio>
+    <exercicio id="4" tipo="desafio_experto" nivel="⭐⭐⭐⭐⭐ (Mestre)" xp="35">
+      <titulo>[Desafío Aberto: Hipótese e Plan de Acción]</titulo>
+      <enunciado>[Caso imprevisto ou reto creativo onde formular unha hipótese e un plan de 2 pasos]</enunciado>
+      <pista>[Reflexión de causa-efecto]</pista>
+      <pauta_resolucion>lineas</pauta_resolucion>
+      <solucion_pasos>[Criterio de resolución e exemplo de resposta válida]</solucion_pasos>
+    </exercicio>
+  </batalla_exercicios>
 </edugalicia_lamina>
 
 NON ENGADAS TEXTO ANTES OU DESPOIS DO XML. Devolve única e exclusivamente o bloque <edugalicia_lamina>...</edugalicia_lamina>.`;
@@ -383,6 +414,37 @@ ESTRUTURA XML OBRIGATORIA:
     <palanca_vf id="2" texto="[Trampa habitual de signos ou xerarquía: ex. '3 + 4 * 2 son 14']" correcta="F" xp="15" />
     <reto_creativo_arte icono="📐">[Reto práctico: debuxa o esquema xeométrico con medidas exactas ou formula un problema da vida real e resólveo con ecuación]</reto_creativo_arte>
   </retos>
+  <batalla_exercicios>
+    <!-- 4 DESAFÍOS MATEMÁTICOS DE ALTO RENDEMENTO CON LATEX COMPILADO $...$ -->
+    <exercicio id="1" tipo="aplicacion_real" nivel="⭐⭐⭐ (Avanzado)" xp="25">
+      <titulo>[Problema Contextualizado con Fórmulas $...$]</titulo>
+      <enunciado>[Enunciado realista con magnitudes, ecuacións ou razóns en Galicia con **fórmulas KaTeX**]</enunciado>
+      <pista>[Propiedade matemática que inicia o despexe]</pista>
+      <pauta_resolucion>cuadricula</pauta_resolucion>
+      <solucion_pasos>[$Desenvolvemento e solución exacta en KaTeX$]</solucion_pasos>
+    </exercicio>
+    <exercicio id="2" tipo="analise_errores" nivel="⭐⭐⭐⭐ (Experto)" xp="30">
+      <titulo>[Caza do Erro Alxébrico ou Numérico]</titulo>
+      <enunciado>[Resolución falsa con erro típico de signos, parénteses ou xerarquía]</enunciado>
+      <pista>[Revisa a regra de signos ou o denominador]</pista>
+      <pauta_resolucion>cuadricula</pauta_resolucion>
+      <solucion_pasos>[Explicación do erro matemático e solución correcta en KaTeX]</solucion_pasos>
+    </exercicio>
+    <exercicio id="3" tipo="calculo_ou_estrutura" nivel="⭐⭐⭐ (Avanzado)" xp="25">
+      <titulo>[Ecuación, Fraccións ou Teorema de Pitágoras Paso a Paso]</titulo>
+      <enunciado>[Operación complexa combinada con corchetes ou xeometría con debuxo mental]</enunciado>
+      <pista>[Orde das operacións ou identificación de catetos/hipotenusa]</pista>
+      <pauta_resolucion>cuadricula</pauta_resolucion>
+      <solucion_pasos>[$Paso 1 \\implies Paso 2 \\implies Resultado final$]</solucion_pasos>
+    </exercicio>
+    <exercicio id="4" tipo="desafio_experto" nivel="⭐⭐⭐⭐⭐ (Mestre)" xp="35">
+      <titulo>[Desafío Lóxico-Matemático Supremo]</titulo>
+      <enunciado>[Problema que require formular un sistema ou xeneralizar cunha fórmula $n$]</enunciado>
+      <pista>[Traduce o enunciado a linguaxe alxébrica con incógnita $x$]</pista>
+      <pauta_resolucion>cuadricula</pauta_resolucion>
+      <solucion_pasos>[$Planteamento e demostración/solución$]</solucion_pasos>
+    </exercicio>
+  </batalla_exercicios>
 </edugalicia_lamina>
 
 NON ENGADAS TEXTO ANTES OU DESPOIS DO XML. Devolve única e exclusivamente o bloque <edugalicia_lamina>...</edugalicia_lamina>.`;
@@ -444,7 +506,7 @@ Toda expresión matemática debe ir en LaTeX delimitada por $...$ o $$...$$.
 • Subíndices: $A_{\\text{base}}$, $V = \\frac{1}{3} A_{\\text{base}} \\cdot h$
 • Sistemas: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 2 \\end{cases}$$
 
-Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\cdot, \\\\widehat, \\\\sqrt, etc.), algoritmos paso a paso, stickers temáticos e retos arcade accionables. Cero linguaxe infantil.`;
+Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\cdot, \\\\widehat, \\\\sqrt, etc.), mapa conceptual, retos arcade e o bloque <batalla_exercicios> con 4 exercicios de alta esixencia. Cero linguaxe infantil.`;
 
     return {
       systemPrompt: SYSTEM_PROMPT_ESO_MATES,
@@ -484,7 +546,7 @@ CONTEXTO CURRICULAR OFICIAL FILTRADO (DECRETO 155/2022 - GALICIA):
 ${ragPayloadString}
 \`\`\`
 
-Devuelve exclusivamente el XML estructurado <edugalicia_lamina>...</edugalicia_lamina> con CONTENIDO DIDÁCTICO CRUDO Y TRABAJABLE (listas reales, operaciones con números resueltas o vocabulario directo, sin frases vacías ni rollos teóricos), arte temático monumental y retos arcade accionables.`;
+Devuelve exclusivamente el XML estructurado <edugalicia_lamina>...</edugalicia_lamina> con CONTENIDO DIDÁCTICO CRUDO Y TRABAJABLE (listas reales, operaciones con números resueltas o vocabulario directo, sin frases vacías ni rollos teóricos), arte temático monumental, retos arcade y el bloque obligatorio <batalla_exercicios> con 4 ejercicios prácticos de alta exigencia cognitiva.`;
 
   return {
     systemPrompt: SYSTEM_PROMPT_MAESTRO,
