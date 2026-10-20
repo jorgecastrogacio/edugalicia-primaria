@@ -233,11 +233,11 @@ export default function SheetLaboratory({
         {/* Liña de Corte con Tesouras */}
         <div className="border-t-2 border-dashed border-slate-400 pt-2 flex items-center justify-between text-[11px] font-black text-slate-700">
           <span className="flex items-center gap-1.5 uppercase tracking-wide">
-            <Scissors className="w-3.5 h-3.5 text-rose-600 animate-pulse" />
+            <Scissors className="w-3.5 h-3.5 text-rose-600" />
             Recorta as túas 4 Tarxetas de Memorización e Repasa en Parellas
           </span>
-          <span className="text-[9px] bg-amber-300 text-slate-900 px-2 py-0.5 rounded-full border border-slate-900 font-black uppercase">
-            +100 XP en Xogo
+          <span className="text-[9px] bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded-full border border-slate-300 font-bold uppercase">
+            Flashcards de Estudo
           </span>
         </div>
 
@@ -254,21 +254,16 @@ export default function SheetLaboratory({
               </div>
 
               <div>
-                {/* Cabecera Tarxeta */}
-                <div className="flex items-center justify-between border-b border-slate-200 pb-1.5 mb-1.5">
-                  <div className="flex items-center gap-1 truncate">
-                    <span className="text-base select-none">{card.icono || "💡"}</span>
-                    <h3 className="font-black text-xs text-slate-900 truncate uppercase">
-                      <HighlightedText text={card.termo} />
-                    </h3>
-                  </div>
-                  <span className="text-[9px] font-black px-1.5 py-0.2 rounded bg-amber-100 text-amber-900 border border-amber-300 shrink-0">
-                    +{card.xp || 25} XP
-                  </span>
+                {/* Cabecera Tarxeta: Título Completo sen recortes nin puntos XP */}
+                <div className="flex items-center gap-1.5 border-b border-slate-200 pb-1.5 mb-1.5 min-h-[32px]">
+                  <span className="text-base select-none shrink-0">{card.icono || "💡"}</span>
+                  <h3 className="font-black text-xs text-slate-900 uppercase leading-snug break-words flex-1">
+                    <HighlightedText text={card.termo} />
+                  </h3>
                 </div>
 
                 {/* Corpo: Definición Concisa */}
-                <p className="text-[10px] text-slate-600 font-medium leading-relaxed">
+                <p className="text-[10px] text-slate-600 font-medium leading-relaxed break-words">
                   <HighlightedText text={card.definicion} />
                 </p>
               </div>
