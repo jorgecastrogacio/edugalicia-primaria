@@ -7,7 +7,6 @@ import { FORMATOS_DISPONIBLES } from './data/formatos';
 import FormInputs from './components/FormInputs';
 import ExportToolbar from './components/ExportToolbar';
 import SheetPreview from './components/SheetPreview';
-import PromptViewerModal from './components/PromptViewerModal';
 import { ShieldCheck, Printer, Zap } from 'lucide-react';
 
 const LOADING_MESSAGES_PRIMARIA = [
@@ -64,8 +63,7 @@ export default function App() {
     currentEtapaRef.current = etapa;
   }, [etapa]);
 
-  // 3. Modales
-  const [isPromptModalOpen, setIsPromptModalOpen] = useState(false);
+
 
   // 4. Estado del Contenido Actual en el Lienzo A4
   const [sheetData, setSheetData] = useState(() => 
@@ -313,14 +311,14 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Selector de Etapa Segmentado en Cabecera */}
-            <div className="hidden sm:flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shadow-inner">
+            {/* Selector de Etapa en Cabecera */}
+            <div className="hidden sm:flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
               <button
                 type="button"
                 onClick={() => handleEtapaChange('primaria')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                   !isESO
-                    ? 'bg-white text-blue-700 shadow-sm border border-slate-200'
+                    ? 'bg-blue-600 text-white shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -330,15 +328,14 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => handleEtapaChange('eso')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
                   isESO
-                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm'
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-sm'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 <span>⚡</span>
-                <span>1º-2º ESO</span>
-                <span className="text-[9px] px-1 py-0.2 bg-black/20 rounded font-mono">MATES</span>
+                <span>Secundaria (ESO)</span>
               </button>
             </div>
 
@@ -431,7 +428,6 @@ export default function App() {
               sheetElementId="edugalicia-a4-sheet"
               title={`${cursoObj?.label || (isESO ? 'eso' : 'primaria')}-${tema}`}
               markdownContent={rawAiResponse}
-              onOpenPromptViewer={() => setIsPromptModalOpen(true)}
               activeTab={activeTab}
             />
 
@@ -453,13 +449,6 @@ export default function App() {
           </section>
         </div>
       </main>
-
-      {/* Modal de Inspección de Prompts */}
-      <PromptViewerModal
-        isOpen={isPromptModalOpen}
-        onClose={() => setIsPromptModalOpen(false)}
-        assembledPrompts={assembledPrompts}
-      />
     </div>
   );
 }

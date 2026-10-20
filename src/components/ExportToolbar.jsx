@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Printer, Download, Copy, Check, Eye, X, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { Printer, Download, Copy, Check, X, Image as ImageIcon, Sparkles } from 'lucide-react';
 import { toPng, toBlob } from 'html-to-image';
 
 export default function ExportToolbar({
   sheetElementId,
   title = "ficha-edugalicia",
   markdownContent,
-  onOpenPromptViewer,
   activeTab = "dashboard"
 }) {
   const [isExportingImage, setIsExportingImage] = useState(false);
@@ -146,18 +145,6 @@ export default function ExportToolbar({
             <span>{copied ? '¡Copiado!' : 'Copiar MD'}</span>
           </button>
         )}
-      </div>
-
-      {/* Grupo derecho: Herramientas de Inspección */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={onOpenPromptViewer}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100 border border-slate-200 transition cursor-pointer"
-          title="Inspeccionar el System Prompt y el Prompt de Ensamblaje con Saberes Básicos RAG"
-        >
-          <Eye className="w-3.5 h-3.5 text-indigo-500" />
-          <span>Ver Prompt Ensamblado</span>
-        </button>
       </div>
     </div>
   );

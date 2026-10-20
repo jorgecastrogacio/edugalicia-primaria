@@ -3,8 +3,9 @@ import SheetDashboardVisual from './SheetDashboardVisual';
 import SheetConceptMap from './SheetConceptMap';
 import SheetChallenges from './SheetChallenges';
 import SheetExercises from './SheetExercises';
+import SheetLaboratory from './SheetLaboratory';
 import HtmlCanvasRenderer from './HtmlCanvasRenderer';
-import { Layout, Compass, Target, BookOpen, Sparkles, ShieldCheck, Swords } from 'lucide-react';
+import { Layout, Compass, Target, BookOpen, Sparkles, ShieldCheck, Swords, Microscope } from 'lucide-react';
 import { getUniversalMascot } from '../data/illustrationMap.jsx';
 
 export default function SheetPreview({
@@ -61,6 +62,13 @@ export default function SheetPreview({
       color: 'bg-purple-600 text-white hover:bg-purple-700'
     },
     {
+      id: 'laboratorio',
+      label: '5. Laboratorio',
+      icon: '🔬',
+      badge: 'Lámina 5',
+      color: 'bg-emerald-600 text-white hover:bg-emerald-700'
+    },
+    {
       id: 'todo',
       label: '📚 Cuaderno Completo',
       icon: '✨',
@@ -73,7 +81,7 @@ export default function SheetPreview({
     <div className="w-full flex flex-col items-center px-1 sm:px-4">
       {/* 1. SELECTOR SUPERIOR DE PESTAÑAS (NO SE IMPRIME) */}
       <nav aria-label="Selección de Lámina" className="no-print mb-4 w-full max-w-4xl bg-white/95 backdrop-blur-xs p-2 rounded-2xl border border-slate-200/90 shadow-xs">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (
@@ -159,7 +167,20 @@ export default function SheetPreview({
           </div>
         )}
 
-        {/* VISTA 4: CUADERNO COMPLETO CON MINI-PORTADA ESCOLAR NEO-BRUTALISTA */}
+        {/* VISTA 5: LABORATORIO Y GLOSARIO (LÁMINA 5) */}
+        {activeTab === 'laboratorio' && (
+          <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
+            <SheetLaboratory
+              curso={curso}
+              materia={materia}
+              tema={tema}
+              data={data}
+              etapa={etapa}
+            />
+          </div>
+        )}
+
+        {/* VISTA 6: CUADERNO COMPLETO CON MINI-PORTADA ESCOLAR NEO-BRUTALISTA */}
         {activeTab === 'todo' && (() => {
           const activeMascot = getUniversalMascot(materia, tema, curso);
           return (
@@ -246,7 +267,7 @@ export default function SheetPreview({
                       {etapa === 'eso' ? 'EduGalicia ESO LOMLOE' : 'EduGalicia Primaria LOMLOE'}
                     </span>
                     <span className="bg-black text-white px-3.5 py-1.5 rounded-xl shadow-[3px_3px_0px_#000]">
-                      {etapa === 'eso' ? '4 Láminas Cyber-Math A4 + Batalla + Retos' : '4 Láminas de Contido A4 + Batalla + Retos'}
+                      {etapa === 'eso' ? '5 Láminas Cyber-Math A4 + Batalla + Laboratorio' : '5 Láminas de Contido A4 + Batalla + Laboratorio'}
                     </span>
                   </footer>
                 </div>
@@ -295,6 +316,17 @@ export default function SheetPreview({
                   etapa={etapa}
                 />
               </div>
+
+              {/* LÁMINA 5: LABORATORIO Y GLOSARIO */}
+              <div className="sheet-page w-full flex justify-center print:block print:w-full print:m-0 print:p-0">
+                <SheetLaboratory
+                  curso={curso}
+                  materia={materia}
+                  tema={tema}
+                  data={data}
+                  etapa={etapa}
+                />
+              </div>
             </div>
           );
         })()}
@@ -327,6 +359,11 @@ export default function SheetPreview({
             <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
           </div>
         )}
+        {activeTab === 'laboratorio' && (
+          <div className="w-[794px] flex justify-center">
+            <SheetLaboratory curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
+          </div>
+        )}
         {activeTab === 'todo' && (
           <div className="w-[794px] space-y-6 flex flex-col items-center">
             <div className="w-[794px] flex justify-center">
@@ -340,6 +377,9 @@ export default function SheetPreview({
             </div>
             <div className="w-[794px] flex justify-center">
               <SheetChallenges curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
+            </div>
+            <div className="w-[794px] flex justify-center">
+              <SheetLaboratory curso={curso} materia={materia} tema={tema} data={data} etapa={etapa} />
             </div>
           </div>
         )}

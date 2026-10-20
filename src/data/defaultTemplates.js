@@ -143,10 +143,68 @@ export const DEFAULT_TEMPLATES = {
           titulo: "Plan de Restauración dun Río Galego",
           enunciado: "Un vertido nun río de Galicia afecta gravemente aos macroinvertebrados acuáticos e ás troitas. Formula unha hipótese de impacto e deseña un plan de recuperación sostible en 2 fases con especies autóctonas.",
           pista: "Fase 1: Limpeza e análise da auga. Fase 2: Repoboación de vexetación de ribeira (ameneiros) e fauna.",
-          pauta: "lineas",
-          solucion: "Plan de 2 fases: 1. Cesamento do vertido e filtrado bioecolóxico. 2. Rexeneración do bosque de ribeira e bioindicadores."
         }
-      ]
+      ],
+      tallerLaboratorio: {
+        tituloMision: "🔬 Laboratorio de Campo: A Filtrometría Natural nas Fragas e Rías",
+        contextoReto: "Imos investigar como a vexetación e o solo filtran a auga da choiva antes de chegar aos nosos ríos e rías.",
+        materiales: [
+          "2 botellas de plástico cortadas",
+          "Mostra de terra con follas secas (bosque)",
+          "Mostra de area ou terra núa",
+          "Auga limpa nun vaso medidor"
+        ],
+        hipotesis: "¿Que auga sairá máis limpa e filtrada: a que pasa por terra con raíces e follas ou a de terra núa?",
+        pasos: [
+          { numero: 1, instruccion: "Coloca boca abaixo a parte superior de cada botella como funil sobre a base." },
+          { numero: 2, instruccion: "Enche un funil con terra con follas e raíces, e o outro con terra sen vexetación." },
+          { numero: 3, instruccion: "Bota 200 ml de auga en cada un e observa a velocidade e a cor da auga filtrada." }
+        ],
+        cadroRexistro: {
+          tipo: "lineas",
+          preguntaGuia: "Rexistro de tempo de filtración, claridade da auga e croquis do experimento:"
+        },
+        conclusionCientifica: "A vexetación autóctona retén os sedimentos, evita a erosión e garante auga limpa e cristalina en Galicia."
+      },
+      glosarioFlashcards: [
+        {
+          id: 1,
+          termo: "Biotopo",
+          icono: "🪨",
+          rareza: "ouro",
+          xp: 25,
+          definicion: "O medio físico inerte dun ecosistema: as rochas, a luz solar, a auga e a temperatura.",
+          retoDorso: "Identifica 3 elementos do biotopo nunha praia galega."
+        },
+        {
+          id: 2,
+          termo: "Biocenose",
+          icono: "🦊",
+          rareza: "diamante",
+          xp: 30,
+          definicion: "O conxunto de todos os seres vivos (flora, fauna, fungos e bacterias) que conviven no mesmo lugar.",
+          retoDorso: "Que animal autóctono é rei da biocenose das Fragas do Eume?"
+        },
+        {
+          id: 3,
+          termo: "Fitoplancto",
+          icono: "🔬",
+          rareza: "prata",
+          xp: 20,
+          definicion: "Microorganismos vexetais acuáticos fotosintéticos que flotan na auga e alimentan aos mexillóns.",
+          retoDorso: "Son os mexillóns produtores ou consumidores primarios?"
+        },
+        {
+          id: 4,
+          termo: "Descompoñedores",
+          icono: "🍄",
+          rareza: "ouro",
+          xp: 25,
+          definicion: "Fungos e bacterias que transforman a materia orgánica morta en sales minerais para as plantas.",
+          retoDorso: "Que pasaría nun bosque se desaparecen todos os fungos?"
+        }
+      ],
+      conexionVidaReal: "Coidar os nosos ecosistemas mariños e terrestres mantén viva a biodiversidade única de Galicia e sustenta o marisqueo sostible."
     }
   },
 
@@ -591,10 +649,67 @@ export const DEFAULT_TEMPLATES = {
           titulo: "Desafío Submarino e Rango Relativo",
           enunciado: "Un submarino de investigación oceanográfica na ría de Vigo opera a **$-140\\text{ m}$**. Descende un cuarto da súa profundidade actual e despois ascende dous quintos da nova cota. A que profundidade final se atopa? Demóstrao con números enteiros $\\mathbb{Z}$.",
           pista: "Descenso: $-140 - 35 = -175\\text{ m}$. Ascenso: $-175 + \\frac{2}{5}(175) = -175 + 70$.",
-          pauta: "cuadricula",
-          solucion: "Cota 1: $-140 - 35 = -175\\text{ m}$. Cota final: $-175 + 70 = -105\\text{ m}$."
         }
-      ]
+      ],
+      tallerLaboratorio: {
+        tituloMision: "⚡ Laboratorio Criptográfico: O Algoritmo de Cifrado con Números Enteiros Z",
+        contextoReto: "Imos deseñar un sistema criptográfico de transmisión segura mediante desprazamento de caracteres en $\\mathbb{Z}$.",
+        materiales: [
+          "Roda alfanumérica de papel ou cartolina (A-Z numeradas de 0 a 26)",
+          "Clave enteira de cifrado $k \\in \\mathbb{Z}$",
+          "Papel milimetrado para a táboa de frecuencias"
+        ],
+        hipotesis: "Se aplicamos unha clave de cifrado $k = -5$, como recuperamos a mensaxe orixinal $M$ a partir do criptograma $C$?",
+        pasos: [
+          { numero: 1, instruccion: "Asigna a cada letra do abecedario galego o seu número de orde: $A=0, B=1, C=2...$" },
+          { numero: 2, instruccion: "Aplica a transformación de cifrado con número enteiro negativo: $C = (M + k) \\pmod{27}$." },
+          { numero: 3, instruccion: "Comproba a función inversa de descifrado sumando o oposto: $M = (C - k) = (C + 5) \\pmod{27}$." }
+        ],
+        cadroRexistro: {
+          tipo: "cuadricula",
+          preguntaGuia: "Táboa de correspondencia de mensaxe, cálculo con regra de signos e verificación:"
+        },
+        conclusionCientifica: "Os números negativos permiten modelar desprazamentos en ambas direccións, base da criptografía moderna e da computación."
+      },
+      glosarioFlashcards: [
+        {
+          id: 1,
+          termo: "Conxunto Z",
+          icono: "🔢",
+          rareza: "ouro",
+          xp: 25,
+          definicion: "O conxunto dos números enteiros $\\mathbb{Z} = \\{..., -3, -2, -1, 0, +1, +2, +3, ...\\}$, pechado para suma e produto.",
+          retoDorso: "É o número 0 positivo, negativo ou neutro?"
+        },
+        {
+          id: 2,
+          termo: "Valor Absoluto",
+          icono: "📏",
+          rareza: "diamante",
+          xp: 30,
+          definicion: "A distancia dun número ao cero na recta numérica: $|a| = a$ se $a \\ge 0$, e $|a| = -a$ se $a < 0$. Sempre positivo.",
+          retoDorso: "Canto vale $|-15| + |+8|$?"
+        },
+        {
+          id: 3,
+          termo: "Opuesto dun Enteiro",
+          icono: "🔄",
+          rareza: "prata",
+          xp: 20,
+          definicion: "O número que ten o mesmo valor absoluto pero signo contrario: $\\text{op}(+a) = -a$. A súa suma sempre é zero: $a + (-a) = 0$.",
+          retoDorso: "Cal é o oposto de $-(-7)$?"
+        },
+        {
+          id: 4,
+          termo: "Regra dos Signos",
+          icono: "⚡",
+          rareza: "diamante",
+          xp: 35,
+          definicion: "Para o produto e cociente: $(+) \\cdot (+) = +$, $(-) \\cdot (-) = +$, $(+) \\cdot (-) = -$, $(-) \\cdot (+) = -$.",
+          retoDorso: "Canto vale $(-2) \\cdot (-3) \\cdot (-4)$?"
+        }
+      ],
+      conexionVidaReal: "Os enteiros son imprescindibles nos sensores de temperatura de Galicia, nas finanzas públicas e no cálculo de cotas de marea nas rías."
     }
   },
 
@@ -1279,6 +1394,147 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
     );
   }
 
+  // 10. Extraer Taller de Laboratorio (<taller_laboratorio>)
+  const labBlock = getTagContent('taller_laboratorio') || text;
+  let tallerLaboratorio = null;
+
+  if (labBlock) {
+    const tituloMision = getTagContent('titulo_mision', labBlock) || `Taller Práctico: Investigación de ${tema}`;
+    const contextoReto = getTagContent('contexto_reto', labBlock) || `Pon en práctica o método científico e comproba como funciona este saber na vida real.`;
+    
+    // Materiales
+    const materiales = [];
+    const matMatches = labBlock.matchAll(/<material>([\s\S]*?)<\/material>/gi);
+    for (const mm of matMatches) {
+      const cleanMat = mm[1].trim();
+      if (cleanMat) materiales.push(cleanMat);
+    }
+    if (materiales.length === 0) {
+      materiales.push("Caderno escolar e lapis", "Regra milimetrada ou cinta métrica", "Material de observación da contorna");
+    }
+
+    const hipotesis = getTagContent('hipotesis', labBlock) || `Que cres que vai acontecer antes de comezar o procedemento?`;
+    
+    // Pasos
+    const pasos = [];
+    const pasoMatches = labBlock.matchAll(/<paso[^>]*numero=["']?(\d+)["']?[^>]*>([\s\S]*?)<\/paso>/gi);
+    for (const pm of pasoMatches) {
+      pasos.push({
+        numero: parseInt(pm[1], 10) || pasos.length + 1,
+        instruccion: pm[2].trim()
+      });
+    }
+    if (pasos.length === 0) {
+      const genericPasoMatches = labBlock.matchAll(/<paso[^>]*>([\s\S]*?)<\/paso>/gi);
+      let pIdx = 1;
+      for (const gpm of genericPasoMatches) {
+        pasos.push({
+          numero: pIdx++,
+          instruccion: gpm[1].trim()
+        });
+      }
+    }
+    if (pasos.length === 0) {
+      pasos.push(
+        { numero: 1, instruccion: `Prepara os materiais e anota o estado ou valor inicial no cadro.` },
+        { numero: 2, instruccion: `Realiza o procedemento paso a paso e observa con atención os cambios producidos.` },
+        { numero: 3, instruccion: `Compara o resultado obtido coa túa hipótese previa e xustifica a conclusión.` }
+      );
+    }
+
+    const preguntaGuia = getTagContent('pregunta_guia', labBlock) || `Anota os teus datos, debuxa o croquis e describe as túas observacións:`;
+    const cadroTipo = labBlock.includes('cuadricula') ? 'cuadricula' : 'lineas';
+    const conclusionCientifica = getTagContent('conclusion_cientifica', labBlock) || `O experimento confirma a importancia práctica e a aplicación directa de **${tema}**.`;
+
+    tallerLaboratorio = {
+      tituloMision,
+      contextoReto,
+      materiales,
+      hipotesis,
+      pasos,
+      cadroRexistro: {
+        tipo: cadroTipo,
+        preguntaGuia
+      },
+      conclusionCientifica
+    };
+  }
+
+  // 11. Extraer Glosario e Flashcards (<glosario_flashcards>)
+  const glosarioBlock = getTagContent('glosario_flashcards') || text;
+  const glosarioFlashcards = [];
+
+  const flashMatches = glosarioBlock.matchAll(/<flashcard([^>]*)>([\s\S]*?)<\/flashcard>/gi);
+  for (const fm of flashMatches) {
+    const attrStr = fm[1];
+    const inner = fm[2];
+    const getAttr = (n) => {
+      const m = attrStr.match(new RegExp(`${n}=["']([^"']*)["']`, 'i'));
+      return m ? m[1] : '';
+    };
+
+    const fId = parseInt(getAttr('id'), 10) || glosarioFlashcards.length + 1;
+    const fTermo = getAttr('termo') || getTagContent('termo', inner) || `Termo #${fId}`;
+    const fIcono = getAttr('icono') || getTagContent('icono', inner) || "💡";
+    const fRareza = getAttr('rareza') || "ouro";
+    const fXp = parseInt(getAttr('xp'), 10) || 25;
+    const fDef = getTagContent('definicion', inner) || inner.replace(/<[^>]+>/g, '').trim();
+    const fReto = getTagContent('reto_dorso', inner) || `Sabrías explicar este concepto coas túas propias palabras?`;
+
+    glosarioFlashcards.push({
+      id: fId,
+      termo: fTermo,
+      icono: fIcono,
+      rareza: fRareza,
+      xp: fXp,
+      definicion: fDef,
+      retoDorso: fReto
+    });
+  }
+
+  if (glosarioFlashcards.length === 0) {
+    glosarioFlashcards.push(
+      {
+        id: 1,
+        termo: "Idea Central",
+        icono: "🧠",
+        rareza: "ouro",
+        xp: 25,
+        definicion: `Concepto esencial para dominar **${tema}** de forma rigorosa.`,
+        retoDorso: "Que aplicación ten este termo na túa vida cotiá?"
+      },
+      {
+        id: 2,
+        termo: "Regra Clave",
+        icono: "⚡",
+        rareza: "diamante",
+        xp: 30,
+        definicion: `Procedemento ou principio fundamental que non debes esquecer nunca.`,
+        retoDorso: "Cal é o erro máis común ao aplicar esta regra?"
+      },
+      {
+        id: 3,
+        termo: "Elemento de Enlace",
+        icono: "🔄",
+        rareza: "prata",
+        xp: 20,
+        definicion: `Conexión directa deste saber co resto de materias escolares.`,
+        retoDorso: "Con que outro tema relacionarías este concepto?"
+      },
+      {
+        id: 4,
+        termo: "Termo de Exame",
+        icono: "🎯",
+        rareza: "ouro",
+        xp: 25,
+        definicion: `Palabra técnica que debes empregar sempre nas túas explicacións formais.`,
+        retoDorso: "Dille a definición exacta ao teu compañeiro/a sen mirar a tarxeta!"
+      }
+    );
+  }
+
+  const conexionVidaReal = getTagContent('conexion_vida_real', glosarioBlock) || `Este saber utilízase continuamente en Galicia para innovar, protexer a nosa contorna e resolver retos do día a día.`;
+
   return {
     titulo,
     colorPaleta,
@@ -1293,6 +1549,9 @@ export function parseAiOutputToSheet(rawText, tema, curso, materia) {
     preguntasTrivial,
     palancasVF,
     retoCreativo,
-    batallaExercicios
+    batallaExercicios,
+    tallerLaboratorio,
+    glosarioFlashcards,
+    conexionVidaReal
   };
 }

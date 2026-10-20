@@ -188,6 +188,46 @@ ESTRUTURA XML OBRIGATORIA:
       <solucion_pasos>[Criterio de resolución e exemplo de resposta válida]</solucion_pasos>
     </exercicio>
   </batalla_exercicios>
+  <taller_laboratorio>
+    <!-- TALLER PRÁCTICO E MÉTODO CIENTÍFICO A4 -->
+    <titulo_mision>[Título chamativo e motivador do reto científico ou procedemento práctico]</titulo_mision>
+    <contexto_reto>[Contextualización en 1-2 frases directas con **palabras clave**]</contexto_reto>
+    <materiales>
+      <material>[Elemento 1 accesible na aula ou na casa]</material>
+      <material>[Elemento 2]</material>
+      <material>[Elemento 3]</material>
+    </materiales>
+    <hipotesis>[Pregunta científica directa: Que cres que vai suceder se...?]</hipotesis>
+    <pasos>
+      <paso numero="1">[Instrución paso a paso 1 con verbo de acción]</paso>
+      <paso numero="2">[Instrución paso a paso 2]</paso>
+      <paso numero="3">[Instrución paso a paso 3]</paso>
+    </pasos>
+    <cadro_rexistro tipo="lineas">
+      <pregunta_guia>[Que observaches no experimento? Anota os datos clave ou fai un croquis]</pregunta_guia>
+    </cadro_rexistro>
+    <conclusion_cientifica>[Principio ou regra científica descuberta con **palabra clave**]</conclusion_cientifica>
+  </taller_laboratorio>
+  <glosario_flashcards>
+    <!-- 4 FLASHCARDS RECORTABLES PARA MEMORIZACIÓN E REPASO EN PARELLAS -->
+    <flashcard id="1" termo="[Termo Clave 1]" icono="[Emoji]" rareza="ouro" xp="25">
+      <definicion>[Definición concisa e exacta con **palabra clave** en asteriscos]</definicion>
+      <reto_dorso>[Pregunta rápida de comprobación para facer ao compañeiro/a]</reto_dorso>
+    </flashcard>
+    <flashcard id="2" termo="[Termo Clave 2]" icono="[Emoji]" rareza="prata" xp="20">
+      <definicion>[Definición concisa e exacta con **palabra clave**]</definicion>
+      <reto_dorso>[Pregunta rápida de comprobación]</reto_dorso>
+    </flashcard>
+    <flashcard id="3" termo="[Termo Clave 3]" icono="[Emoji]" rareza="bronce" xp="20">
+      <definicion>[Definición concisa e exacta con **palabra clave**]</definicion>
+      <reto_dorso>[Pregunta rápida de comprobación]</reto_dorso>
+    </flashcard>
+    <flashcard id="4" termo="[Termo Clave 4]" icono="[Emoji]" rareza="diamante" xp="30">
+      <definicion>[Definición concisa e exacta con **palabra clave**]</definicion>
+      <reto_dorso>[Pregunta rápida de comprobación]</reto_dorso>
+    </flashcard>
+    <conexion_vida_real>[Como se conecta este coñecemento coa vida cotiá ou coa contorna de Galicia?]</conexion_vida_real>
+  </glosario_flashcards>
 </edugalicia_lamina>
 
 NON ENGADAS TEXTO ANTES OU DESPOIS DO XML. Devolve única e exclusivamente o bloque <edugalicia_lamina>...</edugalicia_lamina>.`;
@@ -445,6 +485,46 @@ ESTRUTURA XML OBRIGATORIA:
       <solucion_pasos>[$Planteamento e demostración/solución$]</solucion_pasos>
     </exercicio>
   </batalla_exercicios>
+  <taller_laboratorio>
+    <!-- LABORATORIO MATEMÁTICO E TALLER PRÁCTICO A4 -->
+    <titulo_mision>[Título do Laboratorio Matemático: ex. 'Descifrando Códigos Criptográficos con Números Primos' ou 'O Teorema de Pitágoras no Patio do Instituto']</titulo_mision>
+    <contexto_reto>[Problema de modelización real en Galicia en 1-2 frases directas con **fórmulas KaTeX**]</contexto_reto>
+    <materiales>
+      <material>[Material 1: ex. Calculadora científica ou cinta métrica]</material>
+      <material>[Material 2: ex. Papel milimetrado]</material>
+      <material>[Material 3: ex. Dados ou moedas equilibradas]</material>
+    </materiales>
+    <hipotesis>[Pregunta ou conxectura matemática preditiva en KaTeX: ex. Que relación gardan $a^2 + b^2$ e $c^2$?]</hipotesis>
+    <pasos>
+      <paso numero="1">[Paso 1 de recollida de datos ou algoritmo inicial]</paso>
+      <paso numero="2">[Paso 2 de operacións e táboa comparativa]</paso>
+      <paso numero="3">[Paso 3 de comprobación do resultado]</paso>
+    </pasos>
+    <cadro_rexistro tipo="cuadricula">
+      <pregunta_guia>[Rexistro de datos, táboa de valores ou debuxo xeométrico do problema]</pregunta_guia>
+    </cadro_rexistro>
+    <conclusion_cientifica>[Fórmula ou teorema verificado con KaTeX: ex. $c = \\sqrt{a^2 + b^2}$]</conclusion_cientifica>
+  </taller_laboratorio>
+  <glosario_flashcards>
+    <!-- 4 FLASHCARDS MATEMÁTICAS RECORTABLES CON FORMULAS KATEX -->
+    <flashcard id="1" termo="[Concepto ou Conxunto 1 en KaTeX]" icono="[Emoji]" rareza="ouro" xp="25">
+      <definicion>[Definición matemática formal e rigorosa con **fórmulas KaTeX**]</definicion>
+      <reto_dorso>[Pregunta de cálculo mental rápido ou comprobación de signos]</reto_dorso>
+    </flashcard>
+    <flashcard id="2" termo="[Concepto ou Conxunto 2 en KaTeX]" icono="[Emoji]" rareza="prata" xp="20">
+      <definicion>[Definición matemática formal e rigorosa]</definicion>
+      <reto_dorso>[Pregunta rápida de comprobación]</reto_dorso>
+    </flashcard>
+    <flashcard id="3" termo="[Concepto ou Conxunto 3 en KaTeX]" icono="[Emoji]" rareza="bronce" xp="20">
+      <definicion>[Definición matemática formal e rigorosa]</definicion>
+      <reto_dorso>[Pregunta rápida de comprobación]</reto_dorso>
+    </flashcard>
+    <flashcard id="4" termo="[Concepto ou Conxunto 4 en KaTeX]" icono="[Emoji]" rareza="diamante" xp="30">
+      <definicion>[Definición matemática formal e rigorosa]</definicion>
+      <reto_dorso>[Pregunta rápida de comprobación]</reto_dorso>
+    </flashcard>
+    <conexion_vida_real>[Aplicación práctica do saber matemático na tecnoloxía, arquitectura ou vida cotiá en Galicia]</conexion_vida_real>
+  </glosario_flashcards>
 </edugalicia_lamina>
 
 NON ENGADAS TEXTO ANTES OU DESPOIS DO XML. Devolve única e exclusivamente o bloque <edugalicia_lamina>...</edugalicia_lamina>.`;
@@ -506,7 +586,7 @@ Toda expresión matemática debe ir en LaTeX delimitada por $...$ o $$...$$.
 • Subíndices: $A_{\\text{base}}$, $V = \\frac{1}{3} A_{\\text{base}} \\cdot h$
 • Sistemas: $$\\begin{cases} 2x + y = 7 \\\\ x - y = 2 \\end{cases}$$
 
-Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\cdot, \\\\widehat, \\\\sqrt, etc.), mapa conceptual, retos arcade e o bloque <batalla_exercicios> con 4 exercicios de alta esixencia. Cero linguaxe infantil.`;
+Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\cdot, \\\\widehat, \\\\sqrt, etc.), mapa conceptual, retos arcade, batalla con 4 exercicios e os bloques obrigatorios <taller_laboratorio> (con laboratorio práctico e cadro de rexistro) e <glosario_flashcards> (con 4 flashcards recortables). Cero linguaxe infantil.`;
 
     return {
       systemPrompt: SYSTEM_PROMPT_ESO_MATES,
@@ -546,7 +626,7 @@ CONTEXTO CURRICULAR OFICIAL FILTRADO (DECRETO 155/2022 - GALICIA):
 ${ragPayloadString}
 \`\`\`
 
-Devuelve exclusivamente el XML estructurado <edugalicia_lamina>...</edugalicia_lamina> con CONTENIDO DIDÁCTICO CRUDO Y TRABAJABLE (listas reales, operaciones con números resueltas o vocabulario directo, sin frases vacías ni rollos teóricos), arte temático monumental, retos arcade y el bloque obligatorio <batalla_exercicios> con 4 ejercicios prácticos de alta exigencia cognitiva.`;
+Devuelve exclusivamente el XML estructurado <edugalicia_lamina>...</edugalicia_lamina> con CONTENIDO DIDÁCTICO CRUDO Y TRABAJABLE (listas reales, operaciones con números resueltas o vocabulario directo, sin frases vacías ni rollos teóricos), arte temático monumental, retos arcade, batalla de 4 ejercicios y los bloques obligatorios <taller_laboratorio> (misión experimental paso a paso y registro) y <glosario_flashcards> (4 flashcards recortables con definición y reto).`;
 
   return {
     systemPrompt: SYSTEM_PROMPT_MAESTRO,
@@ -604,15 +684,15 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt, signal
 
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey.trim()}`;
       const controller = new AbortController();
-      // Timeout seguro de 50s para permitir la generación completa de las 4 láminas didácticas
-      const timeoutId = setTimeout(() => controller.abort(), 50000);
+      // Timeout seguro de 65s para permitir la generación completa de las 5 láminas didácticas
+      const timeoutId = setTimeout(() => controller.abort(), 65000);
 
       const onExternalAbort = () => controller.abort();
       if (signal) signal.addEventListener('abort', onExternalAbort, { once: true });
 
       const generationConfig = {
         temperature: 0.3,
-        maxOutputTokens: 3000
+        maxOutputTokens: 8192
       };
       if (modelConfig.thinkingBudget !== null) {
         generationConfig.thinkingConfig = { thinkingBudget: modelConfig.thinkingBudget };
