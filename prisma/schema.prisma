@@ -1,0 +1,54 @@
+// ==============================================================================
+// PRISMA SCHEMA - EDUGALICIA RAG KNOWLEDGE STORE (NEON DB + PGVECTOR)
+// ==============================================================================
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  directUrl  = env("POSTGRES_URL_NON_POOLING")
+  extensions = [pgvector(map: "vector")]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  binaryTargets   = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
+}
+
+// Canonical document representing an extracted unit or resource
+model KnowledgeDocument {
+  id               String          @id @default(cuid())
+  sourceRepo       String          // 'cREAgal' | 'Procomun' | 'RecursosXunta'
+  sourceUrl        String          @unique
+  etapa            String          @default("Educación Primaria")
+  ciclo            String          // '1º Ciclo', '2º Ciclo', '3º Ciclo'
+  cursos           Int[]           // [3, 4]
+  materia          String          // 'Ciencias da Natureza', 'Matemáticas', etc.
+  bloqueSaberes    String          // Decreto 155/2022
+  temaOficial      String
+  lingua           String          // 'galego', 'castelan', 'ingles'
+  resumo           String          @db.Text
+  conceptosClave   String[]
+  rawMarkdownPath  String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  chunks           DocumentChunk[]
+
+  @@index([materia, ciclo])
+  @@index([cursos])
+}
+
+// Semantic chunks with pgvector embeddings for RAG retrieval
+model DocumentChunk {
+  id           String            @id @default(cuid())
+  documentId   String
+  document     KnowledgeDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  chunkIndex   Int
+  heading      String            @default("")
+  content      String            @db.Text
+  tokenCount   Int
+  embedding    Unsupported("vector(768)") // Google text-embedding-004 dimension
+  createdAt    DateTime          @default(now())
+
+  @@index([documentId])
+}

@@ -107,8 +107,8 @@ function autoHealOutsideMath(raw) {
 
     let healed = seg;
 
-    // 1. Fracciones sin formato: frac34 -> $\frac{3}{4}$, fracab -> $\frac{a}{b}$, frac{a}{b} -> $\frac{a}{b}$
-    healed = healed.replace(/\bfrac([0-9a-zA-Z])([0-9a-zA-Z])\b/g, '$\\frac{$1}{$2}$');
+    // 1. Fracciones sin formato numérico: frac34 -> $\frac{3}{4}$, frac12 -> $\frac{1}{2}$
+    healed = healed.replace(/\bfrac(\d)(\d)\b/g, '$\\frac{$1}{$2}$');
     healed = healed.replace(/(?:\\?frac\{([^{}]+)\}\{([^{}]+)\})/g, '$\\frac{$1}{$2}$');
 
     // 2. Sistemas de ecuaciones en texto plano \begin{cases}...\end{cases}

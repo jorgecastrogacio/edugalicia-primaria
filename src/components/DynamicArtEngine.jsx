@@ -14,7 +14,7 @@ export default function DynamicArtEngine({
   className = "",
   etapa = "primaria"
 }) {
-  const isESO = etapa === 'eso' || (String(materia).toLowerCase().includes('matemát') && (String(tema).toLowerCase().includes('eso') || String(tema).toLowerCase().includes('enteir') || String(tema).toLowerCase().includes('ecuac')));
+  const isESO = etapa === 'eso' || /\b(eso|secundaria)\b/i.test(tema);
   const mascot = getUniversalMascot(materia, tema);
   const normTema = (tema + " " + materia).toLowerCase();
 

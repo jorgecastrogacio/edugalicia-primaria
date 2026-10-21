@@ -1,5 +1,5 @@
-import { filterCurriculoRAG } from '../data/curriculoGalicia';
-import { filterCurriculoESORAG } from '../data/curriculoESO';
+import { filterCurriculoRAG } from '../data/curriculoGalicia.js';
+import { filterCurriculoESORAG } from '../data/curriculoESO.js';
 
 /**
  * System Prompt Maestro Oficial de EduGalicia - DIRECTIVA EPSILON
@@ -540,13 +540,46 @@ export function sanitizeUserInput(input = "") {
 }
 
 /**
+ * Constrúe o bloque de Triangulación Pedagóxica Oficial da Xunta de Galicia
+ * Prioriza a petición exacta do usuario sobre calquera contexto auxiliar
+ */
+export function buildGroundingPrompt(ragChunks = [], cleanTema = "") {
+  if (!ragChunks || ragChunks.length === 0) return "";
+
+  const chunksText = ragChunks.map((chunk, index) => {
+    const heading = chunk.heading || chunk.temaOficial || `Documento ${index + 1}`;
+    const cleanContent = (chunk.content || '').trim();
+    return `--- RECURSO CANÓNICO DE APOIO ${index + 1}: ${heading} (Materia: ${chunk.materia || 'LOMLOE'}, Ciclo: ${chunk.ciclo || 'Xeral'}) ---\n${cleanContent}`;
+  }).join('\n\n');
+
+  return `
+================================================================================
+🏛️ TRIANGULACIÓN PEDAGÓXICA OFICIAL (LOMLOE XUNTA DE GALICIA)
+================================================================================
+1. PRIORIDADE ABSOLUTA DA PETICIÓN DO USUARIO:
+   O mandato principal e innegociable é a petición exacta solicitada polo mestre: "${cleanTema}".
+   Xera o 100% dos exercicios, retos, problemas e contidos basándote estritamente na petición do usuario.
+   Se o usuario pide sumas e restas, colocar unidades/decenas/centenas e proba da resta, TODOS os exercicios deben tratar exclusivamente sobre esa temática. Está terminantemente prohibido desviar a temática a fraccións ou outros tópicos alleos non solicitados polo docente.
+
+2. CONTEXTO OFICIAL DE APOIO (NEON DB PGVECTOR):
+   Emprega o contexto oficial adxunto EXCLUSIVAMENTE como vocabulario de apoio, nomes reais, termos de Galicia e datos específicos relacionados co tema.
+   🚨 REGLA DE PROTECCIÓN: Se o contexto adxunto non coincide coa petición do usuario, non é suficiente ou pertence a outro tema didáctico, IGNÓRAO POR COMPLETO e xera os exercicios baseándote estritamente nos saberes básicos oficiais da etapa solicitada (Decreto 155/2022).
+
+${chunksText}
+================================================================================
+`;
+}
+
+/**
  * Ensamblador de Prompts con Filtrado RAG Pre-Prompting y Encapsulado Seguro
  * Soporta de forma aislada tanto Primaria (Decreto 155/2022) como ESO Matemáticas (Decreto 156/2022)
+ * Inyecta Triangulación Pedagógica con los fragmentos vectoriales recuperados de Neon DB
  */
-export function buildAssembledPrompts({ cursoId, materiaId, tema, formato, etapa }) {
+export function buildAssembledPrompts({ cursoId, materiaId, tema, formato, etapa, ragChunks = [] }) {
   // Saneamiento del campo tema
   const cleanTema = sanitizeUserInput(tema) || "Tema Xeral do Currículo";
   const isESO = etapa === 'eso' || String(cursoId).toLowerCase().startsWith('eso');
+  const groundingBlock = buildGroundingPrompt(ragChunks, cleanTema);
 
   if (isESO) {
     // RAG específico y aislado para Secundaria (Decreto 156/2022 DOG núm. 184)
@@ -561,6 +594,10 @@ export function buildAssembledPrompts({ cursoId, materiaId, tema, formato, etapa
         }, null, 2)
       : "Non se atopou o nodo curricular específico de ESO.";
 
+    const ragVectorialSection = ragChunks.length > 0
+      ? `\n\nCONTEXTO OFICIAL ADXUNTO DA BASE VECTORIAL DE NEON (pgvector):\n${ragChunks.map((c, i) => `• Fragmento ${i + 1} (${c.heading || c.temaOficial}): ${c.content.slice(0, 250)}...`).join('\n')}\n`
+      : '';
+
     const userPrompt = `Actúa basándote nas túas instrucións de sistema e no Decreto 156/2022 de Galicia (DOG núm. 184 - Matemáticas ESO).
 
 Parámetros da solicitude:
@@ -573,7 +610,7 @@ CONTEXTO CURRICULAR OFICIAL FILTRADO (DECRETO 156/2022 - GALICIA):
 \`\`\`json
 ${ragPayloadString}
 \`\`\`
-
+${ragVectorialSection}
 🚨 REGLA CRÍTICA DE COMPILACIÓN LATEX (DICCIONARIO DE HIERRO):
 ERES UN COMPILADOR LATEX ESTRICTO. Está TERMINANTEMENTE PROHIBIDO escribir matemáticas en texto plano.
 Toda expresión matemática debe ir en LaTeX delimitada por $...$ o $$...$$.
@@ -588,15 +625,28 @@ Toda expresión matemática debe ir en LaTeX delimitada por $...$ o $$...$$.
 
 Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lamina> con CONTIDO MATEMÁTICO REAL, FÓRMULAS EN KATEX COMPILADAS E ESCAPADAS (\\\\frac, \\\\cdot, \\\\widehat, \\\\sqrt, etc.), mapa conceptual, retos arcade, batalla con 4 exercicios e os bloques obrigatorios <taller_laboratorio> (con laboratorio práctico e cadro de rexistro) e <glosario_flashcards> (con 4 flashcards recortables). Cero linguaxe infantil.`;
 
+    const finalSystemPrompt = groundingBlock
+      ? `${groundingBlock}\n\n${SYSTEM_PROMPT_ESO_MATES}`
+      : SYSTEM_PROMPT_ESO_MATES;
+
     return {
-      systemPrompt: SYSTEM_PROMPT_ESO_MATES,
+      systemPrompt: finalSystemPrompt,
       userPrompt,
       ragSummary: {
         decreto: ragContext?.decreto,
         curso: ragContext?.curso,
         materia: ragContext?.materia,
         bloquesEnviados: ragContext?.bloques?.length || 0,
-        caracteresRAG: ragPayloadString.length
+        caracteresRAG: ragPayloadString.length,
+        ragVectorialActivo: ragChunks.length > 0,
+        chunksVectorialesCount: ragChunks.length,
+        chunks: ragChunks.map(c => ({
+          id: c.id,
+          heading: c.heading,
+          similarity: c.similarity,
+          materia: c.materia,
+          ciclo: c.ciclo
+        }))
       }
     };
   }
@@ -614,6 +664,10 @@ Devolve exclusivamente o XML estruturado <edugalicia_lamina>...</edugalicia_lami
       }, null, 2)
     : "No se encontró el nodo curricular específico.";
 
+  const ragVectorialSection = ragChunks.length > 0
+    ? `\n\nCONTEXTO OFICIAL ADJUNTO DE LA BASE VECTORIAL DE NEON (pgvector):\n${ragChunks.map((c, i) => `• Fragmento ${i + 1} (${c.heading || c.temaOficial}): ${c.content.slice(0, 250)}...`).join('\n')}\n`
+    : '';
+
   const userPrompt = `Actúa basándote en tus instrucciones de sistema y en la LOMLOE de Galicia (Decreto 155/2022).
 
 Parámetros de la solicitud:
@@ -625,17 +679,30 @@ CONTEXTO CURRICULAR OFICIAL FILTRADO (DECRETO 155/2022 - GALICIA):
 \`\`\`json
 ${ragPayloadString}
 \`\`\`
-
+${ragVectorialSection}
 Devuelve exclusivamente el XML estructurado <edugalicia_lamina>...</edugalicia_lamina> con CONTENIDO DIDÁCTICO CRUDO Y TRABAJABLE (listas reales, operaciones con números resueltas o vocabulario directo, sin frases vacías ni rollos teóricos), arte temático monumental, retos arcade, batalla de 4 ejercicios y los bloques obligatorios <taller_laboratorio> (misión experimental paso a paso y registro) y <glosario_flashcards> (4 flashcards recortables con definición y reto).`;
 
+  const finalSystemPrompt = groundingBlock
+    ? `${groundingBlock}\n\n${SYSTEM_PROMPT_MAESTRO}`
+    : SYSTEM_PROMPT_MAESTRO;
+
   return {
-    systemPrompt: SYSTEM_PROMPT_MAESTRO,
+    systemPrompt: finalSystemPrompt,
     userPrompt,
     ragSummary: {
       curso: ragContext?.curso,
       materia: ragContext?.materia,
       bloquesEnviados: ragContext?.bloques?.length || 0,
-      caracteresRAG: ragPayloadString.length
+      caracteresRAG: ragPayloadString.length,
+      ragVectorialActivo: ragChunks.length > 0,
+      chunksVectorialesCount: ragChunks.length,
+      chunks: ragChunks.map(c => ({
+        id: c.id,
+        heading: c.heading,
+        similarity: c.similarity,
+        materia: c.materia,
+        ciclo: c.ciclo
+      }))
     }
   };
 }
@@ -643,12 +710,12 @@ Devuelve exclusivamente el XML estructurado <edugalicia_lamina>...</edugalicia_l
 // Lista de modelos de última generación de Google Gemini ordenados por estabilidad y velocidad
 // Nota: modelos obsoletos como gemini-1.5-flash y gemini-2.0-flash fueron retirados en v1beta (404)
 const ACTIVE_MODELS = [
-  { id: "gemini-3.1-flash-lite", thinkingBudget: null },
+  { id: "gemini-flash-lite-latest", thinkingBudget: null },
+  { id: "gemini-3.5-flash-lite", thinkingBudget: null },
   { id: "gemini-3.6-flash", thinkingBudget: 0 },
   { id: "gemini-3.5-flash", thinkingBudget: 0 },
-  { id: "gemini-3.1-flash-lite-preview", thinkingBudget: null },
-  { id: "gemini-3.8-flash", thinkingBudget: 0 },
-  { id: "gemini-flash-latest", thinkingBudget: null }
+  { id: "gemini-3.1-flash-lite", thinkingBudget: null },
+  { id: "gemini-3.1-flash-lite-preview", thinkingBudget: null }
 ];
 
 /**
@@ -660,7 +727,8 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt, signal
     throw new DOMException("Operación cancelada por el usuario", "AbortError");
   }
 
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  const apiKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) 
+    || (typeof process !== 'undefined' ? (process.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY) : '');
 
   if (!apiKey || apiKey.trim() === "") {
     throw new Error("No se ha detectado la clave API. Añade VITE_GEMINI_API_KEY=tu_clave en el archivo .env.local de la raíz del proyecto o en las variables de entorno de Vercel.");
@@ -733,7 +801,9 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt, signal
         lastError = errorData?.error?.message || `HTTP ${response.status}`;
 
         if (response.status === 429) {
-          throw new Error("LÍMITE ALCANZADO (Rate Limit 429): Has superado las peticiones por minuto. Espera 30 segundos y vuelve a pulsar el botón.");
+          console.warn(`EduGalicia: Modelo ${model} en rate limit (429). Probando seguinte modelo da lista...`);
+          lastError = `Rate limit 429 en ${model}`;
+          break; // Pasar al siguiente modelo de la lista en vez de abortar de golpe
         }
         if (response.status === 400 && lastError.toLowerCase().includes("key")) {
           throw new Error("CLAVE INVÁLIDA (Error 400/403): La clave API configurada no es válida o ha caducado en Google AI Studio.");
@@ -758,13 +828,17 @@ export async function executeGeminiGeneration({ systemPrompt, userPrompt, signal
           lastError = `Timeout en ${model}`;
           break;
         }
-        if (fetchErr.message.includes("LÍMITE ALCANZADO") || fetchErr.message.includes("CLAVE INVÁLIDA")) {
+        if (fetchErr.message.includes("CLAVE INVÁLIDA")) {
           throw fetchErr;
         }
         lastError = fetchErr.message;
         break;
       }
     }
+  }
+
+  if (lastError && (lastError.includes("429") || lastError.includes("Rate limit"))) {
+    throw new Error("LÍMITE ALCANZADO (Rate Limit 429): Google AI Studio está saturado temporalmente. Espera unos segundos y vuelve a pulsar el botón.");
   }
 
   throw new Error(`Non se puido conectar cos modelos dispoñibles de Google Gemini (${lastError}).`);

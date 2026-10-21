@@ -12,7 +12,6 @@
   /* 1. Ocultar todos los elementos de control y UI en papel */
   .no-print,
   [data-no-print],
-  header,
   header.no-print,
   aside,
   aside.no-print,
@@ -49,17 +48,16 @@
     print-color-adjust: exact !important;
   }
 
-  /* 3. DESMANTELAMIENTO TOTAL DE WRAPPERS DE PANTALLA (Grid 12 col, Flex, Max-Width, Overflow) */
+  /* 3. DESMANTELAMIENTO TOTAL DE WRAPPERS DE PANTALLA EXTERNOS (Grid 12 col, Flex, Max-Width, Overflow) */
   #root,
   #root > div,
   .min-h-screen,
   main,
-  main > div,
-  .grid,
+  main > div.grid,
+  main > div.grid > aside,
+  main > div.grid > section,
   .lg\:grid-cols-12,
-  section,
-  .lg\:col-span-7,
-  .overflow-x-auto {
+  .lg\:col-span-7 {
     display: block !important;
     grid-template-columns: none !important;
     grid-column: auto !important;
@@ -74,6 +72,37 @@
     overflow: visible !important;
     gap: 0 !important;
     transform: none !important;
+  }
+
+  /* Blindaje total de headers y grids internos de las láminas */
+  .a4-sheet header,
+  #edugalicia-a4-sheet header {
+    display: flex !important;
+    visibility: visible !important;
+  }
+
+  #edugalicia-a4-sheet .grid,
+  .a4-sheet .grid {
+    display: grid !important;
+  }
+
+  #edugalicia-a4-sheet .sm\:grid-cols-4,
+  .a4-sheet .sm\:grid-cols-4,
+  .a4-sheet .flashcards-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  #edugalicia-a4-sheet .sm\:grid-cols-3,
+  .a4-sheet .sm\:grid-cols-3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  #edugalicia-a4-sheet .md\:grid-cols-2,
+  .a4-sheet .md\:grid-cols-2 {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
   /* 4. Contenedor de Láminas #edugalicia-a4-sheet */

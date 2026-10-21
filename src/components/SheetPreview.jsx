@@ -20,7 +20,7 @@ export default function SheetPreview({
   onTabChange,
   etapa = "primaria"
 }) {
-  const isESO = etapa === 'eso' || String(curso || '').toLowerCase().includes('eso');
+  const isESO = etapa === 'eso' || /\b(eso|secundaria)\b/i.test(String(curso || ''));
   const [internalTab, setInternalTab] = useState('dashboard');
   const activeTab = controlledActiveTab !== undefined ? controlledActiveTab : internalTab;
 

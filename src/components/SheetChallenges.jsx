@@ -12,7 +12,7 @@ export default function SheetChallenges({
   data,
   etapa = "primaria"
 }) {
-  const isESO = etapa === 'eso' || String(curso || '').toLowerCase().includes('eso');
+  const isESO = etapa === 'eso' || /\b(eso|secundaria)\b/i.test(String(curso || ''));
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [tfAnswers, setTfAnswers] = useState({});
 

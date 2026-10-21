@@ -11,7 +11,7 @@ export default function SheetConceptMap({
   data,
   etapa = "primaria"
 }) {
-  const isESO = etapa === 'eso' || String(curso || '').toLowerCase().includes('eso');
+  const isESO = etapa === 'eso' || /\b(eso|secundaria)\b/i.test(String(curso || ''));
   const activeMascot = getUniversalMascot(materia, tema, curso);
 
   // Fallback seguro si la IA no devuelve conceptos

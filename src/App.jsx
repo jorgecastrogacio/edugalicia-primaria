@@ -3,15 +3,16 @@ import { CURRICULO_GALICIA } from './data/curriculoGalicia';
 import { CURRICULO_ESO } from './data/curriculoESO';
 import { DEFAULT_TEMPLATES, parseAiOutputToSheet } from './data/defaultTemplates';
 import { buildAssembledPrompts, executeGeminiGeneration } from './prompts/promptEngine';
+import { fetchRagContext } from './services/ragService';
 import { FORMATOS_DISPONIBLES } from './data/formatos';
 import FormInputs from './components/FormInputs';
 import ExportToolbar from './components/ExportToolbar';
 import SheetPreview from './components/SheetPreview';
-import { ShieldCheck, Printer, Zap } from 'lucide-react';
+import { ShieldCheck, Printer, Zap, Database } from 'lucide-react';
 
 const LOADING_MESSAGES_PRIMARIA = [
-  "Consultando Decreto 155/2022 e Orde do 26 de maio...",
-  "Filtrando Saberes Básicos de Galicia (Pre-Prompting RAG)...",
+  "Consultando base de datos oficial LOMLOE (Neon pgvector)...",
+  "Filtrando Saberes Básicos de Galicia (Zero-Shot Grounding)...",
   "Adaptando vocabulario cognitivo a Primaria (6-12 anos)...",
   "Diseñando mapa conceptual con sintaxe Mermaid...",
   "Estructurando o Dashboard A4 e o trivial de repaso...",
@@ -19,12 +20,12 @@ const LOADING_MESSAGES_PRIMARIA = [
 ];
 
 const LOADING_MESSAGES_ESO = [
-  "Consultando Decreto 156/2022 (DOG núm. 184 - Secundaria)...",
-  "Filtrando Saberes Básicos de Matemáticas ESO (Pre-Prompting RAG)...",
+  "Consultando base de datos oficial ESO (Neon pgvector)...",
+  "Filtrando Saberes Básicos de Matemáticas ESO (Zero-Shot Grounding)...",
   "Compilando fórmulas e sintaxe KaTeX/LaTeX...",
   "Modelando algoritmos paso a paso e regras de signos...",
-  "Xerando stickers Cyber-Math e retos lóxico-matemáticos...",
-  "Finalizando maquetación matemática de alta fidelidade..."
+  "Xerando batalla de exercicios e glosario recortable...",
+  "Finalizando caderno didáctico de secundaria..."
 ];
 
 export default function App() {
@@ -167,19 +168,23 @@ export default function App() {
     return sugerencias;
   }, [etapa, cursoId, materiaId, cursoObj, materiaObj]);
 
+  // Fragmentos canónicos recuperados de Neon DB (pgvector)
+  const [activeRagChunks, setActiveRagChunks] = useState([]);
+
   // Usar useDeferredValue para evitar recalculación intensiva en cada tecla pulsada
   const deferredTema = React.useDeferredValue(tema);
 
-  // Ensamblar los prompts en tiempo real para auditoría e inspección
+  // Ensamblar los prompts en tiempo real para auditoría e inspección (con fragmentos RAG)
   const assembledPrompts = useMemo(() => {
     return buildAssembledPrompts({
       cursoId,
       materiaId,
       tema: deferredTema || "Tema General",
       formato,
-      etapa
+      etapa,
+      ragChunks: activeRagChunks
     });
-  }, [cursoId, materiaId, deferredTema, formato, etapa]);
+  }, [cursoId, materiaId, deferredTema, formato, etapa, activeRagChunks]);
 
   // Manejar el ciclo de mensajes de carga
   useEffect(() => {
@@ -233,7 +238,7 @@ export default function App() {
     setErrorMessage('');
   };
 
-  // Disparo directo a Gemini con recuperación automática, cancelación de llamadas y cero bloqueos
+  // Disparo a RAG vectorial + Gemini con recuperación automática y Zero-Shot Grounding
   const handleGenerar = async () => {
     // Abortar llamada previa si aún estuviera en vuelo
     if (abortControllerRef.current) {
@@ -247,9 +252,35 @@ export default function App() {
     setErrorMessage('');
 
     try {
+      // 1. Intercepción RAG: Consultar Neon DB con pgvector antes de llamar a la IA
+      let chunks = [];
+      try {
+        chunks = await fetchRagContext({
+          materia: materiaObj?.nombre || materiaId,
+          ciclo: cursoObj?.ciclo || (etapa === 'eso' ? 'eso' : 1),
+          query: tema || "Tema Xeral",
+          signal: controller.signal
+        });
+        setActiveRagChunks(chunks);
+      } catch (ragErr) {
+        if (ragErr.name === 'AbortError') throw ragErr;
+        console.warn("EduGalicia: Fallo temporal en búsqueda vectorial RAG, usando currículo embebido:", ragErr);
+      }
+
+      // 2. Ensamblar prompts inyectando la Directiva de Grounding Absoluto con los chunks recuperados
+      const runtimePrompts = buildAssembledPrompts({
+        cursoId,
+        materiaId,
+        tema,
+        formato,
+        etapa,
+        ragChunks: chunks
+      });
+
+      // 3. Ejecutar generación con Google Gemini
       const resultText = await executeGeminiGeneration({
-        systemPrompt: assembledPrompts.systemPrompt,
-        userPrompt: assembledPrompts.userPrompt,
+        systemPrompt: runtimePrompts.systemPrompt,
+        userPrompt: runtimePrompts.userPrompt,
         signal: controller.signal
       });
 
@@ -419,6 +450,37 @@ export default function App() {
                 )}
               </p>
             </div>
+
+            {/* Panel de Estado RAG pgvector + Grounding Absoluto */}
+            {activeRagChunks.length > 0 && (
+              <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 space-y-2 animate-fadeIn">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 font-bold text-emerald-800">
+                    <Database className="w-4 h-4 text-emerald-600 animate-pulse" />
+                    <span>Neon DB (pgvector) • Grounding Absoluto</span>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-200/70 text-emerald-900 border border-emerald-300">
+                    {activeRagChunks.length} fragmentos oficiais
+                  </span>
+                </div>
+                <p className="text-[11px] text-emerald-800/90 leading-relaxed">
+                  Os exercicios foron xerados baseándose estritamente nos currículos oficiais validados en Neon DB mediante similitude do coseno.
+                </p>
+                <div className="space-y-1.5 pt-1">
+                  {activeRagChunks.map((chunk, idx) => (
+                    <div key={chunk.id || idx} className="bg-white/90 border border-emerald-100 rounded-lg p-2 text-[10px] text-emerald-900 flex items-start justify-between gap-2 shadow-2xs">
+                      <div className="truncate">
+                        <span className="font-bold text-emerald-950">#{idx + 1} </span>
+                        <span>{chunk.heading || chunk.temaOficial || 'Currículo Oficial'}</span>
+                      </div>
+                      <span className="shrink-0 font-mono text-[9px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">
+                        Sim: {(chunk.similarity * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </aside>
 
           {/* COLUMNA DERECHA: Visor A4 y Barra de Exportación */}
