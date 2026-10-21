@@ -1,13 +1,20 @@
 import { PrismaClient } from '@prisma/client';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+// Resolver URL da base de datos (Prioriza EDUGALICIA_DATABASE_URL para evitar conflitos de integracións en Vercel)
+const dbUrl = process.env.EDUGALICIA_DATABASE_URL || process.env.DATABASE_URL;
+
 // Singleton de Prisma para reutilizar conexiones en Serverless / Vite dev
 let prisma;
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient();
+  prisma = new PrismaClient({
+    datasources: dbUrl ? { db: { url: dbUrl } } : undefined
+  });
 } else {
   if (!global.__prisma) {
-    global.__prisma = new PrismaClient();
+    global.__prisma = new PrismaClient({
+      datasources: dbUrl ? { db: { url: dbUrl } } : undefined
+    });
   }
   prisma = global.__prisma;
 }
