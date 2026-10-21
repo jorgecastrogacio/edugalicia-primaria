@@ -183,12 +183,12 @@ export default async function handler(req, res) {
     }
 
     // 4. Umbral de calidad estricta (Score Threshold):
-    // Descartar fragmentos con distancia excesiva (distancia > 0.82) o cadenas residuales de JSON
+    // Descartar fragmentos con distancia excesiva (distancia > 0.94) o cadenas residuales de JSON
     const validChunks = (rawChunks || [])
       .filter(chunk => {
         const text = (chunk.content || '').trim();
-        // Si la distancia es muy grande, no hay coincidencia semántica real
-        if (Number(chunk.distance) > 0.82) return false;
+        // Si la distancia es muy grande (> 0.94), no hay coincidencia semántica real
+        if (Number(chunk.distance) > 0.94) return false;
         // Evitar chunks que comiencen por sintaxis de código
         if (text.startsWith('{"') || text.startsWith(',"') || text.startsWith('}') || text.startsWith(']')) return false;
         if (text.startsWith('audio/mpeg') && text.length < 120) return false;
